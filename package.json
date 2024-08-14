@@ -1,6 +1,6 @@
 {
   "name": "react-video",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A react video player component inspired by youtube player ui",
   "scripts": {
     "build": "rollup -c",

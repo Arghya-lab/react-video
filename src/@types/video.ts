@@ -19,10 +19,10 @@ export interface VideoPropTypes {
   onDisablePIP?: () => void;
   onDuration?: (duration: null | number) => void;
   onProgress?: (duration: number) => void;
+  handlePlayPaused?: () => void;
   // onPlaybackRateChange: ()=>void,
   // onPlaybackQualityChange: ()=>void,
   // onClickPreview: ()=>void,
-  handlePlayPaused?: () => void;
 }
 
 export interface PlayerStateType {
