@@ -1,0 +1,40 @@
+@import "../global.scss";
+
+.player-icon {
+  cursor: pointer;
+}
+
+.loader-container {
+  transform-origin: center;
+  animation: rotate4 2s linear infinite;
+  stroke: $loader-stroke-color;
+  width: $loader-width;
+
+  .loading-circle {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    animation: dash4 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes rotate4 {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash4 {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 90, 200;
+    stroke-dashoffset: -35px;
+  }
+
+  100% {
+    stroke-dashoffset: -125px;
+  }
+}

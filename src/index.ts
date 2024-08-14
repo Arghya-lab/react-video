@@ -1,1 +1,1 @@
-export * from "./reactVideo";
+export * from "./components";

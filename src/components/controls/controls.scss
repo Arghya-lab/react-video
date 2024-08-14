@@ -1,0 +1,99 @@
+@import "../global.scss";
+
+.video-bottom-control-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  color: white;
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
+    aspect-ratio: 6 / 1;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .controls {
+    padding: $control-padding;
+    display: flex;
+    align-items: center;
+    gap: $control-button-gap;
+
+    button {
+      background: none;
+      border: none;
+      color: inherit;
+      height: $control-button-height;
+      width: $control-button-width;
+      opacity: 0.8;
+      transition: opacity 150ms ease-in-out;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.video-container {
+  &:hover .video-bottom-control-container,
+  &:focus-within .video-bottom-control-container {
+    opacity: 1;
+  }
+}
+
+.volume-container {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.volume-slider {
+  width: 0;
+  height: $volume-slider-height;
+  background: $volume-slider-color;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition:
+    width 150ms ease-in-out,
+    transform 150ms ease-in-out;
+}
+
+.volume-container:hover .volume-slider,
+.volume-slider:focus-within {
+  width: $volume-container-width-expand;
+  transform: scaleX(1);
+}
+
+.volume-track.volume-track-0 {
+  @include progress-bar(10);
+  background: $volume-slider-fill-color;
+}
+
+.volume-thumb {
+  height: $volume-thumb-height;
+  aspect-ratio: 1/1;
+  position: absolute;
+  top: calc(($volume-slider-height - $volume-thumb-height) / 2);
+  z-index: 15;
+  transform: scale(var(--scale));
+  // transition: transform 150ms ease-in-out;
+  // transform-origin: right;
+  background: $volume-slider-fill-color;
+  border-radius: 50%;
+}
+
+.duration-container {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-grow: 1;
+}

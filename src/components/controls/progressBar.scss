@@ -1,0 +1,53 @@
+@import "../global.scss";
+
+.slider-container {
+  height: $progress-height;
+  margin-bottom: $progress-bottom-margin;
+  margin-inline: $progress-x-margin;
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: $slider-border-radius;
+
+  &:hover {
+    height: $progress-height-hover;
+  }
+}
+
+.horizontal-slider {
+  height: 100%;
+  width: 100%;
+  background-color: $progress-track-color;
+  border-radius: $slider-border-radius;
+  cursor: pointer;
+}
+
+.slider-track.slider-track-0 {
+  @include progress-bar(10);
+  background: $progress-track-fill-color;
+}
+
+.loaded-progress {
+  @include progress-bar(5);
+  background: $progress-loaded-color;
+}
+
+.slider-thumb {
+  --scale: 0;
+  position: absolute;
+  z-index: 15;
+  top: calc(($progress-height-hover - $progress-thumb-height) / 2);
+  height: $progress-thumb-height;
+  aspect-ratio: 1/1;
+  transform: scale(var(--scale));
+  // transition: transform 150ms ease-in-out;
+  // transform-origin: right;
+  background: $progress-track-fill-color;
+  border: $progress-thumb-border-size solid $progress-thumb-border-color;
+  border-radius: 50%;
+}
+
+.slider-container:hover .slider-thumb {
+  --scale: 1;
+}
