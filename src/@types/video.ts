@@ -6,23 +6,23 @@ export interface VideoPropTypes {
   source: SourceType;
   defaultQuality?: string | number;
   autoPlay?: boolean;
-  onReady?: () => any;
-  onStart?: () => any;
-  onPlay?: () => any;
-  onBuffer?: () => any;
-  onBufferEnd?: () => any;
-  onPause?: () => any;
-  onSeek?: () => any;
-  onEnded?: () => any;
-  onError?: () => any;
-  onEnablePIP?: () => any;
-  onDisablePIP?: () => any;
-  onDuration?: (duration: null | number) => any;
-  onProgress?: (duration: number) => any;
-  // onPlaybackRateChange: ()=>any,
-  // onPlaybackQualityChange: ()=>any,
-  // onClickPreview: ()=>any,
-  handlePlayPaused: () => any;
+  onReady?: () => void;
+  onStart?: () => void;
+  onPlay?: () => void;
+  onBuffer?: () => void;
+  onBufferEnd?: () => void;
+  onPause?: () => void;
+  onSeek?: () => void;
+  onEnded?: () => void;
+  onError?: () => void;
+  onEnablePIP?: () => void;
+  onDisablePIP?: () => void;
+  onDuration?: (duration: null | number) => void;
+  onProgress?: (duration: number) => void;
+  // onPlaybackRateChange: ()=>void,
+  // onPlaybackQualityChange: ()=>void,
+  // onClickPreview: ()=>void,
+  handlePlayPaused?: () => void;
 }
 
 export interface PlayerStateType {
@@ -53,9 +53,3 @@ export interface PlayerStateType {
   // isQualitySelectionOpen: boolean;
   // isSettingSectionOpen: boolean;
 }
-
-interface playPauseAction {
-  type: "playDideo";
-}
-
-export type PlayerActionType = playPauseAction;

@@ -8,11 +8,7 @@ export default function secToMinSec(s: number) {
       convertToTwoDigits(Math.floor(s % 60))
     );
   } else {
-    return (
-      convertToTwoDigits(Math.floor(s / 60)) +
-      "." +
-      convertToTwoDigits(Math.floor(s % 60))
-    );
+    return convertToTwoDigits(Math.floor(s / 60)) + "." + convertToTwoDigits(Math.floor(s % 60));
   }
 }
 

@@ -1,9 +1,4 @@
-import {
-  DASH_EXTENSIONS,
-  FLV_EXTENSIONS,
-  HLS_EXTENSIONS,
-  MATCH_CLOUDFLARE_STREAM,
-} from "./RegEx";
+import { DASH_EXTENSIONS, FLV_EXTENSIONS, HLS_EXTENSIONS, MATCH_CLOUDFLARE_STREAM } from "./RegEx";
 
 export function shouldUseHLS(url: string) {
   return HLS_EXTENSIONS.test(url) || MATCH_CLOUDFLARE_STREAM.test(url);

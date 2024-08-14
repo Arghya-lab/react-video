@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from "react";
+import { useEffect } from "react";
 import VideoSrc from "../../lib/VideoSrc";
 import Hls from "hls.js";
 import dashjs from "dashjs";

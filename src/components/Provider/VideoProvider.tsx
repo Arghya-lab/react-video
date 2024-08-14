@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, ReactNode, useContext, useRef, useState } from "react";
 import { PlayerStateType, VideoPropTypes } from "../../@types/video";
 import { VideoContextType } from "../../@types/context";
 import { isMobile } from "react-device-detect";
@@ -84,8 +78,7 @@ export function VideoProvider({
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
 
-  const [playerState, setPlayerState] =
-    useState<PlayerStateType>(defaultPlayerState);
+  const [playerState, setPlayerState] = useState<PlayerStateType>(defaultPlayerState);
 
   const handlePlayPaused = () => {
     if (videoRef && videoRef.current) {

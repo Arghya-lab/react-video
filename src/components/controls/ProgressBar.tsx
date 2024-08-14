@@ -10,18 +10,14 @@ function ProgressBar() {
   const [sliderValue, setSliderValue] = useState(0);
 
   useMemo(
-    () =>
-      setSliderValue(
-        (playerState.currentTime / (playerState.duration || 0) || 0) * 1000
-      ),
-    [playerState.currentTime]
+    () => setSliderValue((playerState.currentTime / (playerState.duration || 0) || 0) * 1000),
+    [playerState.currentTime],
   );
 
-  const handleChangeCurrentTime = (value: number, index: number) => {
+  const handleChangeCurrentTime = (value: number) => {
     if (videoRef && videoRef.current) {
       setSliderValue(value);
-      videoRef.current.currentTime =
-        (value / 1000) * (videoRef.current.duration || 0);
+      videoRef.current.currentTime = (value / 1000) * (videoRef.current.duration || 0);
     }
   };
 

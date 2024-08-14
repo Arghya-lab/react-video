@@ -41,8 +41,7 @@ export const Hls8Video: Story = {
 
 export const DashVideo: Story = {
   args: {
-    source:
-      "https://storage.googleapis.com/shaka-demo-assets/bbb-dark-truths/dash.mpd",
+    source: "https://storage.googleapis.com/shaka-demo-assets/bbb-dark-truths/dash.mpd",
     // autoPlay: true,
   },
 };

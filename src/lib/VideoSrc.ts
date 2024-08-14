@@ -16,16 +16,12 @@ export default class VideoSrc {
   private findPreferredSource(): string | undefined {
     if (this.source instanceof Array) {
       const userPref = this.source.find(
-        (sourceItem) =>
-          sourceItem.quality && sourceItem.quality == this.defaultQuality
+        (sourceItem) => sourceItem.quality && sourceItem.quality == this.defaultQuality,
       );
       const auto =
         this.source.find(
           (si) =>
-            si.quality == "480p" ||
-            si.quality == 480 ||
-            si.quality == "560p" ||
-            si.quality == 560
+            si.quality == "480p" || si.quality == 480 || si.quality == "560p" || si.quality == 560,
         ) || this.source[0];
 
       return (userPref || auto).src;
@@ -45,18 +41,12 @@ export default class VideoSrc {
       return;
     }
 
-    if (
-      shouldUseHLS(this.source) ||
-      shouldUseDASH(this.source) ||
-      shouldUseFLV(this.source)
-    ) {
+    if (shouldUseHLS(this.source) || shouldUseDASH(this.source) || shouldUseFLV(this.source)) {
       return;
     }
 
     if (MATCH_DROPBOX_URL.test(this.source)) {
-      return new VideoSrc(
-        this.source.replace("www.dropbox.com", "dl.dropboxusercontent.com")
-      ).src;
+      return new VideoSrc(this.source.replace("www.dropbox.com", "dl.dropboxusercontent.com")).src;
     }
 
     return this.source;

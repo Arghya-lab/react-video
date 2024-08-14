@@ -15,11 +15,7 @@ function MobileControl() {
       )}
       {(isMobile || !playerState.playing) && (
         <button onClick={handlePlayPaused}>
-          {playerState.playing ? (
-            <PauseIcon size={36} />
-          ) : (
-            <PlayIcon size={36} />
-          )}
+          {playerState.playing ? <PauseIcon size={36} /> : <PlayIcon size={36} />}
         </button>
       )}
       {isMobile && (

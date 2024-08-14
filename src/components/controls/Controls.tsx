@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  CaptionIcon,
   MaximizeIcon,
   MinimizeIcon,
   PauseIcon,
@@ -20,21 +19,14 @@ import ReactSlider from "react-slider";
 import { isMobile } from "react-device-detect";
 
 function Controls() {
-  const {
-    playerState,
-    videoRef,
-    setPlayerState,
-    videoContainerRef,
-    handlePlayPaused,
-  } = useVideo();
+  const { playerState, videoRef, setPlayerState, videoContainerRef, handlePlayPaused } = useVideo();
   const volumeContainerRef = useRef<HTMLDivElement>(null);
   const [volumeUpdate, setVolumeUpdate] = useState(0);
 
   useEffect(() => {
     const handleScroll = (e: WheelEvent) => {
       const isOverSlider =
-        volumeContainerRef.current &&
-        volumeContainerRef.current.contains(e.target as Node);
+        volumeContainerRef.current && volumeContainerRef.current.contains(e.target as Node);
       if (isOverSlider) {
         e.preventDefault(); // Prevent default scroll behavior
 
@@ -52,10 +44,7 @@ function Controls() {
 
   useEffect(() => {
     if (videoRef && videoRef.current && !playerState.muted) {
-      const volume = Math.max(
-        0,
-        Math.min(1, playerState.volume + volumeUpdate)
-      );
+      const volume = Math.max(0, Math.min(1, playerState.volume + volumeUpdate));
 
       videoRef.current.volume = volume;
       setPlayerState((prev) => ({ ...prev, volume }));
@@ -72,11 +61,7 @@ function Controls() {
   };
 
   const toggleFullScreen = () => {
-    if (
-      videoContainerRef &&
-      videoContainerRef.current &&
-      screenFull.isEnabled
-    ) {
+    if (videoContainerRef && videoContainerRef.current && screenFull.isEnabled) {
       if (screenFull.isFullscreen) {
         screenFull.exit();
         if (screen.orientation) screen.orientation.unlock();
@@ -88,7 +73,9 @@ function Controls() {
         }
 
         screenFull.request(videoContainerRef.current);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if ((screen as any).orientation) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (screen as any).orientation?.lock("landscape");
         }
         setPlayerState((prev) => ({

@@ -3,12 +3,7 @@ import { BasicIconPropType } from "./propTypes";
 import classnames from "classnames";
 import "./icon.scss";
 
-export function CaptionIcon({
-  className,
-  color,
-  size,
-  ...rest
-}: BasicIconPropType) {
+export function CaptionIcon({ className, color, size, ...rest }: BasicIconPropType) {
   return (
     <span className={classnames("player-icon", className)} {...rest}>
       <svg

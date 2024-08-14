@@ -38,19 +38,10 @@ function VideoEventListeners() {
       videoRef.current.addEventListener("seeked", onSeek);
       videoRef.current.addEventListener("ended", onEnded);
       videoRef.current.addEventListener("error", onError);
-      videoRef.current.addEventListener(
-        "enterpictureinpicture",
-        handleEnablePIP
-      );
-      videoRef.current.addEventListener(
-        "leavepictureinpicture",
-        handleDisablePIP
-      );
+      videoRef.current.addEventListener("enterpictureinpicture", handleEnablePIP);
+      videoRef.current.addEventListener("leavepictureinpicture", handleDisablePIP);
       document.addEventListener("fullscreenchange", handleFullscreenChange);
-      document.addEventListener(
-        "webkitfullscreenchange",
-        handleFullscreenChange
-      );
+      document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
       document.addEventListener("mozfullscreenchange", handleFullscreenChange);
       document.addEventListener("MSFullscreenChange", handleFullscreenChange);
     }
@@ -67,30 +58,12 @@ function VideoEventListeners() {
         videoRef.current.removeEventListener("seeked", onSeek);
         videoRef.current.removeEventListener("ended", onEnded);
         videoRef.current.removeEventListener("error", onError);
-        videoRef.current.removeEventListener(
-          "enterpictureinpicture",
-          handleEnablePIP
-        );
-        videoRef.current.removeEventListener(
-          "leavepictureinpicture",
-          handleDisablePIP
-        );
-        document.removeEventListener(
-          "fullscreenchange",
-          handleFullscreenChange
-        );
-        document.removeEventListener(
-          "webkitfullscreenchange",
-          handleFullscreenChange
-        );
-        document.removeEventListener(
-          "mozfullscreenchange",
-          handleFullscreenChange
-        );
-        document.removeEventListener(
-          "MSFullscreenChange",
-          handleFullscreenChange
-        );
+        videoRef.current.removeEventListener("enterpictureinpicture", handleEnablePIP);
+        videoRef.current.removeEventListener("leavepictureinpicture", handleDisablePIP);
+        document.removeEventListener("fullscreenchange", handleFullscreenChange);
+        document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+        document.removeEventListener("mozfullscreenchange", handleFullscreenChange);
+        document.removeEventListener("MSFullscreenChange", handleFullscreenChange);
       }
     };
   }, [videoRef]);
@@ -186,11 +159,7 @@ function VideoEventListeners() {
   };
 
   const handleFullscreenChange = () => {
-    if (
-      videoRef &&
-      videoRef.current &&
-      screenFull.element == videoRef.current
-    ) {
+    if (videoRef && videoRef.current && screenFull.element == videoRef.current) {
       screenFull.exit();
       setPlayerState((prev) => ({ ...prev, pip: false }));
     }
