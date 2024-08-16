@@ -1,11 +1,18 @@
-export type SourceArray = { quality?: string | number; src: string }[];
-
-export type SourceType = string | SourceArray | null;
+export type SourceItemType = { quality: string | number; src: string };
+export type SourceType = string | SourceItemType[] | null;
+export interface PlaybackType {
+  text: string;
+  playbackRate: number;
+}
 
 export interface VideoPropTypes {
   source: SourceType;
   defaultQuality?: string | number;
   autoPlay?: boolean;
+  videoSkipSec?: number;
+  className?: string;
+  height?: number | string;
+  width?: number | string;
   onReady?: () => void;
   onStart?: () => void;
   onPlay?: () => void;
@@ -17,16 +24,20 @@ export interface VideoPropTypes {
   onError?: () => void;
   onEnablePIP?: () => void;
   onDisablePIP?: () => void;
-  onDuration?: (duration: null | number) => void;
-  onProgress?: (duration: number) => void;
+  onDuration?: (duration: number) => void;
+  onProgress?: ({
+    currentTime,
+    buffered,
+  }: {
+    currentTime: number;
+    buffered: TimeRanges;
+  }) => void;
+  onPlaybackRateChange?: (playbackSpeed: number) => void;
+  onQualityChange?: (sourceItem: SourceItemType) => void;
   handlePlayPaused?: () => void;
-  // onPlaybackRateChange: ()=>void,
-  // onPlaybackQualityChange: ()=>void,
-  // onClickPreview: ()=>void,
 }
 
 export interface PlayerStateType {
-  // isReady: boolean;
   playing: boolean;
   startOnPlay: boolean;
   buffering: boolean;
@@ -37,13 +48,18 @@ export interface PlayerStateType {
   loaded: [number, number][]; //  each array's first item is start of buffered & last item is end of buffered
   volume: number; //  value -> 0-1
   muted: boolean;
+  isControlVisible: boolean;
+  isSettingOpen: boolean;
+  settingItemOpen: "caption" | "playbackSpeed" | "quality" | null;
+  currentSource: SourceItemType | null;
+  isSourceAutoSelected: boolean;
+  currentPlayback: PlaybackType;
+  // isReady: boolean;
   // url: string | null;
   // controls: boolean,
   // light: boolean,
-  // playbackRate: number,
   // loop: boolean,
   // sources: AnimeStreamingLinkType[];
-  // currentSource: AnimeStreamingLinkType | null;
   // playbackQuality: string;
   // videoAspectRatio: number;
   // FullScreenType: ScreenFullTypeEnum;

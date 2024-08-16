@@ -1,10 +1,8 @@
-import { RefObject, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useVideo } from "../Provider/VideoProvider";
 import screenFull from "screenfull";
 
-export interface VideoEventListenersProps {
-  videoRef: RefObject<HTMLVideoElement>;
-}
+const controlVisibleDuration = 4; // 4 seconds of visibility
 
 function VideoEventListeners() {
   const {
@@ -26,6 +24,8 @@ function VideoEventListeners() {
     onDisablePIP,
   } = useVideo();
 
+  const controlVisibleTill = useRef(controlVisibleDuration);
+
   useEffect(() => {
     if (videoRef && videoRef.current) {
       videoRef.current.addEventListener("canplay", handleReady);
@@ -38,10 +38,19 @@ function VideoEventListeners() {
       videoRef.current.addEventListener("seeked", onSeek);
       videoRef.current.addEventListener("ended", onEnded);
       videoRef.current.addEventListener("error", onError);
-      videoRef.current.addEventListener("enterpictureinpicture", handleEnablePIP);
-      videoRef.current.addEventListener("leavepictureinpicture", handleDisablePIP);
+      videoRef.current.addEventListener(
+        "enterpictureinpicture",
+        handleEnablePIP
+      );
+      videoRef.current.addEventListener(
+        "leavepictureinpicture",
+        handleDisablePIP
+      );
       document.addEventListener("fullscreenchange", handleFullscreenChange);
-      document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+      document.addEventListener(
+        "webkitfullscreenchange",
+        handleFullscreenChange
+      );
       document.addEventListener("mozfullscreenchange", handleFullscreenChange);
       document.addEventListener("MSFullscreenChange", handleFullscreenChange);
     }
@@ -58,21 +67,61 @@ function VideoEventListeners() {
         videoRef.current.removeEventListener("seeked", onSeek);
         videoRef.current.removeEventListener("ended", onEnded);
         videoRef.current.removeEventListener("error", onError);
-        videoRef.current.removeEventListener("enterpictureinpicture", handleEnablePIP);
-        videoRef.current.removeEventListener("leavepictureinpicture", handleDisablePIP);
-        document.removeEventListener("fullscreenchange", handleFullscreenChange);
-        document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
-        document.removeEventListener("mozfullscreenchange", handleFullscreenChange);
-        document.removeEventListener("MSFullscreenChange", handleFullscreenChange);
+        videoRef.current.removeEventListener(
+          "enterpictureinpicture",
+          handleEnablePIP
+        );
+        videoRef.current.removeEventListener(
+          "leavepictureinpicture",
+          handleDisablePIP
+        );
+        document.removeEventListener(
+          "fullscreenchange",
+          handleFullscreenChange
+        );
+        document.removeEventListener(
+          "webkitfullscreenchange",
+          handleFullscreenChange
+        );
+        document.removeEventListener(
+          "mozfullscreenchange",
+          handleFullscreenChange
+        );
+        document.removeEventListener(
+          "MSFullscreenChange",
+          handleFullscreenChange
+        );
       }
     };
   }, [videoRef]);
+
+  useEffect(() => {
+    const handleShowControls = () => {
+      if (videoRef && videoRef.current) {
+        document.documentElement.style.cursor = "default";
+        controlVisibleTill.current =
+          (videoRef.current.currentTime || 0) + controlVisibleDuration;
+        setPlayerState((prev) => ({
+          ...prev,
+          isControlVisible: true,
+        }));
+      }
+    };
+
+    document.addEventListener("mousemove", handleShowControls);
+    document.addEventListener("keydown", handleShowControls);
+
+    return () => {
+      document.removeEventListener("mousemove", handleShowControls);
+      document.removeEventListener("keydown", handleShowControls);
+    };
+  }, [playerState.isControlVisible]);
 
   const getDuration = () => {
     if (videoRef && videoRef.current) {
       return videoRef.current.duration;
     }
-    return null;
+    return 0;
   };
 
   const handleReady = () => {
@@ -111,7 +160,7 @@ function VideoEventListeners() {
         bufferedAreas.push([start, end]);
       }
 
-      onProgress(currentTime);
+      onProgress({ currentTime, buffered });
       setPlayerState((prev) => ({
         ...prev,
         currentTime,
@@ -124,11 +173,25 @@ function VideoEventListeners() {
     if (videoRef && videoRef.current) {
       const currentTime = videoRef.current.currentTime;
 
-      onProgress(currentTime);
-      setPlayerState((prev) => ({
-        ...prev,
-        currentTime,
-      }));
+      if (
+        playerState.isControlVisible &&
+        controlVisibleTill.current + 1 < currentTime
+      ) {
+        document.documentElement.style.cursor = "none";
+
+        setPlayerState((prev) => ({
+          ...prev,
+          currentTime,
+          isControlVisible: false,
+          isSettingOpen: false,
+          settingItemOpen: null,
+        }));
+      } else {
+        setPlayerState((prev) => ({
+          ...prev,
+          currentTime,
+        }));
+      }
     }
   };
 
@@ -150,6 +213,7 @@ function VideoEventListeners() {
       isFullScreen: false,
     }));
   };
+
   const handleDisablePIP = () => {
     onDisablePIP();
     setPlayerState((prev) => ({
@@ -159,7 +223,11 @@ function VideoEventListeners() {
   };
 
   const handleFullscreenChange = () => {
-    if (videoRef && videoRef.current && screenFull.element == videoRef.current) {
+    if (
+      videoRef &&
+      videoRef.current &&
+      screenFull.element == videoRef.current
+    ) {
       screenFull.exit();
       setPlayerState((prev) => ({ ...prev, pip: false }));
     }

@@ -1,4 +1,4 @@
-import { SourceType } from "../@types/video";
+import { SourceItemType, SourceType } from "../@types/video";
 import { MATCH_DROPBOX_URL } from "./RegEx";
 import { shouldUseDASH, shouldUseFLV, shouldUseHLS } from "./shouldUseStream";
 
@@ -13,18 +13,24 @@ export default class VideoSrc {
     this.source = source;
     this.defaultQuality = defaultQuality;
   }
-  private findPreferredSource(): string | undefined {
+
+  private findPreferredSource(): SourceItemType | undefined {
     if (this.source instanceof Array) {
       const userPref = this.source.find(
-        (sourceItem) => sourceItem.quality && sourceItem.quality == this.defaultQuality,
+        (sourceItem) =>
+          sourceItem.quality && sourceItem.quality == this.defaultQuality
       );
       const auto =
         this.source.find(
           (si) =>
-            si.quality == "480p" || si.quality == 480 || si.quality == "560p" || si.quality == 560,
+            si.quality == "480p" ||
+            si.quality == "560p" ||
+            (typeof si.quality === "number" &&
+              si.quality >= 300 &&
+              si.quality <= 600)
         ) || this.source[0];
 
-      return (userPref || auto).src;
+      return userPref || auto;
     }
     return;
   }
@@ -36,17 +42,23 @@ export default class VideoSrc {
     if (this.source instanceof Array) {
       const preferredSource = this.findPreferredSource();
       if (preferredSource) {
-        return new VideoSrc(preferredSource).src;
+        return new VideoSrc(preferredSource.src).src;
       }
       return;
     }
 
-    if (shouldUseHLS(this.source) || shouldUseDASH(this.source) || shouldUseFLV(this.source)) {
+    if (
+      shouldUseHLS(this.source) ||
+      shouldUseDASH(this.source) ||
+      shouldUseFLV(this.source)
+    ) {
       return;
     }
 
     if (MATCH_DROPBOX_URL.test(this.source)) {
-      return new VideoSrc(this.source.replace("www.dropbox.com", "dl.dropboxusercontent.com")).src;
+      return new VideoSrc(
+        this.source.replace("www.dropbox.com", "dl.dropboxusercontent.com")
+      ).src;
     }
 
     return this.source;
@@ -59,7 +71,7 @@ export default class VideoSrc {
     if (this.source instanceof Array) {
       const preferredSource = this.findPreferredSource();
       if (preferredSource) {
-        return new VideoSrc(preferredSource).hlsSrc;
+        return new VideoSrc(preferredSource.src).hlsSrc;
       }
       return;
     }
@@ -78,7 +90,7 @@ export default class VideoSrc {
     if (this.source instanceof Array) {
       const preferredSource = this.findPreferredSource();
       if (preferredSource) {
-        return new VideoSrc(preferredSource).dashSrc;
+        return new VideoSrc(preferredSource.src).dashSrc;
       }
       return;
     }
@@ -97,7 +109,7 @@ export default class VideoSrc {
     if (this.source instanceof Array) {
       const preferredSource = this.findPreferredSource();
       if (preferredSource) {
-        return new VideoSrc(preferredSource).flvSrc;
+        return new VideoSrc(preferredSource.src).flvSrc;
       }
       return;
     }
@@ -107,5 +119,17 @@ export default class VideoSrc {
     }
 
     return;
+  }
+
+  public get preferredSource(): SourceItemType | null {
+    if (this.source instanceof Array) {
+      const preferredSource = this.findPreferredSource();
+      if (preferredSource) {
+        return preferredSource;
+      }
+      return null;
+    }
+
+    return null;
   }
 }

@@ -1,26 +1,20 @@
 export default function secToMinSec(s: number) {
-  if (Math.floor(s / 60) > 60) {
-    return (
-      Math.floor(s / (60 * 60)) +
-      "." +
-      convertToTwoDigits(Math.floor((s % (60 * 60)) / 60)) +
-      "." +
-      convertToTwoDigits(Math.floor(s % 60))
-    );
+  const sign = s < 0 ? "-" : ""; // Capture the sign if the value is negative
+  s = Math.abs(s); // Work with the absolute value for time calculations
+
+  if (s >= 3600) {
+    // 3600 seconds = 1 hour
+    const hours = Math.floor(s / 3600);
+    const minutes = Math.floor((s % 3600) / 60);
+    const seconds = Math.floor(s % 60);
+    return `${sign}${hours}:${convertToTwoDigits(minutes)}:${convertToTwoDigits(seconds)}`;
   } else {
-    return convertToTwoDigits(Math.floor(s / 60)) + "." + convertToTwoDigits(Math.floor(s % 60));
+    const minutes = Math.floor(s / 60);
+    const seconds = Math.floor(s % 60);
+    return `${sign}${convertToTwoDigits(minutes)}:${convertToTwoDigits(seconds)}`;
   }
 }
 
 function convertToTwoDigits(number: number) {
-  // Convert number to string
-  let numberString = number.toString();
-
-  // Check if length is less than 2
-  if (numberString.length < 2) {
-    // Prepend '0' to the string
-    numberString = "0" + numberString;
-  }
-
-  return numberString;
+  return number < 10 ? `0${number}` : number.toString();
 }

@@ -1,8 +1,14 @@
 /src
 /node_modules
+/stories
 /.vscode
 /.storybook
 /.changeset
 
 .env
+.prettierrc.json
 *storybook.log
+
+eslint.config.mjs
+rollup.config.mjs
+tsconfig.json

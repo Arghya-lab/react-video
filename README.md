@@ -22,7 +22,7 @@ A react-video is a feature-rich and optimized React video player component libra
 To install the library, use npm or yarn:
 
 ```bash
-npm install react-video
+npm install @arghya-lab/react-video
 ```
 
 ## Usage
@@ -31,7 +31,8 @@ Here's a basic example of how to use the video player component:
 
 ```tsx
 import React from "react";
-import { ReactVideo } from "react-video";
+import { ReactVideo } from "@arghya-lab/react-video";
+import "@arghya-lab/react-video/dist/styles.css";
 
 const App = () => (
   <div>
@@ -52,7 +53,7 @@ markdown
 ## VideoPlayer Component Props
 
 ```ts
-source: string | { quality?: string | number; src: string }[] | null;
+source: string | { quality: string | number; src: string }[] | null;
 defaultQuality?: string | number;
 autoPlay?: boolean;
 handlePlayPaused?: () => void;
@@ -63,15 +64,21 @@ onPause?: () => void;
 onBuffer?: () => void;
 onBufferEnd?: () => void;
 onSeek?: () => void;
-onDuration?: (duration: null | number) => void;
-onProgress?: (duration: number) => void;
+onDuration?: (duration: number) => void;
+onProgress?: ({
+    currentTime,
+    buffered,
+  }: {
+    currentTime: number;
+    buffered: TimeRanges;
+  }) => void;
 onEnablePIP?: () => void;
 onDisablePIP?: () => void;
 onError?: () => void;
 onEnded?: () => void;
 ```
 
-- **`source`** (`string | { src: string }[] { quality: string | number; src: string }[] | null`): The source URL(s) of the video. It can be a string for a single source, an array of sources with optional quality settings, or `null`.
+- **`source`** (`string | { quality: string | number; src: string }[] | null`): The source URL(s) of the video. It can be a string for a single source, an array of sources with optional quality settings, or `null`.
 
 - **`defaultQuality`** (`string | number | undefined`): The default quality level to use when multiple sources are provided. If not specified, the first source in the list will be used.
 
@@ -93,10 +100,9 @@ onEnded?: () => void;
 
 - **`onSeek`** (`fn() | undefined`): Callback function that is invoked when the user seeks to a different time in the video.
 
-- **`onDuration`** (`fn() | undefined`)
-  onDuration ((duration: null | number) => void): Callback function that is invoked when the video duration is available or changes.
+- **`onDuration`** (`fn() | undefined`): Callback function that is invoked when the video duration is available or changes.
 
-- **`onProgress`** (`fn() | undefined`): Callback function that is invoked periodically with the current playback duration.
+- **`onProgress`** (`fn() | undefined`): Callback function that is invoked periodically with the current playback progress.
 
 - **`onEnablePIP`** (`fn() | undefined`): Callback function that is invoked when Picture-in-Picture mode is enabled.
 

@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 import { ReactVideo } from "../src";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
@@ -25,8 +24,9 @@ type Story = StoryObj<typeof meta>;
 export const NormalVideo: Story = {
   args: {
     source:
-      "https://imdb-video.media-imdb.com/vi738838041/1434659607842-pgv4ql-1722963382149.mp4?Expires=1723637528&Signature=s00FkvgnBBtEvSxqIRpWJ4U4yCn3CplbdpWquqPc~sQ9pJoN9qNK4~L8xZ3qCQPCP4i8g8tT3aTPNSELul1CP~oqDmqT04fHXn21it736UlC8xawBujjXDtrlKQkA8Pj26aPduIK-PD3J3EszuyUm~JFJ5nVXGmOjwNryE~DYcS5hSiz1jh07O8fzcscAJLT-fksJxQnEZ7pp31DtS2D7Uw6znKSFgAjKVt4Aj5bmDKOp6S6G8Ek-RPzdyql0rxHrHUoMud5Z1WsRTfkatVHekJWxQvrvfy2qcQof1Z7u1WqujhCNyNOHHslm2pt~4169StrukQjInphGBS1ptOTzQ__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA",
-    // autoPlay: true,
+      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    autoPlay: true,
+    videoSkipSec: 20,
   },
 };
 
@@ -41,7 +41,74 @@ export const Hls8Video: Story = {
 
 export const DashVideo: Story = {
   args: {
-    source: "https://storage.googleapis.com/shaka-demo-assets/bbb-dark-truths/dash.mpd",
+    source:
+      "https://storage.googleapis.com/shaka-demo-assets/bbb-dark-truths/dash.mpd",
     // autoPlay: true,
+  },
+};
+
+export const HlsVideo: Story = {
+  args: {
+    source: [
+      {
+        src: "https://www088.vipanicdn.net/streamhls/83a227d867325122bc1a93622cf0fb3d/ep.1.1709061920.360.m3u8",
+        quality: "360p",
+      },
+      {
+        src: "https://www088.vipanicdn.net/streamhls/83a227d867325122bc1a93622cf0fb3d/ep.1.1709061920.480.m3u8",
+        quality: "480p",
+      },
+      {
+        src: "https://www088.vipanicdn.net/streamhls/83a227d867325122bc1a93622cf0fb3d/ep.1.1709061920.720.m3u8",
+        quality: "720p",
+      },
+      {
+        src: "https://www088.vipanicdn.net/streamhls/83a227d867325122bc1a93622cf0fb3d/ep.1.1709061920.1080.m3u8",
+        quality: "1080p",
+      },
+      {
+        src: "https://www088.vipanicdn.net/streamhls/83a227d867325122bc1a93622cf0fb3d/ep.1.1709061920.m3u8",
+        quality: "default",
+      },
+      {
+        src: "https://www088.anicdnstream.info/videos/hls/JEXf5r109GSaRSBaTkpuIA/1714509530/147907/83a227d867325122bc1a93622cf0fb3d/ep.1.1709061920.m3u8",
+        quality: "backup",
+      },
+    ],
+  },
+};
+
+export const MultiQuality: Story = {
+  args: {
+    source: [
+      {
+        src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4",
+        quality: "576p",
+      },
+      {
+        src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4",
+        quality: "720p",
+      },
+      {
+        src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4",
+        quality: "1080p",
+      },
+    ],
+    // caption: [
+    //   {
+    //     srclang: "en",
+    //     src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt",
+    //   },
+    //   {
+    //     srclang: "fr",
+    //     src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt",
+    //   },
+    //   {
+    //     srclang: "en",
+    //     src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt",
+    //   },
+    // ],
+    // downloadLink:
+    //   "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4",
   },
 };

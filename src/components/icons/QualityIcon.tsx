@@ -3,7 +3,12 @@ import { BasicIconPropType } from "./propTypes";
 import classnames from "classnames";
 import "./icon.scss";
 
-export function QualityIcon({ className, color, size, ...rest }: BasicIconPropType) {
+export function QualityIcon({
+  className,
+  color,
+  size,
+  ...rest
+}: BasicIconPropType) {
   return (
     <span className={classnames("player-icon", className)} {...rest}>
       <svg

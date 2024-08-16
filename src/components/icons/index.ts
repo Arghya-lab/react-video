@@ -17,3 +17,5 @@ export * from "./MaximizeIcon";
 export * from "./MinimizeIcon";
 export * from "./MinimizeIcon";
 export * from "./LoadingIcon";
+export * from "./ForwardIcon";
+export * from "./BackwardIcon";

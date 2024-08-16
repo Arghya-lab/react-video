@@ -1,3 +1,5 @@
+@import "../global.scss";
+
 .buffering-container {
   position: absolute;
   top: 0;
@@ -8,4 +10,51 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+  pointer-events: none;
+
+  &.control-visible {
+    bottom: calc(nth($control-padding, 1) + $control-button-height);
+  }
+
+  &.buffering {
+    opacity: 1;
+  }
+}
+
+.video-container.full-screen {
+  @include video-container-query(425px) {
+    .buffering-container span svg {
+      width: $mobile-control-button-size-fullscreen-425;
+      height: $mobile-control-button-size-fullscreen-425;
+    }
+  }
+  @include video-container-query(600px) {
+    .buffering-container span svg {
+      width: $mobile-control-button-size-fullscreen-600;
+      height: $mobile-control-button-size-fullscreen-600;
+    }
+  }
+
+  @include video-container-query(1000px) {
+    .buffering-container span svg {
+      width: $mobile-control-button-size-fullscreen-1000;
+      height: $mobile-control-button-size-fullscreen-1000;
+    }
+  }
+
+  @include video-container-query(1200px) {
+    .buffering-container span svg {
+      width: $mobile-control-button-size-fullscreen-1200;
+      height: $mobile-control-button-size-fullscreen-1200;
+    }
+  }
+
+  @include video-container-query(1400px) {
+    .buffering-container span svg {
+      width: $mobile-control-button-size-fullscreen-1400;
+      height: $mobile-control-button-size-fullscreen-1400;
+    }
+  }
 }

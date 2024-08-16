@@ -1,26 +1,56 @@
 import React from "react";
-import { NextIcon, PauseIcon, PlayIcon, PrevIcon } from "../icons";
-import "./mobileControl.scss";
+import { BackwardIcon, ForwardIcon, PauseIcon, PlayIcon } from "../icons";
 import { isMobile } from "react-device-detect";
 import { useVideo } from "../Provider/VideoProvider";
+import classNames from "classnames";
+import "./mobileControl.scss";
 
 function MobileControl() {
-  const { playerState, handlePlayPaused } = useVideo();
+  const { videoRef, playerState, handlePlayPaused, videoSkipSec } = useVideo();
   return (
-    <div className="mobileControl-container">
+    <div
+      className={classNames(
+        { visible: playerState.isControlVisible },
+        { hidden: !playerState.isControlVisible },
+        "mobileControl-container"
+      )}
+    >
       {isMobile && (
-        <button>
-          <PrevIcon size={36} />
+        <button
+          onClick={() => {
+            if (videoRef && videoRef.current) {
+              videoRef.current.currentTime =
+                videoRef.current.currentTime - videoSkipSec;
+            }
+          }}
+        >
+          <BackwardIcon size={36} />
         </button>
       )}
       {(isMobile || !playerState.playing) && (
-        <button onClick={handlePlayPaused}>
-          {playerState.playing ? <PauseIcon size={36} /> : <PlayIcon size={36} />}
+        <button
+          onClick={handlePlayPaused}
+          className={classNames({
+            buffering: playerState.buffering && playerState.playing,
+          })}
+        >
+          {playerState.playing ? (
+            <PauseIcon size={36} />
+          ) : (
+            <PlayIcon size={36} />
+          )}
         </button>
       )}
       {isMobile && (
-        <button>
-          <NextIcon size={36} />
+        <button
+          onClick={() => {
+            if (videoRef && videoRef.current) {
+              videoRef.current.currentTime =
+                videoRef.current.currentTime + videoSkipSec;
+            }
+          }}
+        >
+          <ForwardIcon size={36} />
         </button>
       )}
     </div>

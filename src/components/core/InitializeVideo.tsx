@@ -7,7 +7,8 @@ import { useVideo } from "../Provider/VideoProvider";
 
 function InitializeVideo() {
   let progressTimeout: NodeJS.Timeout;
-  const { videoRef, source, defaultQuality, autoPlay } = useVideo();
+  const { videoRef, source, defaultQuality, autoPlay, setPlayerState } =
+    useVideo();
 
   useEffect(() => {
     let hls: Hls | null = null;
@@ -17,6 +18,10 @@ function InitializeVideo() {
     if (videoRef && videoRef.current) {
       const video = videoRef.current;
       const videoSrc = new VideoSrc(source, defaultQuality);
+      setPlayerState((prev) => ({
+        ...prev,
+        currentSource: videoSrc.preferredSource,
+      }));
 
       //  for normal video link
       if (videoSrc.src) {
@@ -50,7 +55,10 @@ function InitializeVideo() {
         });
         flvPlayer.attachMediaElement(video);
         flvPlayer.load();
-        if (autoPlay) flvPlayer.play();
+      }
+
+      if (autoPlay) {
+        video.play();
       }
     }
 

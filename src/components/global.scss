@@ -3,36 +3,114 @@ $progress-track-fill-color: red;
 $progress-loaded-color: rgba(255, 255, 255, 0.5);
 $progress-thumb-border-color: red;
 
-$slider-border-radius: 0.15rem;
+$mobile-control-button-color: rgba(255, 255, 255, 0.9);
+$volume-slider-color: rgba(255, 255, 255, 0.85);
+$volume-slider-fill-color: red;
+$loader-stroke-color: rgba(255, 255, 255, 0.9);
+$setting-color: rgba(255, 255, 255, 0.9);
+$setting-background: rgba(0, 0, 0, 0.7);
+$setting-background-hover: rgba(255, 255, 255, 0.2);
 
-$progress-height: 0.2rem;
-$progress-height-hover: 0.35rem;
-$progress-bottom-margin: 0.25rem;
-$progress-x-margin: 0.5rem;
-$progress-thumb-height: 0.65rem;
-$progress-thumb-border-size: 0.15rem;
+$global-font-size: 12px;
 
-$control-padding: 0.5rem;
-$control-button-gap: 0.5rem;
+$slider-border-radius: 2.4px;
+$progress-height: 3.2px;
+$progress-height-hover: 5.6px;
+$progress-bottom-margin: 4px;
+$progress-x-margin: 8px;
+$progress-x-margin-fullscreen-425: 16px;
+$progress-x-margin-fullscreen-600: 24px;
+$progress-x-margin-fullscreen-1000: 24.96px;
+$progress-x-margin-fullscreen-1200: 32px;
+$progress-x-margin-fullscreen-1400: 40px;
+$progress-thumb-height: 14px;
+$progress-thumb-border-size: 2px;
+
+$control-padding: 8px 8px;
+$control-padding-fullscreen-425: 8px 16px;
+$control-padding-fullscreen-600: 12px 20px;
+$control-padding-fullscreen-1000: 13.76px 24.96px;
+$control-padding-fullscreen-1200: 16px 32px;
+$control-padding-fullscreen-1400: 18.4px 40px;
+$control-button-gap: 14px;
+$control-button-gap-fullscreen-600: 12px;
+$control-button-gap-fullscreen-1000: 16px;
 $control-button-height: 30px;
 $control-button-width: 30px;
 
-$volume-slider-color: rgba(255, 255, 255, 0.85);
-$volume-slider-fill-color: red;
-$volume-container-height: 0.15rem;
-$volume-container-width-expand: 4rem;
-$volume-slider-height: 0.24rem;
-$volume-thumb-height: 0.72rem;
+$volume-container-height: 2.4px;
+$volume-container-width-expand: 64px;
+$volume-slider-height: 3.84px;
+$volume-thumb-height: 11.52px;
 
-$loader-stroke-color: rgba(255, 255, 255, 0.7);
-$loader-width: 4.8rem;
+$loader-width: 57.6px;
+
+$mobile-control-button-size: 56px;
+$mobile-control-button-size-fullscreen-425: 56px;
+$mobile-control-button-size-fullscreen-600: 60px;
+$mobile-control-button-size-fullscreen-1000: 64px;
+$mobile-control-button-size-fullscreen-1200: 68px;
+$mobile-control-button-size-fullscreen-1400: 72px;
+
+$setting-margin: 16px;
+$setting-width: 256px;
+$setting-max-height: 320px;
+$setting-border-radius: 12px;
+$setting-padding: 8px 0;
+$setting-item-height: 40px;
+$setting-item-icon-padding: 0 10px;
+
+$setting-item-label-padding: 0 15px 0 0;
+$setting-item-label-font-weight: 400;
+$setting-item-label-font-size: 1em;
+$setting-item-label-count-font-size: 0.86em;
+
+$setting-item-active-padding: 0 38px 0 15px;
+$setting-item-active-background-size: 32px 32px;
+$setting-item-active-background-position: right 9px center;
+$setting-item-active-font-weight: 300;
+$setting-item-active-font-size: 0.92em;
+
+$setting-option-header-font-weight: 500;
+$setting-option-header-font-size: 1.25em;
+$setting-option-header-height: 48px;
+$setting-option-header-padding-left: 48px;
+$setting-option-header-bottom-border: 2px solid black;
+$setting-option-header-background-position: left 9px center;
+$setting-setting-option-choice-padding-left: 32px;
 
 @mixin progress-bar($z-index) {
   position: absolute;
   height: 100%;
   z-index: $z-index;
-  border-radius: $slider-border-radius;
+  // border-radius: $slider-border-radius;
   transition: width 300ms ease;
+}
+
+@mixin visible-hidden-control($opacity) {
+  opacity: $opacity;
+  transition: opacity 300ms ease-in-out;
+  @if $opacity < 0.5 {
+    pointer-events: none; /* Disable interaction when hidden */
+  } @else {
+    pointer-events: auto; /* Enable interaction when fully visible */
+  }
+}
+
+@mixin video-container-query($min-width: null, $max-width: null) {
+  @if $min-width != null and $max-width == null {
+    @media (min-width: #{$min-width}) {
+      @content;
+    }
+  } @else if $min-width == null and $max-width != null {
+    @media (max-width: #{$max-width}) {
+      @content;
+    }
+  } @else if $min-width != null and $max-width != null {
+    @media (min-width: #{$min-width}) and (max-width: #{$max-width}) {
+      @content;
+    }
+  }
 }
 
 *,
@@ -51,6 +129,9 @@ body {
   justify-content: center;
   margin-inline: auto;
   background-color: black;
+  user-select: none;
+  font-family: Arial, sans-serif;
+  font-size: $global-font-size;
 }
 
 video {

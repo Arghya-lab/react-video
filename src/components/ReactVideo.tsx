@@ -6,18 +6,18 @@ import VideoEventListeners from "./core/VideoEventListeners";
 import Controls from "./controls/Controls";
 import Buffering from "./overlays/Buffering";
 import MobileControl from "./controls/MobileControl";
+import Settings from "./overlays/settings";
 
 function ReactVideo(props: VideoPropTypes) {
   return (
-    <div style={{ height: "200vh" }}>
-      <VideoProvider {...props}>
-        <InitializeVideo />
-        <VideoEventListeners />
-        <Controls />
-        <MobileControl />
-        <Buffering />
-      </VideoProvider>
-    </div>
+    <VideoProvider {...props}>
+      <InitializeVideo />
+      <VideoEventListeners />
+      <Controls />
+      <MobileControl />
+      <Buffering />
+      <Settings />
+    </VideoProvider>
   );
 }
 

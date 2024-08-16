@@ -15,11 +15,43 @@
   }
 }
 
+.video-container.full-screen {
+  @include video-container-query(425px) {
+    .video-bottom-control-container .slider-container {
+      margin-inline: $progress-x-margin-fullscreen-425;
+    }
+  }
+
+  @include video-container-query(600px) {
+    .video-bottom-control-container .slider-container {
+      margin-inline: $progress-x-margin-fullscreen-600;
+    }
+  }
+
+  @include video-container-query(1000px) {
+    .video-bottom-control-container .slider-container {
+      margin-inline: $progress-x-margin-fullscreen-1000;
+    }
+  }
+
+  @include video-container-query(1200px) {
+    .video-bottom-control-container .slider-container {
+      margin-inline: $progress-x-margin-fullscreen-1200;
+    }
+  }
+
+  @include video-container-query(1400px) {
+    .video-bottom-control-container .slider-container {
+      margin-inline: $progress-x-margin-fullscreen-1400;
+    }
+  }
+}
+
 .horizontal-slider {
   height: 100%;
   width: 100%;
   background-color: $progress-track-color;
-  border-radius: $slider-border-radius;
+  // border-radius: $slider-border-radius;
   cursor: pointer;
 }
 
@@ -29,14 +61,12 @@
 }
 
 .loaded-progress {
-  @include progress-bar(5);
+  @include progress-bar(-5);
   background: $progress-loaded-color;
 }
 
 .slider-thumb {
   --scale: 0;
-  position: absolute;
-  z-index: 15;
   top: calc(($progress-height-hover - $progress-thumb-height) / 2);
   height: $progress-thumb-height;
   aspect-ratio: 1/1;

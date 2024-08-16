@@ -5,14 +5,20 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: calc($control-padding + $control-button-height);
+  bottom: calc(nth($control-padding, 1) + $control-button-height);
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  color: white;
-  opacity: 0;
-  transition: opacity 150ms ease-in-out;
+  color: $mobile-control-button-color;
+
+  &.hidden {
+    @include visible-hidden-control(0);
+  }
+
+  &.visible {
+    @include visible-hidden-control(1);
+  }
 
   button {
     background: none;
@@ -24,12 +30,47 @@
     &:hover {
       opacity: 1;
     }
+
+    &.buffering {
+      opacity: 0;
+      pointer-events: none;
+    }
   }
 }
 
-.video-container {
-  &:hover .mobileControl-container,
-  &:focus-within .mobileControl-container {
-    opacity: 1;
+.video-container.full-screen {
+  @include video-container-query(425px) {
+    .mobileControl-container button span svg {
+      width: $mobile-control-button-size-fullscreen-425;
+      height: $mobile-control-button-size-fullscreen-425;
+    }
+  }
+
+  @include video-container-query(600px) {
+    .mobileControl-container button span svg {
+      width: $mobile-control-button-size-fullscreen-600;
+      height: $mobile-control-button-size-fullscreen-600;
+    }
+  }
+
+  @include video-container-query(1000px) {
+    .mobileControl-container button span svg {
+      width: $mobile-control-button-size-fullscreen-1000;
+      height: $mobile-control-button-size-fullscreen-1000;
+    }
+  }
+
+  @include video-container-query(1200px) {
+    .mobileControl-container button span svg {
+      width: $mobile-control-button-size-fullscreen-1200;
+      height: $mobile-control-button-size-fullscreen-1200;
+    }
+  }
+
+  @include video-container-query(1400px) {
+    .mobileControl-container button span svg {
+      width: $mobile-control-button-size-fullscreen-1400;
+      height: $mobile-control-button-size-fullscreen-1400;
+    }
   }
 }

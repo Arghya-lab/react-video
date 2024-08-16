@@ -3,7 +3,13 @@ import { IconPropType } from "./propTypes";
 import classnames from "classnames";
 import "./icon.scss";
 
-export function PlaybackSpeedIcon({ className, color, size, strokeWidth, ...rest }: IconPropType) {
+export function PlaybackSpeedIcon({
+  className,
+  color,
+  size,
+  strokeWidth,
+  ...rest
+}: IconPropType) {
   return (
     <span className={classnames("player-icon", className)} {...rest}>
       <svg

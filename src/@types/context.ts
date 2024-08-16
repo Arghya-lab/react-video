@@ -1,9 +1,12 @@
 import { Dispatch, RefObject, SetStateAction } from "react";
-import { PlayerStateType, VideoPropTypes } from "./video";
+import { PlayerStateType, SourceItemType, VideoPropTypes } from "./video";
 
 export interface VideoContextType extends VideoPropTypes {
   videoRef: RefObject<HTMLVideoElement> | null;
   videoContainerRef: RefObject<HTMLDivElement> | null;
+  autoPlay: boolean;
+  videoSkipSec: number;
+  className?: string;
   playerState: PlayerStateType;
   setPlayerState: Dispatch<SetStateAction<PlayerStateType>>;
   onReady: () => void;
@@ -17,6 +20,14 @@ export interface VideoContextType extends VideoPropTypes {
   onError: () => void;
   onEnablePIP: () => void;
   onDisablePIP: () => void;
-  onDuration: (duration: number | null) => void;
-  onProgress: (duration: number) => void;
+  onDuration: (duration: number) => void;
+  onProgress: ({
+    currentTime,
+    buffered,
+  }: {
+    currentTime: number;
+    buffered: TimeRanges;
+  }) => void;
+  onPlaybackRateChange: (playbackSpeed: number) => void;
+  onQualityChange: (sourceItem: SourceItemType) => void;
 }

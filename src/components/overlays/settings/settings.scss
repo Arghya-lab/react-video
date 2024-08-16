@@ -1,0 +1,162 @@
+@import "../../global.scss";
+
+$setting-bottom-margin: calc(
+  (nth($control-padding, 1) * 2) + $control-button-height +
+    $progress-bottom-margin + $progress-height + $setting-margin
+);
+
+$setting-bottom-margin-fullscreen-425: calc(
+  (nth($control-padding-fullscreen-425, 1) * 2) + $control-button-height +
+    $progress-bottom-margin + $progress-height + $setting-margin
+);
+$setting-bottom-margin-fullscreen-600: calc(
+  (nth($control-padding-fullscreen-600, 1) * 2) + $control-button-height +
+    $progress-bottom-margin + $progress-height + $setting-margin
+);
+$setting-bottom-margin-fullscreen-1000: calc(
+  (nth($control-padding-fullscreen-1000, 1) * 2) + $control-button-height +
+    $progress-bottom-margin + $progress-height + $setting-margin
+);
+$setting-bottom-margin-fullscreen-1200: calc(
+  (nth($control-padding-fullscreen-1200, 1) * 2) + $control-button-height +
+    $progress-bottom-margin + $progress-height + $setting-margin
+);
+$setting-bottom-margin-fullscreen-1400: calc(
+  (nth($control-padding-fullscreen-1400, 1) * 2) + $control-button-height +
+    $progress-bottom-margin + $progress-height + $setting-margin
+);
+
+.setting-container {
+  position: absolute;
+  right: $setting-margin;
+  bottom: $setting-bottom-margin;
+  z-index: 60;
+  width: $setting-width;
+  color: $setting-color;
+  background: $setting-background;
+  border-radius: $setting-border-radius;
+  height: 0;
+  opacity: 0;
+  display: none;
+  overflow-y: auto;
+  transition:
+    height 1s ease-in-out,
+    opacity 1s ease-in-out;
+
+  &.show-setting {
+    display: block;
+    height: fit-content;
+    max-height: min(
+      calc(100% - $setting-bottom-margin - $setting-margin),
+      $setting-max-height
+    );
+    opacity: 1;
+  }
+
+  .setting-item-option {
+    padding: $setting-padding;
+
+    .setting-item {
+      display: flex;
+      align-items: center;
+      height: $setting-item-height;
+      cursor: pointer;
+
+      &:hover {
+        background: $setting-background-hover;
+        color: white;
+      }
+
+      .setting-item-icon {
+        padding: $setting-item-icon-padding;
+      }
+
+      .setting-item-label {
+        padding: $setting-item-label-padding;
+        font-weight: $setting-item-label-font-weight;
+        font-size: $setting-item-label-font-size;
+
+        .setting-item-label-count {
+          font-size: $setting-item-label-count-font-size;
+        }
+      }
+
+      .setting-active {
+        padding: $setting-item-active-padding;
+        text-overflow: ellipsis;
+        text-align: right;
+        flex: 1 1 0%;
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIj48cGF0aCBkPSJtIDEyLjU5LDIwLjM0IDQuNTgsLTQuNTkgLTQuNTgsLTQuNTkgMS40MSwtMS40MSA2LDYgLTYsNiB6IiBmaWxsPSIjZmZmIiAvPjwvc3ZnPg==");
+        background-repeat: no-repeat;
+        background-position: $setting-item-active-background-position;
+        background-size: $setting-item-active-background-size;
+        font-weight: $setting-item-active-font-weight;
+        font-size: $setting-item-active-font-size;
+      }
+    }
+  }
+
+  .setting-option-header {
+    font-size: $setting-option-header-font-size;
+    font-weight: $setting-option-header-font-weight;
+    height: $setting-option-header-height;
+    border-bottom: $setting-option-header-bottom-border;
+    padding-left: $setting-option-header-padding-left;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIzMiIgZm9jdXNhYmxlPSJmYWxzZSIgYXJpYS1oaWRkZW49InRydWUiIHN0eWxlPSJwb2ludGVyLWV2ZW50czogbm9uZTsgZGlzcGxheTogaW5oZXJpdDsgd2lkdGg6IDEwMCU7IGhlaWdodDogMTAwJTsiPjxwYXRoIGQ9Ik0xNC45NiAxOC45NiA4IDEybDYuOTYtNi45Ni43MS43MUw5LjQxIDEybDYuMjUgNi4yNS0uNy43MXoiIGZpbGw9IiNGMUYxRjEiPjwvcGF0aD48L3N2Zz4=");
+    background-repeat: no-repeat;
+    background-position: $setting-option-header-background-position;
+    background-size: $setting-item-active-background-size;
+  }
+
+  .setting-option-choice-container {
+    padding: $setting-padding;
+
+    .setting-option-choice {
+      display: flex;
+      align-items: center;
+      height: $setting-item-height;
+      cursor: pointer;
+      padding-left: $setting-setting-option-choice-padding-left;
+
+      &:hover {
+        background: $setting-background-hover;
+        color: white;
+      }
+    }
+  }
+}
+
+.video-container.full-screen {
+  @include video-container-query(425px) {
+    .setting-container.show-setting {
+      bottom: $setting-bottom-margin-fullscreen-425;
+    }
+  }
+
+  @include video-container-query(600px) {
+    .setting-container.show-setting {
+      bottom: $setting-bottom-margin-fullscreen-600;
+    }
+  }
+
+  @include video-container-query(1000px) {
+    .setting-container.show-setting {
+      bottom: $setting-bottom-margin-fullscreen-1000;
+    }
+  }
+
+  @include video-container-query(1200px) {
+    .setting-container.show-setting {
+      bottom: $setting-bottom-margin-fullscreen-1200;
+    }
+  }
+
+  @include video-container-query(1400px) {
+    .setting-container.show-setting {
+      bottom: $setting-bottom-margin-fullscreen-1400;
+    }
+  }
+}
