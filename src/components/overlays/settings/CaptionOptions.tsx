@@ -1,9 +1,21 @@
 import React from "react";
 import { useVideo } from "../../Provider/VideoProvider";
+import fetchAndParseCaption from "../../../lib/fetchAndParseCaption";
+import { CaptionType } from "../../../@types";
 
 function CaptionOptions() {
-  const { setPlayerState } = useVideo();
-  const captions = ["English", "Japanese", "Hindi", "Bengali", "Tamil"];
+  const { captions, setPlayerState, setCaptionData } = useVideo();
+
+  function handleSelectCaption(this: CaptionType) {
+    setPlayerState((prev) => ({
+      ...prev,
+      currentCaption: this,
+      settingItemOpen: null,
+    }));
+    fetchAndParseCaption(this.src).then((data) => setCaptionData(data));
+  }
+
+  if (!captions) return null;
 
   return (
     <>
@@ -16,9 +28,25 @@ function CaptionOptions() {
         Caption
       </div>
       <div className="setting-option-choice-container">
+        <div
+          className="setting-option-choice"
+          onClick={() => {
+            setPlayerState((prev) => ({
+              ...prev,
+              currentCaption: null,
+              settingItemOpen: null,
+            }));
+          }}
+        >
+          <span>Off</span>
+        </div>
         {captions.map((caption) => (
-          <div key={caption} className="setting-option-choice">
-            <span>{caption}</span>
+          <div
+            key={caption.srclang}
+            className="setting-option-choice"
+            onClick={handleSelectCaption.bind(caption)}
+          >
+            <span>{caption.srclang}</span>
           </div>
         ))}
       </div>

@@ -1,10 +1,11 @@
 import React, { useMemo, useRef, useState } from "react";
 import ReactSlider from "react-slider";
 import { useVideo } from "../Provider/VideoProvider";
+import { controlVisibleDuration } from "../../lib/constant";
 import "./progressBar.scss";
 
 function ProgressBar() {
-  const { videoRef, playerState } = useVideo();
+  const { videoRef, playerState, controlVisibleTill } = useVideo();
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const [sliderValue, setSliderValue] = useState(0);
@@ -19,9 +20,14 @@ function ProgressBar() {
 
   const handleChangeCurrentTime = (value: number) => {
     if (videoRef && videoRef.current) {
+      const WishCT = (value / 1000) * (videoRef.current.duration || 0);
+
+      if (controlVisibleTill) {
+        controlVisibleTill.current = WishCT + controlVisibleDuration;
+      }
+
       setSliderValue(value);
-      videoRef.current.currentTime =
-        (value / 1000) * (videoRef.current.duration || 0);
+      videoRef.current.currentTime = WishCT;
     }
   };
 

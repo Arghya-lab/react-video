@@ -7,19 +7,18 @@ A react-video is a feature-rich and optimized React video player component libra
 - **Custom Controls**: Tailor the player controls to fit your design needs.
 - **Multi-Format Support**: Plays HLS, DASH, and FLV video files seamlessly.
 - **Mobile Device Friendly**: Optimized controls for a smooth mobile experience.
+- **Multi-quality Streaming**: Support for multiple streaming qualities with different qualities.
+- **Playback Speed Control**: Adjust playback speed with ease.
+- **Caption Support**: Display captions and subtitles for a better viewing experience.
+- **Keyboard Gestures**: Navigate and control playback using keyboard gestures.
 
 ## Upcoming Features
 
-- **Multi-Link Streaming**: Support for multiple streaming links with different qualities.
-- **Caption Support**: Display captions and subtitles for a better viewing experience.
-- **Screenshot Support**: Capture screenshots directly from the progress bar.
-- **Keyboard Gestures**: Navigate and control playback using keyboard gestures.
-- **Playback Speed Control**: Adjust playback speed with ease.
 - **Chapter Highlights**: View and skip through chapters highlighted in the progress bar.
 
 ## Installation
 
-To install the library, use npm or yarn:
+To install the library, use npm:
 
 ```bash
 npm install @arghya-lab/react-video
@@ -46,16 +45,19 @@ const App = () => (
 export default App;
 ```
 
-Certainly! Here's how you might document the VideoPlayer component props in Markdown format:
-
-markdown
-
 ## VideoPlayer Component Props
 
 ```ts
-source: string | { quality: string | number; src: string }[] | null;
+source?: string | { quality: string | number; src: string }[] | null;
 defaultQuality?: string | number;
 autoPlay?: boolean;
+controls?: boolean | "html5";
+captions?: { srclang: string; src: string; }[];
+videoSkipSec?: number;
+className?: string;
+height?: number | string;
+width?: number | string;
+style?: CSSProperties;
 handlePlayPaused?: () => void;
 onReady?: () => void;
 onStart?: () => void;
@@ -76,6 +78,11 @@ onEnablePIP?: () => void;
 onDisablePIP?: () => void;
 onError?: () => void;
 onEnded?: () => void;
+onPlaybackRateChange?: (playbackSpeed: number) => void;
+onQualityChange?: (sourceItem: {
+    quality: string | number;
+    src: string;
+  }) => void;
 ```
 
 - **`source`** (`string | { quality: string | number; src: string }[] | null`): The source URL(s) of the video. It can be a string for a single source, an array of sources with optional quality settings, or `null`.
@@ -83,6 +90,20 @@ onEnded?: () => void;
 - **`defaultQuality`** (`string | number | undefined`): The default quality level to use when multiple sources are provided. If not specified, the first source in the list will be used.
 
 - **`autoPlay`** (`boolean | undefined`): Whether the video should start playing automatically when loaded.
+
+- **`controls: `** (`boolean | "html5" | undefined`): Whether controls will be shown or not. html5 mean default html video control true mean custom control.
+
+- **`captions: `** (`{ srclang: string; src: string; }[] | undefined`): Captions for video support srt, vtt caption.
+
+- **`videoSkipSec`** (`number`): How much sec should skip forward or skip back.
+
+- **`className`** (`string`): Class for video container.
+
+- **`height`** (`number | string`): Height of video container.
+
+- **`width`** (`number | string`): Height of video container.
+
+- **`style`** : Style of video container.
 
 - **`handlePlayPaused`** (`fn() | undefined`): Callback function that is invoked when the play/pause button is interacted with.
 
@@ -111,6 +132,37 @@ onEnded?: () => void;
 - **`onError`** (`fn() | undefined`): Callback function that is invoked when an error occurs during playback.
 
 - **`onEnded`** (`fn() | undefined`): Callback function that is invoked when playback ends.
+
+- **`onPlaybackRateChange`** (`fn() | undefined`): Callback function that is invoked when playback ends.
+
+- **`onQualityChange`** (`fn() | undefined`): Callback function that is invoked when playback ends.
+
+- **`ref`** (`RefObject<HTMLVideoElement>`): Ref for the html video element which react-video using under the hood.
+
+## Keyboard Shortcuts
+
+| Key                    | Action                                  |
+| ---------------------- | --------------------------------------- |
+| `Space`                | Play/Pause (unless focused on a button) |
+| `K`, `k`               | Play/Pause                              |
+| `ArrowRight`, `L`, `l` | Skip Forward                            |
+| `ArrowLeft`, `J`, `j`  | Skip Backward                           |
+| `F`, `f`               | Toggle Fullscreen                       |
+| `P`, `p`               | Toggle Picture-in-Picture (PiP)         |
+| `M`, `m`               | Toggle Mute                             |
+| `Escape`               | Exit Fullscreen                         |
+| `ArrowUp`              | Increase Volume                         |
+| `ArrowDown`            | Decrease Volume                         |
+| `0`                    | Seek to 0% (start) of video             |
+| `1`                    | Seek to 10% of video                    |
+| `2`                    | Seek to 20% of video                    |
+| `3`                    | Seek to 30% of video                    |
+| `4`                    | Seek to 40% of video                    |
+| `5`                    | Seek to 50% of video                    |
+| `6`                    | Seek to 60% of video                    |
+| `7`                    | Seek to 70% of video                    |
+| `8`                    | Seek to 80% of video                    |
+| `9`                    | Seek to 90% of video                    |
 
 ## Development
 

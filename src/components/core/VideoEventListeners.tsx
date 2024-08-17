@@ -1,12 +1,12 @@
-import { useEffect, useRef } from "react";
-import { useVideo } from "../Provider/VideoProvider";
+import { useEffect } from "react";
 import screenFull from "screenfull";
-
-const controlVisibleDuration = 4; // 4 seconds of visibility
+import { useVideo } from "../Provider/VideoProvider";
+import { controlVisibleDuration } from "../../lib/constant";
 
 function VideoEventListeners() {
   const {
     videoRef,
+    controlVisibleTill,
     playerState,
     setPlayerState,
     onReady,
@@ -24,8 +24,6 @@ function VideoEventListeners() {
     onDisablePIP,
   } = useVideo();
 
-  const controlVisibleTill = useRef(controlVisibleDuration);
-
   useEffect(() => {
     if (videoRef && videoRef.current) {
       videoRef.current.addEventListener("canplay", handleReady);
@@ -34,7 +32,7 @@ function VideoEventListeners() {
       videoRef.current.addEventListener("timeupdate", handleTimeUpdate);
       videoRef.current.addEventListener("waiting", handleBuffering);
       videoRef.current.addEventListener("playing", handleBufferingEnd);
-      videoRef.current.addEventListener("pause", onPause);
+      videoRef.current.addEventListener("pause", handleOnPause);
       videoRef.current.addEventListener("seeked", onSeek);
       videoRef.current.addEventListener("ended", onEnded);
       videoRef.current.addEventListener("error", onError);
@@ -63,7 +61,7 @@ function VideoEventListeners() {
         videoRef.current.removeEventListener("timeupdate", handleTimeUpdate);
         videoRef.current.removeEventListener("waiting", handleBuffering);
         videoRef.current.removeEventListener("playing", handleBufferingEnd);
-        videoRef.current.removeEventListener("pause", onPause);
+        videoRef.current.removeEventListener("pause", handleOnPause);
         videoRef.current.removeEventListener("seeked", onSeek);
         videoRef.current.removeEventListener("ended", onEnded);
         videoRef.current.removeEventListener("error", onError);
@@ -97,10 +95,10 @@ function VideoEventListeners() {
 
   useEffect(() => {
     const handleShowControls = () => {
-      if (videoRef && videoRef.current) {
+      if (videoRef && videoRef.current && controlVisibleTill) {
         document.documentElement.style.cursor = "default";
         controlVisibleTill.current =
-          (videoRef.current.currentTime || 0) + controlVisibleDuration;
+          videoRef.current.currentTime + controlVisibleDuration;
         setPlayerState((prev) => ({
           ...prev,
           isControlVisible: true,
@@ -142,8 +140,15 @@ function VideoEventListeners() {
     }
     onPlay();
     setPlayerState((prev) => ({ ...prev, playing: true, buffering: false }));
+  };
 
-    //  TODO: on quality change seek to prev position
+  const handleOnPause = () => {
+    onPause();
+    setPlayerState((prev) => ({
+      ...prev,
+      playing: false,
+      isControlVisible: true,
+    }));
   };
 
   const handleProgress = () => {
@@ -175,6 +180,7 @@ function VideoEventListeners() {
 
       if (
         playerState.isControlVisible &&
+        controlVisibleTill &&
         controlVisibleTill.current + 1 < currentTime
       ) {
         document.documentElement.style.cursor = "none";

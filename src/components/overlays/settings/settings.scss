@@ -1,35 +1,35 @@
 @import "../../global.scss";
 
-$setting-bottom-margin: calc(
-  (nth($control-padding, 1) * 2) + $control-button-height +
-    $progress-bottom-margin + $progress-height + $setting-margin
-);
+// $setting-bottom-margin: calc(
+//   (nth($control-padding, 1) * 2) + $control-button-height +
+//     $progress-bottom-margin + $progress-height + $setting-margin
+// );
 
-$setting-bottom-margin-fullscreen-425: calc(
-  (nth($control-padding-fullscreen-425, 1) * 2) + $control-button-height +
-    $progress-bottom-margin + $progress-height + $setting-margin
-);
-$setting-bottom-margin-fullscreen-600: calc(
-  (nth($control-padding-fullscreen-600, 1) * 2) + $control-button-height +
-    $progress-bottom-margin + $progress-height + $setting-margin
-);
-$setting-bottom-margin-fullscreen-1000: calc(
-  (nth($control-padding-fullscreen-1000, 1) * 2) + $control-button-height +
-    $progress-bottom-margin + $progress-height + $setting-margin
-);
-$setting-bottom-margin-fullscreen-1200: calc(
-  (nth($control-padding-fullscreen-1200, 1) * 2) + $control-button-height +
-    $progress-bottom-margin + $progress-height + $setting-margin
-);
-$setting-bottom-margin-fullscreen-1400: calc(
-  (nth($control-padding-fullscreen-1400, 1) * 2) + $control-button-height +
-    $progress-bottom-margin + $progress-height + $setting-margin
-);
+// $setting-bottom-margin-fullscreen-425: calc(
+//   (nth($control-padding-fullscreen-425, 1) * 2) + $control-button-height +
+//     $progress-bottom-margin + $progress-height + $setting-margin
+// );
+// $setting-bottom-margin-fullscreen-600: calc(
+//   (nth($control-padding-fullscreen-600, 1) * 2) + $control-button-height +
+//     $progress-bottom-margin + $progress-height + $setting-margin
+// );
+// $setting-bottom-margin-fullscreen-1000: calc(
+//   (nth($control-padding-fullscreen-1000, 1) * 2) + $control-button-height +
+//     $progress-bottom-margin + $progress-height + $setting-margin
+// );
+// $setting-bottom-margin-fullscreen-1200: calc(
+//   (nth($control-padding-fullscreen-1200, 1) * 2) + $control-button-height +
+//     $progress-bottom-margin + $progress-height + $setting-margin
+// );
+// $setting-bottom-margin-fullscreen-1400: calc(
+//   (nth($control-padding-fullscreen-1400, 1) * 2) + $control-button-height +
+//     $progress-bottom-margin + $progress-height + $setting-margin
+// );
 
 .setting-container {
   position: absolute;
   right: $setting-margin;
-  bottom: $setting-bottom-margin;
+  bottom: calc($control-height + $setting-margin);
   z-index: 60;
   width: $setting-width;
   color: $setting-color;
@@ -46,10 +46,7 @@ $setting-bottom-margin-fullscreen-1400: calc(
   &.show-setting {
     display: block;
     height: fit-content;
-    max-height: min(
-      calc(100% - $setting-bottom-margin - $setting-margin),
-      $setting-max-height
-    );
+    max-height: min(calc(100% - $control-height), $setting-max-height);
     opacity: 1;
   }
 
@@ -130,33 +127,33 @@ $setting-bottom-margin-fullscreen-1400: calc(
 }
 
 .video-container.full-screen {
-  @include video-container-query(425px) {
+  @include screen-query(425px) {
     .setting-container.show-setting {
-      bottom: $setting-bottom-margin-fullscreen-425;
+      bottom: calc($control-height-fullscreen-425 + $setting-margin);
     }
   }
 
-  @include video-container-query(600px) {
+  @include screen-query(600px) {
     .setting-container.show-setting {
-      bottom: $setting-bottom-margin-fullscreen-600;
+      bottom: calc($control-height-fullscreen-600 + $setting-margin);
     }
   }
 
-  @include video-container-query(1000px) {
+  @include screen-query(1000px) {
     .setting-container.show-setting {
-      bottom: $setting-bottom-margin-fullscreen-1000;
+      bottom: calc($control-height-fullscreen-1000 + $setting-margin);
     }
   }
 
-  @include video-container-query(1200px) {
+  @include screen-query(1200px) {
     .setting-container.show-setting {
-      bottom: $setting-bottom-margin-fullscreen-1200;
+      bottom: calc($control-height-fullscreen-1200 + $setting-margin);
     }
   }
 
-  @include video-container-query(1400px) {
+  @include screen-query(1400px) {
     .setting-container.show-setting {
-      bottom: $setting-bottom-margin-fullscreen-1400;
+      bottom: calc($control-height-fullscreen-1400 + $setting-margin);
     }
   }
 }

@@ -3,10 +3,42 @@ import { BackwardIcon, ForwardIcon, PauseIcon, PlayIcon } from "../icons";
 import { isMobile } from "react-device-detect";
 import { useVideo } from "../Provider/VideoProvider";
 import classNames from "classnames";
+import { controlVisibleDuration } from "../../lib/constant";
 import "./mobileControl.scss";
 
 function MobileControl() {
-  const { videoRef, playerState, handlePlayPaused, videoSkipSec } = useVideo();
+  const {
+    videoRef,
+    playerState,
+    handlePlayPaused,
+    videoSkipSec,
+    controlVisibleTill,
+  } = useVideo();
+
+  const handleSkipForward = () => {
+    if (videoRef && videoRef.current) {
+      if (controlVisibleTill) {
+        controlVisibleTill.current =
+          videoRef.current.currentTime + videoSkipSec + controlVisibleDuration;
+      }
+
+      videoRef.current.currentTime =
+        videoRef.current.currentTime + videoSkipSec;
+    }
+  };
+
+  const handleSkipBack = () => {
+    if (videoRef && videoRef.current) {
+      if (controlVisibleTill) {
+        controlVisibleTill.current =
+          videoRef.current.currentTime - videoSkipSec + controlVisibleDuration;
+      }
+
+      videoRef.current.currentTime =
+        videoRef.current.currentTime - videoSkipSec;
+    }
+  };
+
   return (
     <div
       className={classNames(
@@ -16,14 +48,7 @@ function MobileControl() {
       )}
     >
       {isMobile && (
-        <button
-          onClick={() => {
-            if (videoRef && videoRef.current) {
-              videoRef.current.currentTime =
-                videoRef.current.currentTime - videoSkipSec;
-            }
-          }}
-        >
+        <button onClick={handleSkipBack}>
           <BackwardIcon size={36} />
         </button>
       )}
@@ -42,14 +67,7 @@ function MobileControl() {
         </button>
       )}
       {isMobile && (
-        <button
-          onClick={() => {
-            if (videoRef && videoRef.current) {
-              videoRef.current.currentTime =
-                videoRef.current.currentTime + videoSkipSec;
-            }
-          }}
-        >
+        <button onClick={handleSkipForward}>
           <ForwardIcon size={36} />
         </button>
       )}

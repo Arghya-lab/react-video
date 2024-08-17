@@ -24,9 +24,18 @@ type Story = StoryObj<typeof meta>;
 export const NormalVideo: Story = {
   args: {
     source:
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    autoPlay: true,
+      // "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    // autoPlay: true,
     videoSkipSec: 20,
+  },
+};
+
+export const Movie: Story = {
+  args: {
+    source:
+      "https://hls2.vcdnx.com/hls/aHpvUVNTTlNiQ29WWkt3OWJPREgvUT09/xfgdYshjhYhj=!sdsHsyG",
+    // autoPlay: true,
   },
 };
 
@@ -47,7 +56,20 @@ export const DashVideo: Story = {
   },
 };
 
-export const HlsVideo: Story = {
+export const CaptionVideo: Story = {
+  args: {
+    source: "https://files.vidstack.io/sprite-fight/hls/stream.m3u8",
+    captions: [
+      {
+        src: "https://files.vidstack.io/sprite-fight/subs/english.vtt",
+        srclang: "en",
+      },
+    ],
+    // autoPlay: true,
+  },
+};
+
+export const MultiHlsVideo: Story = {
   args: {
     source: [
       {
@@ -94,20 +116,16 @@ export const MultiQuality: Story = {
         quality: "1080p",
       },
     ],
-    // caption: [
-    //   {
-    //     srclang: "en",
-    //     src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt",
-    //   },
-    //   {
-    //     srclang: "fr",
-    //     src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt",
-    //   },
-    //   {
-    //     srclang: "en",
-    //     src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt",
-    //   },
-    // ],
+    captions: [
+      {
+        srclang: "en",
+        src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt",
+      },
+      {
+        srclang: "fr",
+        src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt",
+      },
+    ],
     // downloadLink:
     //   "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4",
   },

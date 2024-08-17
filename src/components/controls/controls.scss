@@ -71,33 +71,33 @@
 }
 
 .video-container.full-screen {
-  @include video-container-query(425px) {
+  @include screen-query(425px) {
     .video-bottom-control-container .controls {
       padding: $control-padding-fullscreen-425;
     }
   }
 
-  @include video-container-query(600px) {
+  @include screen-query(600px) {
     .video-bottom-control-container .controls {
       gap: $control-button-gap-fullscreen-600;
       padding: $control-padding-fullscreen-600;
     }
   }
 
-  @include video-container-query(1000px) {
+  @include screen-query(1000px) {
     .video-bottom-control-container .controls {
       gap: $control-button-gap-fullscreen-1000;
       padding: $control-padding-fullscreen-1000;
     }
   }
 
-  @include video-container-query(1200px) {
+  @include screen-query(1200px) {
     .video-bottom-control-container .controls {
       padding: $control-padding-fullscreen-1200;
     }
   }
 
-  @include video-container-query(1400px) {
+  @include screen-query(1400px) {
     .video-bottom-control-container .controls {
       padding: $control-padding-fullscreen-1400;
     }

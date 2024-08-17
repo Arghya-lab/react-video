@@ -1,6 +1,7 @@
 import React from "react";
-import { playbackSpeeds, useVideo } from "../../Provider/VideoProvider";
+import { useVideo } from "../../Provider/VideoProvider";
 import { PlaybackType } from "../../../@types";
+import { playbackSpeeds } from "../../../lib/constant";
 
 function PlaybackSpeedOption() {
   const { setPlayerState, videoRef, onPlaybackRateChange } = useVideo();

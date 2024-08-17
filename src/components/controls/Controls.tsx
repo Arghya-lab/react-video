@@ -21,12 +21,15 @@ import "./controls.scss";
 import ReactSlider from "react-slider";
 import { isMobile } from "react-device-detect";
 import classNames from "classnames";
+import { controlVisibleDuration } from "../../lib/constant";
 
 function Controls() {
   const {
+    controls,
+    videoRef,
     videoSkipSec,
     playerState,
-    videoRef,
+    controlVisibleTill,
     setPlayerState,
     videoContainerRef,
     handlePlayPaused,
@@ -36,21 +39,10 @@ function Controls() {
   const [isReverseTime, setIsReverseTime] = useState(false);
 
   useEffect(() => {
-    const handleScroll = (e: WheelEvent) => {
-      const isOverSlider =
-        volumeContainerRef.current &&
-        volumeContainerRef.current.contains(e.target as Node);
-      if (isOverSlider) {
-        e.preventDefault(); // Prevent default scroll behavior
-
-        if (videoRef && videoRef.current && !playerState.muted) {
-          setVolumeUpdate((prev) => (prev + e.deltaY < 0 ? 0.1 : -0.1));
-        }
-      }
-    };
-
+    document.addEventListener("keydown", handlePlayerKeyPress);
     window.addEventListener("wheel", handleScroll, { passive: false }); // Add passive: false to prevent default scroll
     return () => {
+      document.removeEventListener("keydown", handlePlayerKeyPress);
       window.removeEventListener("wheel", handleScroll);
     };
   }, []);
@@ -63,10 +55,107 @@ function Controls() {
       );
 
       videoRef.current.volume = volume;
-      setPlayerState((prev) => ({ ...prev, volume }));
+      if (controlVisibleTill) {
+        controlVisibleTill.current =
+          videoRef.current.currentTime + controlVisibleDuration;
+      }
+      setPlayerState((prev) => ({ ...prev, volume, isControlVisible: true }));
       setVolumeUpdate(0);
     }
   }, [volumeUpdate]);
+
+  const handlePlayerKeyPress = (e: KeyboardEvent) => {
+    if (isMobile) return;
+    const tagName = document.activeElement?.tagName.toLowerCase();
+    if (tagName === "input") return;
+    if (!videoRef?.current) return;
+
+    e.preventDefault();
+    switch (e.key.toLowerCase()) {
+      case " ":
+        if (tagName === "button") return;
+        if (handlePlayPaused) handlePlayPaused();
+        break;
+      case "k":
+        if (handlePlayPaused) handlePlayPaused();
+        break;
+      case "arrowright":
+      case "l":
+        handleSkipForward();
+        break;
+      case "arrowleft":
+      case "j":
+        handleSkipBack();
+        break;
+      case "f":
+        toggleFullScreen();
+        break;
+      case "p":
+        togglePip();
+        break;
+      case "m":
+        toggleMute();
+        break;
+      case "Escape":
+        if (screenFull.isFullscreen) {
+          screenFull.exit();
+          if (screen.orientation) screen.orientation.unlock();
+          setPlayerState((prev) => ({ ...prev, isFullScreen: false }));
+        }
+        break;
+      case "arrowup":
+        handleVolumeChange((videoRef.current.volume + 0.2) * 10);
+        break;
+      case "arrowdown":
+        handleVolumeChange((videoRef.current.volume - 0.2) * 10);
+        break;
+      case "0":
+        videoRef.current.currentTime = (videoRef.current.duration * 0) / 10;
+        break;
+      case "1":
+        videoRef.current.currentTime = (videoRef.current.duration * 1) / 10;
+        break;
+      case "2":
+        videoRef.current.currentTime = (videoRef.current.duration * 2) / 10;
+        break;
+      case "3":
+        videoRef.current.currentTime = (videoRef.current.duration * 3) / 10;
+        break;
+      case "4":
+        videoRef.current.currentTime = (videoRef.current.duration * 4) / 10;
+        break;
+      case "5":
+        videoRef.current.currentTime = (videoRef.current.duration * 5) / 10;
+        break;
+      case "6":
+        videoRef.current.currentTime = (videoRef.current.duration * 6) / 10;
+        break;
+      case "7":
+        videoRef.current.currentTime = (videoRef.current.duration * 7) / 10;
+        break;
+      case "8":
+        videoRef.current.currentTime = (videoRef.current.duration * 8) / 10;
+        break;
+      case "9":
+        videoRef.current.currentTime = (videoRef.current.duration * 9) / 10;
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleScroll = (e: WheelEvent) => {
+    const isOverSlider =
+      volumeContainerRef.current &&
+      volumeContainerRef.current.contains(e.target as Node);
+    if (isOverSlider) {
+      e.preventDefault(); // Prevent default scroll behavior
+
+      if (videoRef && videoRef.current && !playerState.muted) {
+        setVolumeUpdate((prev) => (prev + e.deltaY < 0 ? 0.1 : -0.1));
+      }
+    }
+  };
 
   const togglePip = () => {
     if (document.pictureInPictureElement) {
@@ -123,11 +212,39 @@ function Controls() {
     }
   };
 
+  const handleSkipForward = () => {
+    if (videoRef && videoRef.current) {
+      if (controlVisibleTill) {
+        controlVisibleTill.current =
+          videoRef.current.currentTime + videoSkipSec + controlVisibleDuration;
+      }
+
+      videoRef.current.currentTime =
+        videoRef.current.currentTime + videoSkipSec;
+    }
+  };
+
+  const handleSkipBack = () => {
+    if (videoRef && videoRef.current) {
+      if (controlVisibleTill) {
+        controlVisibleTill.current =
+          videoRef.current.currentTime - videoSkipSec + controlVisibleDuration;
+      }
+
+      videoRef.current.currentTime =
+        videoRef.current.currentTime - videoSkipSec;
+    }
+  };
+
+  if (!controls) return null;
+
   return (
     <div
       className={classNames(
-        { visible: playerState.isControlVisible },
-        { hidden: !playerState.isControlVisible },
+        {
+          visible: playerState.isControlVisible,
+          hidden: !playerState.isControlVisible,
+        },
         "video-bottom-control-container"
       )}
     >
@@ -176,40 +293,10 @@ function Controls() {
           </span>
           /<span>{secToMinSec(playerState.duration || 0)}</span>
         </div>
-        {/* TODO: Caption & playback speed support */}
-        {/* <button className="captions-btn">
-          <CaptionIcon />
-          </button> */}
-        {/* <button>1x</button> */}
-        {/*{source instanceof Array &&
-          source.length > 1 &&
-          videoRef &&
-          videoRef.current && (
-            <button>
-              <button onClick={handleChangeSource}>
-              {source.map((sourceItem) => (
-                <div key={sourceItem.quality}>{sourceItem.quality}</div>
-              ))}
-            </button>
-          )} */}
-        <button
-          onClick={() => {
-            if (videoRef && videoRef.current) {
-              videoRef.current.currentTime =
-                videoRef.current.currentTime - videoSkipSec;
-            }
-          }}
-        >
+        <button onClick={handleSkipBack}>
           <BackwardIcon size={20} />
         </button>
-        <button
-          onClick={() => {
-            if (videoRef && videoRef.current) {
-              videoRef.current.currentTime =
-                videoRef.current.currentTime + videoSkipSec;
-            }
-          }}
-        >
+        <button onClick={handleSkipForward}>
           <ForwardIcon size={20} />
         </button>
         <button

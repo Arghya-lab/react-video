@@ -39,35 +39,35 @@
 }
 
 .video-container.full-screen {
-  @include video-container-query(425px) {
+  @include screen-query(425px) {
     .mobileControl-container button span svg {
       width: $mobile-control-button-size-fullscreen-425;
       height: $mobile-control-button-size-fullscreen-425;
     }
   }
 
-  @include video-container-query(600px) {
+  @include screen-query(600px) {
     .mobileControl-container button span svg {
       width: $mobile-control-button-size-fullscreen-600;
       height: $mobile-control-button-size-fullscreen-600;
     }
   }
 
-  @include video-container-query(1000px) {
+  @include screen-query(1000px) {
     .mobileControl-container button span svg {
       width: $mobile-control-button-size-fullscreen-1000;
       height: $mobile-control-button-size-fullscreen-1000;
     }
   }
 
-  @include video-container-query(1200px) {
+  @include screen-query(1200px) {
     .mobileControl-container button span svg {
       width: $mobile-control-button-size-fullscreen-1200;
       height: $mobile-control-button-size-fullscreen-1200;
     }
   }
 
-  @include video-container-query(1400px) {
+  @include screen-query(1400px) {
     .mobileControl-container button span svg {
       width: $mobile-control-button-size-fullscreen-1400;
       height: $mobile-control-button-size-fullscreen-1400;

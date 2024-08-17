@@ -7,6 +7,7 @@ import Controls from "./controls/Controls";
 import Buffering from "./overlays/Buffering";
 import MobileControl from "./controls/MobileControl";
 import Settings from "./overlays/settings";
+import Caption from "./overlays/Caption";
 
 function ReactVideo(props: VideoPropTypes) {
   return (
@@ -17,6 +18,7 @@ function ReactVideo(props: VideoPropTypes) {
       <MobileControl />
       <Buffering />
       <Settings />
+      <Caption />
     </VideoProvider>
   );
 }

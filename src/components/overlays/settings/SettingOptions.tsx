@@ -1,28 +1,34 @@
 import React from "react";
-import { PlaybackSpeedIcon, QualityIcon } from "../../icons";
+import { CaptionIcon, PlaybackSpeedIcon, QualityIcon } from "../../icons";
 import { useVideo } from "../../Provider/VideoProvider";
 
 function SettingOptions() {
-  const { playerState, setPlayerState } = useVideo();
+  const { captions, playerState, setPlayerState } = useVideo();
 
   return (
     <div className="setting-item-option">
       {/* Caption */}
-      {/* <div
-        className="setting-item"
-        onClick={() =>
-          setPlayerState((prev) => ({ ...prev, settingItemOpen: "caption" }))
-        }
-      >
-        <div className="setting-item-icon">
-          <CaptionIcon />
+      {captions && captions.length > 0 && (
+        <div
+          className="setting-item"
+          onClick={() =>
+            setPlayerState((prev) => ({ ...prev, settingItemOpen: "caption" }))
+          }
+        >
+          <div className="setting-item-icon">
+            <CaptionIcon />
+          </div>
+          <div className="setting-item-label">
+            <span>CC/Subtitles </span>
+            <span className="setting-item-label-count">
+              ({captions.length})
+            </span>
+          </div>
+          <div className="setting-active">
+            {playerState.currentCaption?.srclang || "Off"}
+          </div>
         </div>
-        <div className="setting-item-label">
-          <span>CC/Subtitles</span>
-          <span className="setting-item-label-count"> (1)</span>
-        </div>
-        <div className="setting-active">Off</div>
-      </div> */}
+      )}
       {/* Playback speed */}
       <div
         className="setting-item"

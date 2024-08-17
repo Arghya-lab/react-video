@@ -3,8 +3,7 @@ import { useVideo } from "../../Provider/VideoProvider";
 import { SourceItemType } from "../../../@types";
 
 function QualityOption() {
-  const { videoRef, source, playerState, setPlayerState, onQualityChange } =
-    useVideo();
+  const { videoRef, source, setPlayerState, onQualityChange } = useVideo();
 
   if (!(source instanceof Array)) return null;
 
@@ -15,14 +14,6 @@ function QualityOption() {
   const handleQualityChange = (sourceItem: SourceItemType) => {
     if (videoRef && videoRef.current) {
       if (videoRef.current.src !== sourceItem.src) {
-        const video = videoRef.current;
-        const previouslyPlayingAt = playerState.currentTime;
-        const isPreviouslyPlaying = playerState.playing;
-
-        video.src = sourceItem.src;
-        if (isPreviouslyPlaying) video.play();
-        video.currentTime = previouslyPlayingAt;
-
         onQualityChange(sourceItem);
         setPlayerState((prev) => ({
           ...prev,

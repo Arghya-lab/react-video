@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import "../global.scss";
+
+.caption-text {
+  position: absolute;
+  z-index: 60;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: $setting-margin;
+  background: $caption-background;
+  transition: bottom 300ms ease;
+  color: $caption-color;
+  font-size: $caption-font-size;
+  text-align: center;
+  font-family: "Open Sans", Arial, sans-serif;
+
+  span {
+    padding: $caption-padding;
+  }
+}
+
+.caption-text.show-caption {
+  bottom: calc($control-height + $setting-margin);
+}
+
+.video-container.full-screen {
+  .caption-text {
+    font-size: $caption-font-size-fullscreen;
+  }
+
+  @include screen-query(425px) {
+    .caption-text.show-caption {
+      bottom: calc($control-height-fullscreen-425 + $setting-margin);
+    }
+  }
+
+  @include screen-query(600px) {
+    .caption-text.show-caption {
+      bottom: calc($control-height-fullscreen-600 + $setting-margin);
+    }
+  }
+
+  @include screen-query(1000px) {
+    .caption-text.show-caption {
+      bottom: calc($control-height-fullscreen-1000 + $setting-margin);
+    }
+  }
+
+  @include screen-query(1200px) {
+    .caption-text.show-caption {
+      bottom: calc($control-height-fullscreen-1200 + $setting-margin);
+    }
+  }
+
+  @include screen-query(1400px) {
+    .caption-text.show-caption {
+      bottom: calc($control-height-fullscreen-1400 + $setting-margin);
+    }
+  }
+}

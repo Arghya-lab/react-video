@@ -79,6 +79,39 @@ $setting-option-header-bottom-border: 2px solid black;
 $setting-option-header-background-position: left 9px center;
 $setting-setting-option-choice-padding-left: 32px;
 
+$caption-background: rgba(0, 0, 0, 0.5);
+$caption-color: rgba(255, 255, 255);
+$caption-padding: 10px 6px;
+$caption-font-size: 16px;
+$caption-font-size-fullscreen: clamp(16px, 2vw, 24px);
+/* Font size will be 2vw but will not go below 16px or above 24px */
+
+$control-height: calc(
+  (nth($control-padding, 1) * 2) + $control-button-height +
+    $progress-bottom-margin + $progress-height
+);
+
+$control-height-fullscreen-425: calc(
+  (nth($control-padding-fullscreen-425, 1) * 2) + $control-button-height +
+    $progress-bottom-margin + $progress-height
+);
+$control-height-fullscreen-600: calc(
+  (nth($control-padding-fullscreen-600, 1) * 2) + $control-button-height +
+    $progress-bottom-margin + $progress-height
+);
+$control-height-fullscreen-1000: calc(
+  (nth($control-padding-fullscreen-1000, 1) * 2) + $control-button-height +
+    $progress-bottom-margin + $progress-height
+);
+$control-height-fullscreen-1200: calc(
+  (nth($control-padding-fullscreen-1200, 1) * 2) + $control-button-height +
+    $progress-bottom-margin + $progress-height
+);
+$control-height-fullscreen-1400: calc(
+  (nth($control-padding-fullscreen-1400, 1) * 2) + $control-button-height +
+    $progress-bottom-margin + $progress-height
+);
+
 @mixin progress-bar($z-index) {
   position: absolute;
   height: 100%;
@@ -97,7 +130,7 @@ $setting-setting-option-choice-padding-left: 32px;
   }
 }
 
-@mixin video-container-query($min-width: null, $max-width: null) {
+@mixin screen-query($min-width: null, $max-width: null) {
   @if $min-width != null and $max-width == null {
     @media (min-width: #{$min-width}) {
       @content;

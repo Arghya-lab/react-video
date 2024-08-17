@@ -7,8 +7,14 @@ import { useVideo } from "../Provider/VideoProvider";
 
 function InitializeVideo() {
   let progressTimeout: NodeJS.Timeout;
-  const { videoRef, source, defaultQuality, autoPlay, setPlayerState } =
-    useVideo();
+  const {
+    videoRef,
+    source,
+    defaultQuality,
+    autoPlay,
+    playerState,
+    setPlayerState,
+  } = useVideo();
 
   useEffect(() => {
     let hls: Hls | null = null;
@@ -17,7 +23,13 @@ function InitializeVideo() {
 
     if (videoRef && videoRef.current) {
       const video = videoRef.current;
-      const videoSrc = new VideoSrc(source, defaultQuality);
+      const previouslyPlayingAt = playerState.currentTime;
+      const isPreviouslyPlaying = playerState.playing;
+
+      const videoSrc = new VideoSrc(
+        source,
+        playerState.currentSource?.quality || defaultQuality
+      );
       setPlayerState((prev) => ({
         ...prev,
         currentSource: videoSrc.preferredSource,
@@ -57,7 +69,11 @@ function InitializeVideo() {
         flvPlayer.load();
       }
 
-      if (autoPlay) {
+      if (!playerState.isSourceAutoSelected) {
+        //  false mean the quality is changed
+        if (isPreviouslyPlaying) video.play();
+        video.currentTime = previouslyPlayingAt;
+      } else if (autoPlay) {
         video.play();
       }
     }
@@ -68,7 +84,7 @@ function InitializeVideo() {
       if (dashPlayer) dashPlayer.reset();
       if (flvPlayer) flvPlayer.destroy();
     };
-  }, [source, videoRef]);
+  }, [source, videoRef, playerState.currentSource?.quality]);
 
   return null;
 }
