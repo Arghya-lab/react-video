@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 @import "../global.scss";
 
 .caption-text {
@@ -19,7 +18,7 @@
   }
 }
 
-.caption-text.show-caption {
+.caption-text.control-visible {
   bottom: calc($control-height + $setting-margin);
 }
 
@@ -29,31 +28,31 @@
   }
 
   @include screen-query(425px) {
-    .caption-text.show-caption {
+    .caption-text.control-visible {
       bottom: calc($control-height-fullscreen-425 + $setting-margin);
     }
   }
 
   @include screen-query(600px) {
-    .caption-text.show-caption {
+    .caption-text.control-visible {
       bottom: calc($control-height-fullscreen-600 + $setting-margin);
     }
   }
 
   @include screen-query(1000px) {
-    .caption-text.show-caption {
+    .caption-text.control-visible {
       bottom: calc($control-height-fullscreen-1000 + $setting-margin);
     }
   }
 
   @include screen-query(1200px) {
-    .caption-text.show-caption {
+    .caption-text.control-visible {
       bottom: calc($control-height-fullscreen-1200 + $setting-margin);
     }
   }
 
   @include screen-query(1400px) {
-    .caption-text.show-caption {
+    .caption-text.control-visible {
       bottom: calc($control-height-fullscreen-1400 + $setting-margin);
     }
   }

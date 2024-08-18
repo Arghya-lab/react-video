@@ -8,6 +8,8 @@ import Buffering from "./overlays/Buffering";
 import MobileControl from "./controls/MobileControl";
 import Settings from "./overlays/settings";
 import Caption from "./overlays/Caption";
+import Chapters from "./overlays/Chapters";
+import SkipButton from "./overlays/SkipButton";
 
 function ReactVideo(props: VideoPropTypes) {
   return (
@@ -19,6 +21,8 @@ function ReactVideo(props: VideoPropTypes) {
       <Buffering />
       <Settings />
       <Caption />
+      <Chapters />
+      <SkipButton />
     </VideoProvider>
   );
 }

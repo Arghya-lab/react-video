@@ -6,8 +6,10 @@ import { controlVisibleDuration } from "../../lib/constant";
 function VideoEventListeners() {
   const {
     videoRef,
+    videoContainerRef,
     controlVisibleTill,
     playerState,
+    chapters,
     setPlayerState,
     onReady,
     onStart,
@@ -106,14 +108,23 @@ function VideoEventListeners() {
       }
     };
 
-    document.addEventListener("mousemove", handleShowControls);
-    document.addEventListener("keydown", handleShowControls);
+    videoContainerRef?.current?.addEventListener(
+      "mousemove",
+      handleShowControls
+    );
+    videoContainerRef?.current?.addEventListener("keydown", handleShowControls);
 
     return () => {
-      document.removeEventListener("mousemove", handleShowControls);
-      document.removeEventListener("keydown", handleShowControls);
+      videoContainerRef?.current?.removeEventListener(
+        "mousemove",
+        handleShowControls
+      );
+      videoContainerRef?.current?.removeEventListener(
+        "keydown",
+        handleShowControls
+      );
     };
-  }, [playerState.isControlVisible]);
+  }, [videoRef, videoContainerRef, controlVisibleTill, setPlayerState]);
 
   const getDuration = () => {
     if (videoRef && videoRef.current) {
@@ -177,6 +188,33 @@ function VideoEventListeners() {
   const handleTimeUpdate = () => {
     if (videoRef && videoRef.current) {
       const currentTime = videoRef.current.currentTime;
+
+      //  Update current chapters
+      if (
+        chapters && // nothing is set
+        ((!playerState.currentChapter && !playerState.nextChapterStartAt) ||
+          //  chapter have to update
+          (playerState.nextChapterStartAt &&
+            playerState.nextChapterStartAt <= currentTime) ||
+          //  user skip back
+          (playerState.currentChapter &&
+            playerState.currentChapter.startTime > currentTime))
+      ) {
+        const updatedCh = chapters.find(
+          (chapter) =>
+            chapter.startTime <= currentTime && chapter.endTime >= currentTime
+        );
+        const nextCh = chapters.find(
+          (chapter) => chapter.startTime > currentTime
+        );
+        setPlayerState((prev) => ({
+          ...prev,
+          currentChapter: updatedCh || null,
+          nextChapterStartAt: prev.nextChapterStartAt
+            ? nextCh?.startTime || playerState.duration
+            : nextCh?.startTime || null,
+        }));
+      }
 
       if (
         playerState.isControlVisible &&

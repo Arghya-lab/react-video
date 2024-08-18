@@ -4,15 +4,17 @@ import fetchAndParseCaption from "../../../lib/fetchAndParseCaption";
 import { CaptionType } from "../../../@types";
 
 function CaptionOptions() {
-  const { captions, setPlayerState, setCaptionData } = useVideo();
+  const { captions, setPlayerState } = useVideo();
 
-  function handleSelectCaption(this: CaptionType) {
+  async function handleSelectCaption(this: CaptionType) {
     setPlayerState((prev) => ({
       ...prev,
       currentCaption: this,
       settingItemOpen: null,
     }));
-    fetchAndParseCaption(this.src).then((data) => setCaptionData(data));
+    fetchAndParseCaption(this.src).then((data) =>
+      setPlayerState((prev) => ({ ...prev, currentCaptionData: data }))
+    );
   }
 
   if (!captions) return null;

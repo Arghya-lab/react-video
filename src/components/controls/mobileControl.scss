@@ -11,6 +11,7 @@
   align-items: center;
   justify-content: space-evenly;
   color: $mobile-control-button-color;
+  pointer-events: none;
 
   &.hidden {
     @include visible-hidden-control(0);

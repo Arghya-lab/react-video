@@ -13,6 +13,22 @@
   &:hover {
     height: $progress-height-hover;
   }
+
+  .loaded-progress {
+    @include progress-bar(-5);
+    background: $progress-loaded-color;
+  }
+
+  .chapter-bar {
+    position: absolute;
+    height: $progress-chapter-bar-height;
+    z-index: 5;
+    pointer-events: none;
+
+    &.above-progress {
+      z-index: 15;
+    }
+  }
 }
 
 .video-container.full-screen {
@@ -58,11 +74,6 @@
 .slider-track.slider-track-0 {
   @include progress-bar(10);
   background: $progress-track-fill-color;
-}
-
-.loaded-progress {
-  @include progress-bar(-5);
-  background: $progress-loaded-color;
 }
 
 .slider-thumb {

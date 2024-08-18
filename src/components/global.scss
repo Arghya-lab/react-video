@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
 $progress-track-color: rgba(255, 255, 255, 0.6);
 $progress-track-fill-color: red;
 $progress-loaded-color: rgba(255, 255, 255, 0.5);
@@ -11,12 +13,26 @@ $setting-color: rgba(255, 255, 255, 0.9);
 $setting-background: rgba(0, 0, 0, 0.7);
 $setting-background-hover: rgba(255, 255, 255, 0.2);
 
+$caption-background: rgba(0, 0, 0, 0.5);
+$caption-color: rgba(255, 255, 255);
+
+$chapters-container-background: rgba(0, 0, 0, 0.85);
+$chapter-time-background: rgba(255, 255, 255, 0.2);
+$chapter-time-color: rgba(255, 255, 255);
+$chapter-button-color: rgba(255, 255, 255, 0.85);
+
+$skip-button-color: white;
+$skip-button-border-color: white;
+$skip-button-background-color: rgba(255, 255, 255, 0.25);
+$skip-button-background-color-hover: rgba(255, 255, 255, 0.2);
+
 $global-font-size: 12px;
 
 $slider-border-radius: 2.4px;
 $progress-height: 3.2px;
 $progress-height-hover: 5.6px;
-$progress-bottom-margin: 4px;
+$progress-chapter-bar-height: 2.4px;
+$progress-bottom-margin: 0px;
 $progress-x-margin: 8px;
 $progress-x-margin-fullscreen-425: 16px;
 $progress-x-margin-fullscreen-600: 24px;
@@ -26,12 +42,12 @@ $progress-x-margin-fullscreen-1400: 40px;
 $progress-thumb-height: 14px;
 $progress-thumb-border-size: 2px;
 
-$control-padding: 8px 8px;
-$control-padding-fullscreen-425: 8px 16px;
-$control-padding-fullscreen-600: 12px 20px;
-$control-padding-fullscreen-1000: 13.76px 24.96px;
-$control-padding-fullscreen-1200: 16px 32px;
-$control-padding-fullscreen-1400: 18.4px 40px;
+$control-padding: 12px 8px;
+$control-padding-fullscreen-425: 12px 16px;
+$control-padding-fullscreen-600: 16px 20px;
+$control-padding-fullscreen-1000: 18px 24.96px;
+$control-padding-fullscreen-1200: 20px 32px;
+$control-padding-fullscreen-1400: 22.4px 40px;
 $control-button-gap: 14px;
 $control-button-gap-fullscreen-600: 12px;
 $control-button-gap-fullscreen-1000: 16px;
@@ -79,12 +95,27 @@ $setting-option-header-bottom-border: 2px solid black;
 $setting-option-header-background-position: left 9px center;
 $setting-setting-option-choice-padding-left: 32px;
 
-$caption-background: rgba(0, 0, 0, 0.5);
-$caption-color: rgba(255, 255, 255);
 $caption-padding: 10px 6px;
 $caption-font-size: 16px;
 $caption-font-size-fullscreen: clamp(16px, 2vw, 24px);
 /* Font size will be 2vw but will not go below 16px or above 24px */
+
+$chapters-container-padding: 32px;
+$chapters-container-padding-left: 20%;
+$chapter-button-font-size: 24px;
+$chapter-button-padding: 6px 12px;
+$chapter-button-border-radius: 6px;
+$chapter-gap: 20px;
+$chapter-time-gap: 6px;
+$chapter-time-padding: 2px;
+$chapter-time-border-radius: 4px;
+
+$skip-button-font-size: 16px;
+$skip-button-padding: 6px 10px;
+$skip-button-side-margin: 16px;
+$skip-button-bottom-margin: 20px;
+$skip-button-border-width: 2px;
+$skip-button-border-border-radius: 6px;
 
 $control-height: calc(
   (nth($control-padding, 1) * 2) + $control-button-height +
@@ -162,6 +193,7 @@ body {
   justify-content: center;
   margin-inline: auto;
   background-color: black;
+  color: white;
   user-select: none;
   font-family: Arial, sans-serif;
   font-size: $global-font-size;

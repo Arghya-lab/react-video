@@ -11,10 +11,11 @@ A react-video is a feature-rich and optimized React video player component libra
 - **Playback Speed Control**: Adjust playback speed with ease.
 - **Caption Support**: Display captions and subtitles for a better viewing experience.
 - **Keyboard Gestures**: Navigate and control playback using keyboard gestures.
+- **Chapter Highlights**: View and skip through chapters highlighted in the progress bar.
 
 ## Upcoming Features
 
-- **Chapter Highlights**: View and skip through chapters highlighted in the progress bar.
+- **Different aspect ratio full screen**: Different aspect ratio of full screen mode.
 
 ## Installation
 
@@ -52,13 +53,13 @@ source?: string | { quality: string | number; src: string }[] | null;
 defaultQuality?: string | number;
 autoPlay?: boolean;
 controls?: boolean | "html5";
-captions?: { srclang: string; src: string; }[];
+loop?: boolean;
+captions?: { srclang: string; src: string; default?: boolean; }[];
 videoSkipSec?: number;
 className?: string;
 height?: number | string;
 width?: number | string;
 style?: CSSProperties;
-handlePlayPaused?: () => void;
 onReady?: () => void;
 onStart?: () => void;
 onPlay?: () => void;
@@ -93,7 +94,9 @@ onQualityChange?: (sourceItem: {
 
 - **`controls: `** (`boolean | "html5" | undefined`): Whether controls will be shown or not. html5 mean default html video control true mean custom control.
 
-- **`captions: `** (`{ srclang: string; src: string; }[] | undefined`): Captions for video support srt, vtt caption.
+- **`captions: `** (`{ srclang: string; src: string; default?: boolean;}[] | undefined`): Captions for video support srt, vtt caption.
+
+- **`loop: `** (`boolean | undefined`): Weather video will be on loop or not.
 
 - **`videoSkipSec`** (`number`): How much sec should skip forward or skip back.
 
@@ -104,8 +107,6 @@ onQualityChange?: (sourceItem: {
 - **`width`** (`number | string`): Height of video container.
 
 - **`style`** : Style of video container.
-
-- **`handlePlayPaused`** (`fn() | undefined`): Callback function that is invoked when the play/pause button is interacted with.
 
 - **`onReady`** (`fn() | undefined`): Callback function that is invoked when the video player is ready.
 
@@ -190,6 +191,10 @@ npm run storybook
 ## Contributing
 
 We welcome contributions to enhance the library. Please open an issue or submit a pull request on GitHub.
+
+## Bug Report
+
+If you find any bug plz report on https://github.com/Arghya-lab/react-video/issues
 
 ## License
 

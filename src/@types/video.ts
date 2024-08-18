@@ -1,14 +1,27 @@
 import { CSSProperties } from "react";
+import { SubtitleItemType } from "../lib/fetchAndParseCaption";
 
 export type SourceItemType = { quality: string | number; src: string };
+
 export type SourceType = string | SourceItemType[] | null;
+
 export interface PlaybackType {
   text: string;
   playbackRate: number;
 }
+
 export interface CaptionType {
   srclang: string;
   src: string;
+  default?: boolean;
+}
+
+export interface ChapterType {
+  name: string;
+  startTime: number;
+  endTime: number;
+  color?: string;
+  skipAble?: boolean;
 }
 
 export interface VideoPropTypes {
@@ -16,8 +29,11 @@ export interface VideoPropTypes {
   defaultQuality?: string | number;
   autoPlay?: boolean;
   controls?: boolean | "html5";
+  loop?: boolean;
   captions?: CaptionType[];
   videoSkipSec?: number;
+  chapters?: ChapterType[];
+  showSkipableChapter?: boolean;
   className?: string;
   height?: number | string;
   width?: number | string;
@@ -41,10 +57,8 @@ export interface VideoPropTypes {
   onDisablePIP?: () => void;
   onEnded?: () => void;
   onError?: () => void;
-
   onPlaybackRateChange?: (playbackSpeed: number) => void;
   onQualityChange?: (sourceItem: SourceItemType) => void;
-  handlePlayPaused?: () => void;
 }
 
 export interface PlayerStateType {
@@ -55,7 +69,7 @@ export interface PlayerStateType {
   currentTime: number;
   pip: boolean;
   isFullScreen: boolean;
-  loaded: [number, number][]; //  each array's first item is start of buffered & last item is end of buffered
+  loaded: [startTime: number, endTime: number][]; //  each array's first item is start of buffered & last item is end of buffered
   volume: number; //  value -> 0-1
   muted: boolean;
   isControlVisible: boolean;
@@ -65,17 +79,12 @@ export interface PlayerStateType {
   isSourceAutoSelected: boolean;
   currentPlayback: PlaybackType;
   currentCaption: CaptionType | null;
-  // loop: boolean,
-  // skipTimes: SkipTimeType[];
+  currentCaptionData: SubtitleItemType[] | null;
+  currentChapter: ChapterType | null;
+  nextChapterStartAt: number | null;
+  isChapterOverLayOpen: boolean;
   // isReady: boolean;
-  // url: string | null;
   // light: boolean,
-  // sources: AnimeStreamingLinkType[];
-  // playbackQuality: string;
   // videoAspectRatio: number;
   // FullScreenType: ScreenFullTypeEnum;
-  // isMobileDevice: boolean;
-  // controllerVisibility: boolean;
-  // isQualitySelectionOpen: boolean;
-  // isSettingSectionOpen: boolean;
 }

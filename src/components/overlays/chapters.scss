@@ -1,0 +1,51 @@
+@import "../global.scss";
+
+.chapters-container {
+  position: absolute;
+  z-index: 70;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: $chapters-container-padding;
+  padding-left: $chapters-container-padding-left;
+  background: $chapters-container-background;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  gap: $chapter-gap;
+
+  .chapter {
+    display: flex;
+    align-items: center;
+    gap: $chapter-time-gap;
+
+    span {
+      background: $chapter-time-background;
+      padding: $chapter-time-padding;
+      border-radius: $chapter-time-border-radius;
+      color: $chapter-time-color;
+    }
+
+    button {
+      margin: 0;
+      padding: $chapter-button-padding;
+      border-radius: $chapter-button-border-radius;
+      border: 0;
+      text-transform: capitalize;
+      background: inherit;
+      color: $chapter-button-color;
+      cursor: pointer;
+      font-size: $chapter-button-font-size;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}

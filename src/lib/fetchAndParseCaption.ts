@@ -9,7 +9,7 @@ export type SubtitleItemType = {
   text: string;
 };
 
-export default async function fetchAndParseVTT(
+export default async function fetchAndParseCaption(
   url: string
 ): Promise<SubtitleItemType[]> {
   try {
@@ -19,6 +19,7 @@ export default async function fetchAndParseVTT(
     }
 
     const data = await response.text();
+
     if (SRT_EXTENSIONS.test(url)) {
       const parser = new srtParser2();
       return parser

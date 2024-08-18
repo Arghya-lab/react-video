@@ -28,6 +28,7 @@ function Controls() {
     controls,
     videoRef,
     videoSkipSec,
+    chapters,
     playerState,
     controlVisibleTill,
     setPlayerState,
@@ -293,6 +294,28 @@ function Controls() {
           </span>
           /<span>{secToMinSec(playerState.duration || 0)}</span>
         </div>
+        {chapters && (
+          <button
+            className={classNames("chapter-button", {
+              "show-chapter-button": !playerState.currentChapter,
+            })}
+            onClick={() =>
+              setPlayerState((prev) => ({
+                ...prev,
+                isChapterOverLayOpen: !prev.isChapterOverLayOpen,
+              }))
+            }
+          >
+            • {playerState.currentChapter?.name || "show chapters"}
+            <svg height="20" viewBox="0 0 24 24" width="20">
+              <path
+                d="M9.71 18.71l-1.42-1.42 5.3-5.29-5.3-5.29 1.42-1.42 6.7 6.71z"
+                fill="#fff"
+              ></path>
+            </svg>
+          </button>
+        )}
+        <span style={{ flexGrow: 1 }} />
         <button onClick={handleSkipBack}>
           <BackwardIcon size={20} />
         </button>

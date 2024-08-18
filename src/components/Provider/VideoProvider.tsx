@@ -9,26 +9,27 @@ import React, {
   useRef,
   useState,
 } from "react";
+import classNames from "classnames";
+import screenfull from "screenfull";
+import { isDesktop } from "react-device-detect";
 import { PlayerStateType, VideoPropTypes } from "../../@types/video";
 import { VideoContextType } from "../../@types/context";
-import classNames from "classnames";
 import { controlVisibleDuration, defaultPlayerState } from "../../lib/constant";
-import { SubtitleItemType } from "../../lib/fetchAndParseCaption";
 
 const VideoContext = createContext<VideoContextType>({
   videoRef: null,
   videoContainerRef: null,
   source: null,
-  defaultQuality: undefined,
   autoPlay: false,
   controls: true,
+  loop: false,
   videoSkipSec: 10,
   className: "",
+  height: 480,
+  width: 854,
   playerState: defaultPlayerState,
   controlVisibleTill: null,
-  captionData: null,
   setPlayerState: () => {},
-  setCaptionData: () => {},
   onReady: () => {},
   onStart: () => {},
   onPlay: () => {},
@@ -60,8 +61,11 @@ export const VideoProvider = forwardRef<
       defaultQuality,
       autoPlay = false,
       controls = true,
+      loop = false,
       captions = undefined,
       videoSkipSec = 10,
+      chapters = undefined,
+      showSkipableChapter = false,
       className = "",
       height = 480,
       width = 854,
@@ -81,7 +85,6 @@ export const VideoProvider = forwardRef<
       onProgress = () => {},
       onPlaybackRateChange = () => {},
       onQualityChange = () => {},
-      handlePlayPaused = () => {},
     }: { children: ReactNode } & VideoPropTypes,
     ref
   ) => {
@@ -89,14 +92,10 @@ export const VideoProvider = forwardRef<
       (ref as RefObject<HTMLVideoElement>) || useRef<HTMLVideoElement>(null);
     const videoContainerRef = useRef<HTMLDivElement>(null);
     const controlVisibleTill = useRef(controlVisibleDuration);
-    const [captionData, setCaptionData] = useState<SubtitleItemType[] | null>(
-      null
-    );
-
     const [playerState, setPlayerState] =
       useState<PlayerStateType>(defaultPlayerState);
 
-    handlePlayPaused = () => {
+    const handlePlayPaused = () => {
       if (videoRef && videoRef.current) {
         if (videoRef.current.paused) {
           videoRef.current.play();
@@ -130,6 +129,26 @@ export const VideoProvider = forwardRef<
       }
     };
 
+    const handleDoubleClick = () => {
+      if (!screenfull.isFullscreen && videoContainerRef.current && isDesktop) {
+        if (document.pictureInPictureElement) {
+          document.exitPictureInPicture();
+        }
+
+        screenfull.request(videoContainerRef.current);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if ((screen as any).orientation) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (screen as any).orientation?.lock("landscape");
+        }
+        setPlayerState((prev) => ({
+          ...prev,
+          isFullScreen: true,
+          pip: false,
+        }));
+      }
+    };
+
     return (
       <VideoContext.Provider
         value={{
@@ -141,15 +160,15 @@ export const VideoProvider = forwardRef<
           controls,
           captions,
           videoSkipSec,
+          chapters,
+          showSkipableChapter,
           className,
           height,
           width,
           style,
           playerState,
           controlVisibleTill,
-          captionData,
           setPlayerState,
-          setCaptionData,
           onReady,
           onStart,
           onPlay,
@@ -175,6 +194,7 @@ export const VideoProvider = forwardRef<
             "full-screen": playerState.isFullScreen,
           })}
           onClick={handleClick}
+          onDoubleClick={handleDoubleClick}
         >
           {source ? (
             <>
@@ -183,6 +203,7 @@ export const VideoProvider = forwardRef<
                 style={{ width: "100%" }}
                 autoPlay={autoPlay}
                 controls={controls === "html5"}
+                loop={loop}
               >
                 {captions &&
                   captions.map((caption) => (

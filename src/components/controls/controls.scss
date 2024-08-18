@@ -55,9 +55,24 @@
     }
 
     .duration-container {
-      flex-grow: 1;
       cursor: pointer;
+      font-family: "Open Sans", Arial, sans-serif;
+    }
+
+    .chapter-button {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
       font-family: Verdana, sans-serif;
+      text-transform: capitalize;
+      opacity: 0.95;
+
+      &.show-chapter-button {
+        font-family: "Fira Code", "JetBrains Mono", "Cascadia Code",
+          "Courier New", Courier, monospace;
+        text-transform: none;
+        font-weight: 400;
+      }
     }
 
     .setting-button {

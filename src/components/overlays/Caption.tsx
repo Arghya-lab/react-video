@@ -5,21 +5,21 @@ import { SubtitleItemType } from "../../lib/fetchAndParseCaption";
 import "./caption.scss";
 
 function Caption() {
-  const { captionData, playerState } = useVideo();
+  const { playerState } = useVideo();
   const [currenText, setCurrenText] = useState<SubtitleItemType | null>(null);
   const [nextTextStartAt, setNextTextStartAt] = useState<number | null>(null);
 
   useMemo(() => {
     function updateCurrentText() {
-      if (captionData) {
-        const cct = captionData.find(
+      if (playerState.currentCaptionData) {
+        const cct = playerState.currentCaptionData.find(
           (item) =>
             item.startTime <= playerState.currentTime &&
             item.endTime >= playerState.currentTime
         );
         setCurrenText(cct || null);
 
-        const nct = captionData.find(
+        const nct = playerState.currentCaptionData.find(
           (item) => item.startTime > playerState.currentTime
         );
         setNextTextStartAt((prev) =>
@@ -28,7 +28,7 @@ function Caption() {
       }
     }
 
-    if (!playerState.currentCaption || !captionData) return;
+    if (!playerState.currentCaption || !playerState.currentCaptionData) return;
 
     //  in the current text
     if (
@@ -64,15 +64,16 @@ function Caption() {
     }
   }, [playerState.currentTime]);
 
-  if (!playerState.currentCaption || !captionData) return null;
+  if (!playerState.currentCaption || !playerState.currentCaptionData)
+    return null;
 
   return (
     <div
       className={classNames("caption-text", {
-        "show-caption": playerState.isControlVisible,
+        "control-visible": playerState.isControlVisible,
       })}
     >
-      <span>{currenText && currenText.text}</span>
+      {currenText && <span>{currenText.text}</span>}
     </div>
   );
 }

@@ -34,15 +34,8 @@ export const defaultPlayerState: PlayerStateType = {
     (playbackSpeed) => playbackSpeed.text === "Default"
   )!,
   currentCaption: null,
-  // isReady: false,
-  // light: false,
-  // loop: false,
-  // playbackQuality: playbackQuality || "360p",
-  // videoAspectRatio: 16 / 9,
-  // FullScreenType: 0, // value -> 0=>>default 1=>>maxWidth 2=>>16:9
-  // isMobileDevice: isMobileDevice(),
-  // controllerVisibility: true,
-  // skipTimes: [],
-  // isQualitySelectionOpen: false,
-  // isSettingSectionOpen: false,
+  currentCaptionData: null,
+  currentChapter: null,
+  nextChapterStartAt: null,
+  isChapterOverLayOpen: false,
 };

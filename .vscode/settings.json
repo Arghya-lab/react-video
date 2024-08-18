@@ -4,7 +4,10 @@
     "dropboxusercontent",
     "flvjs",
     "Plyr",
+    "screenfull",
+    "Skipable",
     "srclang",
+    "tinycolor",
     "videojs"
   ]
 }

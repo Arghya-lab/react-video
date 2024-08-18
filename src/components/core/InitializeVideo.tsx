@@ -4,6 +4,7 @@ import Hls from "hls.js";
 import dashjs from "dashjs";
 import flvjs from "flv.js";
 import { useVideo } from "../Provider/VideoProvider";
+import fetchAndParseCaption from "../../lib/fetchAndParseCaption";
 
 function InitializeVideo() {
   let progressTimeout: NodeJS.Timeout;
@@ -12,6 +13,7 @@ function InitializeVideo() {
     source,
     defaultQuality,
     autoPlay,
+    captions,
     playerState,
     setPlayerState,
   } = useVideo();
@@ -75,6 +77,19 @@ function InitializeVideo() {
         video.currentTime = previouslyPlayingAt;
       } else if (autoPlay) {
         video.play();
+      }
+
+      if (captions) {
+        const defaultCaption = captions.find((caption) => caption.default);
+        if (defaultCaption) {
+          setPlayerState((prev) => ({
+            ...prev,
+            currentCaption: defaultCaption,
+          }));
+          fetchAndParseCaption(defaultCaption.src).then((data) =>
+            setPlayerState((prev) => ({ ...prev, currentCaptionData: data }))
+          );
+        }
       }
     }
 

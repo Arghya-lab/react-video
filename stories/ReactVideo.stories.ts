@@ -69,7 +69,7 @@ export const CaptionVideo: Story = {
   },
 };
 
-export const MultiHlsVideo: Story = {
+export const polyQtyHlsWithCh: Story = {
   args: {
     source: [
       {
@@ -92,11 +92,31 @@ export const MultiHlsVideo: Story = {
         src: "https://www088.vipanicdn.net/streamhls/83a227d867325122bc1a93622cf0fb3d/ep.1.1709061920.m3u8",
         quality: "default",
       },
+    ],
+    chapters: [
       {
-        src: "https://www088.anicdnstream.info/videos/hls/JEXf5r109GSaRSBaTkpuIA/1714509530/147907/83a227d867325122bc1a93622cf0fb3d/ep.1.1709061920.m3u8",
-        quality: "backup",
+        name: "opening interval",
+        startTime: 54.711,
+        endTime: 145.111,
+        skipAble: true,
+        color: "yellow",
+      },
+      {
+        name: "ending interval",
+        startTime: 1292.583,
+        endTime: 1370.829,
+        skipAble: false,
+        color: "pink",
+      },
+      {
+        name: "mixed ed",
+        startTime: 1424.042,
+        endTime: 1435,
+        skipAble: true,
+        color: "blue",
       },
     ],
+    showSkipableChapter: true,
   },
 };
 
@@ -124,6 +144,7 @@ export const MultiQuality: Story = {
       {
         srclang: "fr",
         src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt",
+        default: true,
       },
     ],
     // downloadLink:
