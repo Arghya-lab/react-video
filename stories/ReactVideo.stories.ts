@@ -39,11 +39,17 @@ export const Movie: Story = {
   },
 };
 
-export const Hls8Video: Story = {
+export const Hls_loadPoster_infoText: Story = {
   args: {
     // source: "https://www088.vipanicdn.net/streamhls/83a227d867325122bc1a93622cf0fb3d/ep.1.1709061920.1080.m3u8",
     source:
       "https://www088.vipanicdn.net/streamhls/83a227d867325122bc1a93622cf0fb3d/ep.1.1709061920.480.m3u8",
+    loadingPoster:
+      "https://static.animesuge.to/6b/i/5/5d/5d13c1684a4dcf9795b5254918484c42@1024.jpg",
+    infoText: {
+      title: "Jujutsu Kaisen",
+      summery: "Episode: 01",
+    },
     // autoPlay: true,
   },
 };

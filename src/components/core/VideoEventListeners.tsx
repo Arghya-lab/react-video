@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import screenFull from "screenfull";
 import { useVideo } from "../Provider/VideoProvider";
 import { controlVisibleDuration } from "../../lib/constant";
 
@@ -46,13 +45,6 @@ function VideoEventListeners() {
         "leavepictureinpicture",
         handleDisablePIP
       );
-      document.addEventListener("fullscreenchange", handleFullscreenChange);
-      document.addEventListener(
-        "webkitfullscreenchange",
-        handleFullscreenChange
-      );
-      document.addEventListener("mozfullscreenchange", handleFullscreenChange);
-      document.addEventListener("MSFullscreenChange", handleFullscreenChange);
     }
 
     return () => {
@@ -74,22 +66,6 @@ function VideoEventListeners() {
         videoRef.current.removeEventListener(
           "leavepictureinpicture",
           handleDisablePIP
-        );
-        document.removeEventListener(
-          "fullscreenchange",
-          handleFullscreenChange
-        );
-        document.removeEventListener(
-          "webkitfullscreenchange",
-          handleFullscreenChange
-        );
-        document.removeEventListener(
-          "mozfullscreenchange",
-          handleFullscreenChange
-        );
-        document.removeEventListener(
-          "MSFullscreenChange",
-          handleFullscreenChange
         );
       }
     };
@@ -264,17 +240,6 @@ function VideoEventListeners() {
       ...prev,
       pip: false,
     }));
-  };
-
-  const handleFullscreenChange = () => {
-    if (
-      videoRef &&
-      videoRef.current &&
-      screenFull.element == videoRef.current
-    ) {
-      screenFull.exit();
-      setPlayerState((prev) => ({ ...prev, pip: false }));
-    }
   };
 
   return null;

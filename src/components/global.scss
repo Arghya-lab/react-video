@@ -26,6 +26,8 @@ $skip-button-border-color: white;
 $skip-button-background-color: rgba(255, 255, 255, 0.25);
 $skip-button-background-color-hover: rgba(255, 255, 255, 0.2);
 
+$tooltip-background: rgba(0, 0, 0, 0.85);
+
 $global-font-size: 12px;
 
 $slider-border-radius: 2.4px;
@@ -116,6 +118,21 @@ $skip-button-side-margin: 16px;
 $skip-button-bottom-margin: 20px;
 $skip-button-border-width: 2px;
 $skip-button-border-border-radius: 6px;
+
+$tooltip-padding: 4px 8px;
+$tooltip-padding-fullscreen: 8px 12px;
+$tooltip-font-size: 12px;
+$tooltip-font-size-fullscreen: 16px;
+$tooltip-border-radius: 6px;
+
+$info-text-container-margin: 20px;
+$info-text-container-margin-fullscreen: 24px;
+$info-text-title-padding-bottom: 8px;
+$info-text-title-padding-bottom-fullscreen: 12px;
+$info-text-title-font-size: clamp(16px, 2vw, 22px);
+$info-text-title-font-size-fullscreen: clamp(24px, 2.5vw, 28px);
+$info-text-summery-font-size: clamp(12px, 1.5vw, 16px);
+$info-text-summery-font-size-fullscreen: clamp(15px, 1.75vw, 18px);
 
 $control-height: calc(
   (nth($control-padding, 1) * 2) + $control-button-height +

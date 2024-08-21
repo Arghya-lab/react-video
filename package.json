@@ -1,6 +1,6 @@
 {
   "name": "@arghya-lab/react-video",
-  "version": "0.3.0",
+  "version": "0.4.1",
   "description": "A react video player component inspired by youtube player ui",
   "scripts": {
     "build": "rollup -c",
@@ -47,6 +47,7 @@
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.3.1",
     "react-slider": "^2.0.6",
+    "react-tooltip": "^5.28.0",
     "rollup": "^4.20.0",
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",

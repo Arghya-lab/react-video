@@ -6,6 +6,7 @@
   left: 0;
   right: 0;
   bottom: calc(nth($control-padding, 1) + $control-button-height);
+  // nth($control-padding, 1) * 2 + $control-button-height + $progress-height
   z-index: 10;
   display: flex;
   align-items: center;

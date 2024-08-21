@@ -56,6 +56,17 @@ controls?: boolean | "html5";
 loop?: boolean;
 captions?: { srclang: string; src: string; default?: boolean; }[];
 videoSkipSec?: number;
+chapters?: {
+  name: string;
+  startTime: number;
+  endTime: number;
+  color?: string;
+  skipAble?: boolean;
+}[];
+showSkipableChapter?: boolean;
+loadingPoster?: string;
+infoText?: { title: string; summery?: string };
+fullscreenOnlyInfoText?: boolean;
 className?: string;
 height?: number | string;
 width?: number | string;
@@ -99,6 +110,16 @@ onQualityChange?: (sourceItem: {
 - **`loop: `** (`boolean | undefined`): Weather video will be on loop or not.
 
 - **`videoSkipSec`** (`number`): How much sec should skip forward or skip back.
+
+- **`chapters`** (`{ name: string; startTime: number; endTime: number; color?: string; skipAble?: boolean; }[] | undefined`): Chapters of the video. color property is for chapter highlighting in progressbar, skipable property is indicate that particular chapter is skipable or not.
+
+- **`showSkipableChapter`** (`boolean | undefined`): It show skipable chapter in progress bar with color that indicate that this part is skipable.
+
+- **`loadingPoster`** (`string | undefined`): Image src for bg poster while loading the video.
+
+- **`infoText`** (`{ title: string; summery: string } | { title: string; } | undefined`): Text in the top of video(provide info about playing video).
+
+- **`fullscreenOnlyInfoText`** (`boolean | undefined`): It limit the info text to show only in full screen mode.
 
 - **`className`** (`string`): Class for video container.
 

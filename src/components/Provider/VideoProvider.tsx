@@ -62,10 +62,13 @@ export const VideoProvider = forwardRef<
       autoPlay = false,
       controls = true,
       loop = false,
-      captions = undefined,
+      captions,
       videoSkipSec = 10,
-      chapters = undefined,
+      chapters,
       showSkipableChapter = false,
+      loadingPoster = undefined,
+      infoText,
+      fullscreenOnlyInfoText,
       className = "",
       height = 480,
       width = 854,
@@ -111,6 +114,7 @@ export const VideoProvider = forwardRef<
       // if setting overlay is open then hide and if click on button then show
       const settingBtn = document.getElementById("setting-button");
       const settingContainer = document.getElementById("setting-container");
+      const topVideoLayer = document.querySelector(".mobileControl-container");
 
       if (!(settingContainer && settingContainer.contains(e.target as Node))) {
         if (
@@ -125,12 +129,21 @@ export const VideoProvider = forwardRef<
             isSettingOpen: false,
             settingItemOpen: null,
           }));
+        } else if (isDesktop && topVideoLayer?.contains(e.target as Node)) {
+          handlePlayPaused();
         }
       }
     };
 
-    const handleDoubleClick = () => {
-      if (!screenfull.isFullscreen && videoContainerRef.current && isDesktop) {
+    const handleDoubleClick = (e: MouseEvent) => {
+      const topVideoLayer = document.querySelector(".mobileControl-container");
+
+      if (
+        !screenfull.isFullscreen &&
+        videoContainerRef.current &&
+        isDesktop &&
+        topVideoLayer?.contains(e.target as Node)
+      ) {
         if (document.pictureInPictureElement) {
           document.exitPictureInPicture();
         }
@@ -162,6 +175,8 @@ export const VideoProvider = forwardRef<
           videoSkipSec,
           chapters,
           showSkipableChapter,
+          infoText,
+          fullscreenOnlyInfoText,
           className,
           height,
           width,
@@ -204,6 +219,7 @@ export const VideoProvider = forwardRef<
                 autoPlay={autoPlay}
                 controls={controls === "html5"}
                 loop={loop}
+                poster={loadingPoster}
               >
                 {captions &&
                   captions.map((caption) => (

@@ -253,11 +253,11 @@ function Controls() {
       <div className="controls">
         {!isMobile && (
           <>
-            <button onClick={handlePlayPaused}>
+            <button id="play-pause-btn" onClick={handlePlayPaused}>
               {playerState.playing ? <PauseIcon /> : <PlayIcon />}
             </button>
             <div ref={volumeContainerRef} className="volume-container">
-              <button onClick={toggleMute}>
+              <button id="volume-btn" onClick={toggleMute}>
                 {playerState.muted || playerState.volume === 0 ? (
                   <VolumeMuteIcon fill />
                 ) : playerState.volume < 0.33 ? (
@@ -295,7 +295,7 @@ function Controls() {
           /<span>{secToMinSec(playerState.duration || 0)}</span>
         </div>
         {chapters && (
-          <button
+          <p
             className={classNames("chapter-button", {
               "show-chapter-button": !playerState.currentChapter,
             })}
@@ -313,13 +313,13 @@ function Controls() {
                 fill="#fff"
               ></path>
             </svg>
-          </button>
+          </p>
         )}
         <span style={{ flexGrow: 1 }} />
-        <button onClick={handleSkipBack}>
+        <button id="backward-btn" onClick={handleSkipBack}>
           <BackwardIcon size={20} />
         </button>
-        <button onClick={handleSkipForward}>
+        <button id="forward-btn" onClick={handleSkipForward}>
           <ForwardIcon size={20} />
         </button>
         <button
@@ -330,10 +330,12 @@ function Controls() {
         >
           <SettingIcon fill />
         </button>
-        <button onClick={togglePip}>
-          <PipIcon isPip={playerState.pip} />
-        </button>
-        <button onClick={toggleFullScreen}>
+        {document.pictureInPictureEnabled && ( // if browser support then show pip button
+          <button id="pip-button" onClick={togglePip}>
+            <PipIcon isPip={playerState.pip} />
+          </button>
+        )}
+        <button id="fullscreen-btn" onClick={toggleFullScreen}>
           {playerState.isFullScreen ? <MinimizeIcon /> : <MaximizeIcon />}
         </button>
       </div>

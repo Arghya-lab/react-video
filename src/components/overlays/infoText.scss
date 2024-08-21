@@ -1,0 +1,36 @@
+@import "../global.scss";
+
+.info-text-container {
+  position: absolute;
+  top: $info-text-container-margin;
+  left: $info-text-container-margin;
+  text-shadow: 5px 5px 8px rgba(0, 0, 0, 0.45);
+
+  h1 {
+    margin: 0;
+    font-weight: 700;
+    text-transform: capitalize;
+    font-size: $info-text-title-font-size;
+    padding-bottom: $info-text-title-padding-bottom;
+  }
+
+  p {
+    margin: 0;
+    font-size: $info-text-summery-font-size;
+    text-transform: capitalize;
+  }
+
+  &.full-screen {
+    top: $info-text-container-margin-fullscreen;
+    left: $info-text-container-margin-fullscreen;
+
+    h1 {
+      font-size: $info-text-title-font-size-fullscreen;
+      padding-bottom: $info-text-title-padding-bottom-fullscreen;
+    }
+
+    p {
+      font-size: $info-text-summery-font-size-fullscreen;
+    }
+  }
+}

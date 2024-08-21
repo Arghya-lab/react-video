@@ -34,6 +34,9 @@ export interface VideoPropTypes {
   videoSkipSec?: number;
   chapters?: ChapterType[];
   showSkipableChapter?: boolean;
+  loadingPoster?: string;
+  infoText?: { title: string; summery?: string };
+  fullscreenOnlyInfoText?: boolean;
   className?: string;
   height?: number | string;
   width?: number | string;
@@ -83,8 +86,6 @@ export interface PlayerStateType {
   currentChapter: ChapterType | null;
   nextChapterStartAt: number | null;
   isChapterOverLayOpen: boolean;
-  // isReady: boolean;
-  // light: boolean,
   // videoAspectRatio: number;
   // FullScreenType: ScreenFullTypeEnum;
 }

@@ -4,6 +4,8 @@ import { VideoProvider } from "./Provider/VideoProvider";
 import InitializeVideo from "./core/InitializeVideo";
 import VideoEventListeners from "./core/VideoEventListeners";
 import Controls from "./controls/Controls";
+import ToolTips from "./overlays/ToolTips";
+import InfoText from "./overlays/InfoText";
 import Buffering from "./overlays/Buffering";
 import MobileControl from "./controls/MobileControl";
 import Settings from "./overlays/settings";
@@ -17,6 +19,8 @@ function ReactVideo(props: VideoPropTypes) {
       <InitializeVideo />
       <VideoEventListeners />
       <Controls />
+      <ToolTips />
+      <InfoText />
       <MobileControl />
       <Buffering />
       <Settings />
