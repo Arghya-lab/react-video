@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import "../variables.scss";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.video-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-inline: auto;
+  background-color: black;
+  color: white;
+  user-select: none;
+  font-family: Arial, sans-serif;
+  font-size: $global-font-size;
+}
+
+video {
+  width: 100%;
+}

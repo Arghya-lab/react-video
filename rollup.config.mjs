@@ -37,9 +37,11 @@ export default [
         extensions: [".css"], // Output CSS file
         extract: "styles.css",
         minimize: true, // Minify CSS
+        sourceMap: true, // Include source maps for CSS
       }),
       sass({
-        output: false, // Don't output a separate Sass file
+        // Compile SCSS but do not output directly
+        output: false,
       }),
     ],
   },

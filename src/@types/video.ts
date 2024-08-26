@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { CSSProperties, ReactNode } from "react";
 import { SubtitleItemType } from "../lib/fetchAndParseCaption";
 
 export type SourceItemType = { quality: string | number; src: string };
@@ -62,6 +62,9 @@ export interface VideoPropTypes {
   onError?: () => void;
   onPlaybackRateChange?: (playbackSpeed: number) => void;
   onQualityChange?: (sourceItem: SourceItemType) => void;
+}
+export interface VideoProviderProps extends VideoPropTypes {
+  children: ReactNode;
 }
 
 export interface PlayerStateType {

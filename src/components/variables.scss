@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-
 $progress-track-color: rgba(255, 255, 255, 0.6);
 $progress-track-fill-color: red;
 $progress-loaded-color: rgba(255, 255, 255, 0.5);
@@ -192,30 +190,4 @@ $control-height-fullscreen-1400: calc(
       @content;
     }
   }
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
-.video-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  margin-inline: auto;
-  background-color: black;
-  color: white;
-  user-select: none;
-  font-family: Arial, sans-serif;
-  font-size: $global-font-size;
-}
-
-video {
-  width: 100%;
 }
