@@ -1,5 +1,3 @@
-@import "../variables.scss";
-
 .player-icon {
   cursor: pointer;
 }
@@ -7,8 +5,8 @@
 .loader-container {
   transform-origin: center;
   animation: rotate4 2s linear infinite;
-  stroke: $loader-stroke-color;
-  width: $loader-width;
+  stroke: var(--rv-loader-stroke-color);
+  width: var(--rv-loader-width);
 
   .loading-circle {
     stroke-dasharray: 1, 200;

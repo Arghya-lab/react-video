@@ -1,7 +1,6 @@
 import React from "react";
 import { useVideo } from "../Provider/VideoProvider";
 import classNames from "classnames";
-import "./infoText.scss";
 import { isMobile } from "react-device-detect";
 
 function InfoText() {

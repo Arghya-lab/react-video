@@ -1,17 +1,15 @@
-@import "../variables.scss";
-
-.mobileControl-container {
+.mobile-control-container {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: calc(nth($control-padding, 1) + $control-button-height);
-  // nth($control-padding, 1) * 2 + $control-button-height + $progress-height
+  bottom: calc(var(--rv-control-padding-y) + var(--rv-control-button-height));
+  // var(--rv-control-padding-y) * 2 + var(--rv-control-button-height) + var(--rv-progress-height)
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  color: $mobile-control-button-color;
+  color: var(--rv-mobile-control-button-color);
   pointer-events: none;
 
   &.hidden {
@@ -43,36 +41,36 @@
 .video-container.full-screen {
   @include screen-query(425px) {
     .mobileControl-container button span svg {
-      width: $mobile-control-button-size-fullscreen-425;
-      height: $mobile-control-button-size-fullscreen-425;
+      width: var(--rv-mobile-control-button-size-fullscreen-425);
+      height: var(--rv-mobile-control-button-size-fullscreen-425);
     }
   }
 
   @include screen-query(600px) {
     .mobileControl-container button span svg {
-      width: $mobile-control-button-size-fullscreen-600;
-      height: $mobile-control-button-size-fullscreen-600;
+      width: var(--rv-mobile-control-button-size-fullscreen-600);
+      height: var(--rv-mobile-control-button-size-fullscreen-600);
     }
   }
 
   @include screen-query(1000px) {
     .mobileControl-container button span svg {
-      width: $mobile-control-button-size-fullscreen-1000;
-      height: $mobile-control-button-size-fullscreen-1000;
+      width: var(--rv-mobile-control-button-size-fullscreen-1000);
+      height: var(--rv-mobile-control-button-size-fullscreen-1000);
     }
   }
 
   @include screen-query(1200px) {
     .mobileControl-container button span svg {
-      width: $mobile-control-button-size-fullscreen-1200;
-      height: $mobile-control-button-size-fullscreen-1200;
+      width: var(--rv-mobile-control-button-size-fullscreen-1200);
+      height: var(--rv-mobile-control-button-size-fullscreen-1200);
     }
   }
 
   @include screen-query(1400px) {
     .mobileControl-container button span svg {
-      width: $mobile-control-button-size-fullscreen-1400;
-      height: $mobile-control-button-size-fullscreen-1400;
+      width: var(--rv-mobile-control-button-size-fullscreen-1400);
+      height: var(--rv-mobile-control-button-size-fullscreen-1400);
     }
   }
 }

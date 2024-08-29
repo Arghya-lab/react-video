@@ -4,7 +4,6 @@ import React, {
   ForwardRefRenderFunction,
   MouseEvent,
   MouseEventHandler,
-  ReactNode,
   RefObject,
   useContext,
   useRef,
@@ -13,14 +12,9 @@ import React, {
 import classNames from "classnames";
 import screenfull from "screenfull";
 import { isDesktop } from "react-device-detect";
-import {
-  PlayerStateType,
-  VideoPropTypes,
-  VideoProviderProps,
-} from "../../@types/video";
+import { PlayerStateType, VideoProviderProps } from "../../@types/video";
 import { VideoContextType } from "../../@types/context";
 import { controlVisibleDuration, defaultPlayerState } from "../../lib/constant";
-import "./main.scss";
 
 const VideoContext = createContext<VideoContextType>({
   videoRef: null,
@@ -94,7 +88,7 @@ const VideoProviderFunction: ForwardRefRenderFunction<
     onProgress = () => {},
     onPlaybackRateChange = () => {},
     onQualityChange = () => {},
-  }: { children: ReactNode } & VideoPropTypes,
+  }: VideoProviderProps,
   ref
 ) => {
   const videoRef =
@@ -120,7 +114,8 @@ const VideoProviderFunction: ForwardRefRenderFunction<
     // if setting overlay is open then hide and if click on button then show
     const settingBtn = document.getElementById("setting-button");
     const settingContainer = document.getElementById("setting-container");
-    const topVideoLayer = document.querySelector(".mobileControl-container");
+    const topVideoLayer = document.querySelector(".mobile-control-container");
+    const centerPlatBtn = document.querySelector(".play-btn-center");
 
     if (!(settingContainer && settingContainer.contains(e.target as Node))) {
       if (
@@ -135,6 +130,8 @@ const VideoProviderFunction: ForwardRefRenderFunction<
           isSettingOpen: false,
           settingItemOpen: null,
         }));
+      } else if (centerPlatBtn?.contains(e.target as Node)) {
+        return;
       } else if (isDesktop && topVideoLayer?.contains(e.target as Node)) {
         handlePlayPaused();
       }
@@ -142,9 +139,12 @@ const VideoProviderFunction: ForwardRefRenderFunction<
   };
 
   const handleDoubleClick = (e: MouseEvent) => {
-    const topVideoLayer = document.querySelector(".mobileControl-container");
+    const topVideoLayer = document.querySelector(".mobile-control-container");
+    const centerPlatBtn = document.querySelector(".play-btn-center");
 
-    if (
+    if (centerPlatBtn?.contains(e.target as Node)) {
+      return;
+    } else if (
       !screenfull.isFullscreen &&
       videoContainerRef.current &&
       isDesktop &&
@@ -182,6 +182,7 @@ const VideoProviderFunction: ForwardRefRenderFunction<
         chapters,
         showSkipableChapter,
         infoText,
+        loadingPoster,
         fullscreenOnlyInfoText,
         className,
         height,
@@ -210,12 +211,12 @@ const VideoProviderFunction: ForwardRefRenderFunction<
     >
       <div
         ref={videoContainerRef}
+        onClick={handleClick}
+        onDoubleClick={handleDoubleClick}
         style={{ height, width, ...style }}
         className={classNames("video-container", className, {
           "full-screen": playerState.isFullScreen,
         })}
-        onClick={handleClick}
-        onDoubleClick={handleDoubleClick}
       >
         {source ? (
           <>
@@ -225,7 +226,6 @@ const VideoProviderFunction: ForwardRefRenderFunction<
               autoPlay={autoPlay}
               controls={controls === "html5"}
               loop={loop}
-              poster={loadingPoster}
             >
               {captions &&
                 captions.map((caption) => (

@@ -1,7 +1,6 @@
 import React from "react";
 import { BasicIconPropType } from "./propTypes";
 import classnames from "classnames";
-import "./icon.scss";
 
 export function QualityIcon({
   className,

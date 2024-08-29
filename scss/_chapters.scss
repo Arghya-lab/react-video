@@ -1,0 +1,49 @@
+.chapters-container {
+  position: absolute;
+  z-index: 70;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--rv-chapters-container-padding);
+  padding-left: var(--rv-chapters-container-padding-left);
+  background: var(--rv-chapters-container-background);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  gap: var(--rv-chapter-gap);
+
+  .chapter {
+    display: flex;
+    align-items: center;
+    gap: var(--rv-chapter-time-gap);
+
+    span {
+      background: var(--rv-chapter-time-background);
+      padding: var(--rv-chapter-time-padding);
+      border-radius: var(--rv-chapter-time-border-radius);
+      color: var(--rv-chapter-time-color);
+    }
+
+    button {
+      margin: 0;
+      padding: var(--rv-chapter-button-padding);
+      border-radius: var(--rv-chapter-button-border-radius);
+      border: 0;
+      text-transform: capitalize;
+      background: inherit;
+      color: var(--rv-chapter-button-color);
+      cursor: pointer;
+      font-size: var(--rv-chapter-button-font-size);
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}

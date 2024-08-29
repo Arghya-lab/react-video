@@ -4,7 +4,6 @@ import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
-import sass from "rollup-plugin-sass";
 
 // This is required to read package.json file when
 // using Native ES modules in Node.js
@@ -28,20 +27,20 @@ export default [
         sourcemap: true,
       },
     ],
+    external: [
+      ...Object.keys(packageJson.peerDependencies || {}),
+      ...Object.keys(packageJson.dependencies || {}),
+    ],
     plugins: [
       peerDepsExternal(),
       resolve(),
       commonjs(),
       typescript(),
       postcss({
-        extensions: [".css"], // Output CSS file
+        extensions: [".css", ".scss"], // Handle both CSS and SCSS
         extract: "styles.css",
-        minimize: true, // Minify CSS
-        sourceMap: true, // Include source maps for CSS
-      }),
-      sass({
-        // Compile SCSS but do not output directly
-        output: false,
+        minimize: true,
+        sourceMap: true,
       }),
     ],
   },

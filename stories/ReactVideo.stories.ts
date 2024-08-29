@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ReactVideo } from "../src";
+import ReactVideo from "../src";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -45,7 +45,8 @@ export const Hls_loadPoster_infoText: Story = {
     source:
       "https://www088.vipanicdn.net/streamhls/83a227d867325122bc1a93622cf0fb3d/ep.1.1709061920.480.m3u8",
     loadingPoster:
-      "https://static.animesuge.to/6b/i/5/5d/5d13c1684a4dcf9795b5254918484c42@1024.jpg",
+      // "https://static.animesuge.to/6b/i/5/5d/5d13c1684a4dcf9795b5254918484c42@1024.jpg",
+      "https://ww11.gogoanimes.fi/cover/jujutsu-kaisen-tv-dub.png",
     infoText: {
       title: "Jujutsu Kaisen",
       summery: "Episode: 01",
@@ -146,11 +147,11 @@ export const MultiQuality: Story = {
       {
         srclang: "en",
         src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt",
+        default: true,
       },
       {
         srclang: "fr",
         src: "https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt",
-        default: true,
       },
     ],
     // downloadLink:

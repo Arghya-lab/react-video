@@ -1,0 +1,142 @@
+.setting-container {
+  position: absolute;
+  right: var(--rv-setting-margin);
+  bottom: calc(var(--rv-control-height) + var(--rv-setting-margin));
+  z-index: 80;
+  width: var(--rv-setting-width);
+  color: var(--rv-setting-color);
+  background: var(--rv-setting-background);
+  border-radius: var(--rv-setting-border-radius);
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  overflow-y: hidden;
+  transition: opacity 300ms ease-in-out;
+
+  &.show-setting {
+    overflow-y: auto;
+    pointer-events: unset;
+    max-height: min(
+      calc(100% - var(--rv-control-height)),
+      var(--rv-setting-max-height)
+    );
+    opacity: 1;
+  }
+
+  .setting-item-option {
+    padding: var(--rv-setting-padding);
+
+    .setting-item {
+      display: flex;
+      align-items: center;
+      height: var(--rv-setting-item-height);
+      cursor: pointer;
+
+      &:hover {
+        background: var(--rv-setting-background-hover);
+        color: white;
+      }
+
+      .setting-item-icon {
+        padding: var(--rv-setting-item-icon-padding);
+      }
+
+      .setting-item-label {
+        padding: var(--rv-setting-item-label-padding);
+        font-weight: var(--rv-setting-item-label-font-weight);
+        font-size: var(--rv-setting-item-label-font-size);
+
+        .setting-item-label-count {
+          font-size: var(--rv-setting-item-label-count-font-size);
+        }
+      }
+
+      .setting-active {
+        padding: var(--rv-setting-item-active-padding);
+        text-overflow: ellipsis;
+        text-align: right;
+        flex: 1 1 0%;
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIj48cGF0aCBkPSJtIDEyLjU5LDIwLjM0IDQuNTgsLTQuNTkgLTQuNTgsLTQuNTkgMS40MSwtMS40MSA2LDYgLTYsNiB6IiBmaWxsPSIjZmZmIiAvPjwvc3ZnPg==");
+        background-repeat: no-repeat;
+        background-position: var(--rv-setting-item-active-background-position);
+        background-size: var(--rv-setting-item-active-background-size);
+        font-weight: var(--rv-setting-item-active-font-weight);
+        font-size: var(--rv-setting-item-active-font-size);
+      }
+    }
+  }
+
+  .setting-option-header {
+    font-size: var(--rv-setting-option-header-font-size);
+    font-weight: var(--rv-setting-option-header-font-weight);
+    height: var(--rv-setting-option-header-height);
+    border-bottom: var(--rv-setting-option-header-bottom-border);
+    padding-left: var(--rv-setting-option-header-padding-left);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIzMiIgZm9jdXNhYmxlPSJmYWxzZSIgYXJpYS1oaWRkZW49InRydWUiIHN0eWxlPSJwb2ludGVyLWV2ZW50czogbm9uZTsgZGlzcGxheTogaW5oZXJpdDsgd2lkdGg6IDEwMCU7IGhlaWdodDogMTAwJTsiPjxwYXRoIGQ9Ik0xNC45NiAxOC45NiA4IDEybDYuOTYtNi45Ni43MS43MUw5LjQxIDEybDYuMjUgNi4yNS0uNy43MXoiIGZpbGw9IiNGMUYxRjEiPjwvcGF0aD48L3N2Zz4=");
+    background-repeat: no-repeat;
+    background-position: var(--rv-setting-option-header-background-position);
+    background-size: var(--rv-setting-item-active-background-size);
+  }
+
+  .setting-option-choice-container {
+    padding: var(--rv-setting-padding);
+
+    .setting-option-choice {
+      display: flex;
+      align-items: center;
+      height: var(--rv-setting-item-height);
+      cursor: pointer;
+      padding-left: var(--rv-setting-setting-option-choice-padding-left);
+
+      &:hover {
+        background: var(--rv-setting-background-hover);
+        color: white;
+      }
+    }
+  }
+}
+
+.video-container.full-screen {
+  @include screen-query(425px) {
+    .setting-container.show-setting {
+      bottom: calc(
+        var(--rv-control-height-fullscreen-425) + var(--rv-setting-margin)
+      );
+    }
+  }
+
+  @include screen-query(600px) {
+    .setting-container.show-setting {
+      bottom: calc(
+        var(--rv-control-height-fullscreen-600) + var(--rv-setting-margin)
+      );
+    }
+  }
+
+  @include screen-query(1000px) {
+    .setting-container.show-setting {
+      bottom: calc(
+        var(--rv-control-height-fullscreen-1000) + var(--rv-setting-margin)
+      );
+    }
+  }
+
+  @include screen-query(1200px) {
+    .setting-container.show-setting {
+      bottom: calc(
+        var(--rv-control-height-fullscreen-1200) + var(--rv-setting-margin)
+      );
+    }
+  }
+
+  @include screen-query(1400px) {
+    .setting-container.show-setting {
+      bottom: calc(
+        var(--rv-control-height-fullscreen-1400) + var(--rv-setting-margin)
+      );
+    }
+  }
+}

@@ -1,5 +1,4 @@
 import React, { MouseEvent } from "react";
-import "./chapters.scss";
 import { useVideo } from "../Provider/VideoProvider";
 import secToMinSec from "../../lib/secToMinSec";
 
@@ -16,7 +15,9 @@ function Chapters() {
     setPlayerState((prev) => ({ ...prev, isChapterOverLayOpen: false }));
   };
 
-  if (!playerState.isChapterOverLayOpen || !chapters) return null;
+  if (!playerState.isChapterOverLayOpen || !chapters || chapters.length === 0) {
+    return null;
+  }
 
   return (
     <div className="chapters-container" onClick={handleClose}>

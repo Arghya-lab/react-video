@@ -1,0 +1,16 @@
+.video-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-inline: auto;
+  background-color: black;
+  color: white;
+  user-select: none;
+  font-family: Arial, sans-serif;
+  font-size: var(--rv-global-font-size);
+
+  & video {
+    width: 100%;
+    max-width: 100%;
+  }
+}

@@ -1,5 +1,3 @@
-@import "../variables.scss";
-
 .video-bottom-control-container {
   position: absolute;
   bottom: 0;
@@ -28,17 +26,17 @@
   }
 
   .controls {
-    padding: $control-padding;
+    padding: var(--rv-control-padding-y) var(--rv-control-padding-x);
     display: flex;
     align-items: center;
-    gap: $control-button-gap;
+    gap: var(--rv-control-button-gap);
 
     button {
       background: none;
       border: none;
       color: inherit;
-      height: $control-button-height;
-      // width: $control-button-width;
+      height: var(--rv-control-button-height);
+      // width: var(--rv-control-button-width);
       padding: 0;
       opacity: 0.8;
       transition: opacity 150ms ease-in-out;
@@ -88,41 +86,45 @@
 .video-container.full-screen {
   @include screen-query(425px) {
     .video-bottom-control-container .controls {
-      padding: $control-padding-fullscreen-425;
+      padding: var(--rv-control-padding-fullscreen-425-y)
+        var(--rv-control-padding-fullscreen-425-x);
     }
   }
 
   @include screen-query(600px) {
     .video-bottom-control-container .controls {
-      gap: $control-button-gap-fullscreen-600;
-      padding: $control-padding-fullscreen-600;
+      gap: var(--rv-control-button-gap-fullscreen-600);
+      padding: var(--rv-control-padding-fullscreen-600-y)
+        var(--rv-control-padding-fullscreen-600-x);
     }
   }
 
   @include screen-query(1000px) {
     .video-bottom-control-container .controls {
-      gap: $control-button-gap-fullscreen-1000;
-      padding: $control-padding-fullscreen-1000;
+      gap: var(--rv-control-button-gap-fullscreen-1000);
+      padding: var(--rv-control-padding-fullscreen-1000-y)
+        var(--rv-control-padding-fullscreen-1000-x);
     }
   }
 
   @include screen-query(1200px) {
     .video-bottom-control-container .controls {
-      padding: $control-padding-fullscreen-1200;
+      padding: var(--rv-control-padding-fullscreen-1200-y)
+        var(--rv-control-padding-fullscreen-1200-x);
     }
   }
 
   @include screen-query(1400px) {
     .video-bottom-control-container .controls {
-      padding: $control-padding-fullscreen-1400;
+      padding: var(--rv-control-padding-fullscreen-1400-y)
+        var(--rv-control-padding-fullscreen-1400-x);
     }
   }
 }
 
 .volume-slider {
   width: 0;
-  height: $volume-slider-height;
-  background: $volume-slider-color;
+  background: var(--rv-volume-slider-color);
   transform-origin: left;
   transform: scaleX(0);
   transition:
@@ -132,22 +134,24 @@
 
 .volume-container:hover .volume-slider,
 .volume-slider:focus-within {
-  width: $volume-container-width-expand;
+  width: var(--rv-volume-container-width-expand);
   transform: scaleX(1);
 }
 
 .volume-track.volume-track-0 {
   @include progress-bar(10);
-  background: $volume-slider-fill-color;
+  height: var(--rv-volume-slider-height);
+  top: calc(-1 * var(--rv-volume-slider-height) / 2);
+  background: var(--rv-volume-slider-fill-color);
 }
 
 .volume-thumb {
-  height: $volume-thumb-height;
+  height: var(--rv-volume-thumb-height);
   aspect-ratio: 1/1;
   position: absolute;
-  top: calc(($volume-slider-height - $volume-thumb-height) / 2);
+  top: calc(-1 * var(--rv-volume-thumb-height) / 2);
   z-index: 15;
   transform: scale(var(--scale));
-  background: $volume-slider-fill-color;
+  background: var(--rv-volume-slider-fill-color);
   border-radius: 50%;
 }

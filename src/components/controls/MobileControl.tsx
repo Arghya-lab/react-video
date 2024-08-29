@@ -4,7 +4,6 @@ import { isMobile } from "react-device-detect";
 import { useVideo } from "../Provider/VideoProvider";
 import classNames from "classnames";
 import { controlVisibleDuration } from "../../lib/constant";
-import "./mobileControl.scss";
 
 function MobileControl() {
   const {
@@ -44,7 +43,7 @@ function MobileControl() {
       className={classNames(
         { visible: playerState.isControlVisible },
         { hidden: !playerState.isControlVisible },
-        "mobileControl-container"
+        "mobile-control-container"
       )}
     >
       {isMobile && (
@@ -55,7 +54,7 @@ function MobileControl() {
       {(isMobile || !playerState.playing) && (
         <button
           onClick={handlePlayPaused}
-          className={classNames({
+          className={classNames("play-btn-center", {
             buffering: playerState.buffering && playerState.playing,
           })}
         >

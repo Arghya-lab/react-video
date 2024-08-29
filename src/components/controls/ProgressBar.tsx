@@ -3,7 +3,6 @@ import ReactSlider from "react-slider";
 import classNames from "classnames";
 import { useVideo } from "../Provider/VideoProvider";
 import { controlVisibleDuration } from "../../lib/constant";
-import "./progressBar.scss";
 
 function ProgressBar() {
   const {

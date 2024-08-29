@@ -5,7 +5,6 @@ import SettingOptions from "./SettingOptions";
 import CaptionOptions from "./CaptionOptions";
 import PlaybackSpeedOption from "./PlaybackSpeedOption";
 import QualityOption from "./QualityOption";
-import "./settings.scss";
 
 function Settings() {
   const { playerState } = useVideo();

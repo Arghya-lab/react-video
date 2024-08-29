@@ -1,7 +1,6 @@
 import React from "react";
 import { useVideo } from "../Provider/VideoProvider";
 import { LoadingIcon } from "../icons";
-import "./buffering.scss";
 import classNames from "classnames";
 
 function Buffering() {

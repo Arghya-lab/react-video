@@ -1,5 +1,3 @@
-@import "../variables.scss";
-
 .buffering-container {
   position: absolute;
   top: 0;
@@ -15,7 +13,7 @@
   pointer-events: none;
 
   &.control-visible {
-    bottom: calc(nth($control-padding, 1) + $control-button-height);
+    bottom: calc(var(--rv-control-padding-y) + var(--rv-control-button-height));
   }
 
   &.buffering {
@@ -26,35 +24,35 @@
 .video-container.full-screen {
   @include screen-query(425px) {
     .buffering-container span svg {
-      width: $mobile-control-button-size-fullscreen-425;
-      height: $mobile-control-button-size-fullscreen-425;
+      width: var(--rv-mobile-control-button-size-fullscreen-425);
+      height: var(--rv-mobile-control-button-size-fullscreen-425);
     }
   }
   @include screen-query(600px) {
     .buffering-container span svg {
-      width: $mobile-control-button-size-fullscreen-600;
-      height: $mobile-control-button-size-fullscreen-600;
+      width: var(--rv-mobile-control-button-size-fullscreen-600);
+      height: var(--rv-mobile-control-button-size-fullscreen-600);
     }
   }
 
   @include screen-query(1000px) {
     .buffering-container span svg {
-      width: $mobile-control-button-size-fullscreen-1000;
-      height: $mobile-control-button-size-fullscreen-1000;
+      width: var(--rv-mobile-control-button-size-fullscreen-1000);
+      height: var(--rv-mobile-control-button-size-fullscreen-1000);
     }
   }
 
   @include screen-query(1200px) {
     .buffering-container span svg {
-      width: $mobile-control-button-size-fullscreen-1200;
-      height: $mobile-control-button-size-fullscreen-1200;
+      width: var(--rv-mobile-control-button-size-fullscreen-1200);
+      height: var(--rv-mobile-control-button-size-fullscreen-1200);
     }
   }
 
   @include screen-query(1400px) {
     .buffering-container span svg {
-      width: $mobile-control-button-size-fullscreen-1400;
-      height: $mobile-control-button-size-fullscreen-1400;
+      width: var(--rv-mobile-control-button-size-fullscreen-1400);
+      height: var(--rv-mobile-control-button-size-fullscreen-1400);
     }
   }
 }

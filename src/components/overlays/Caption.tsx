@@ -2,10 +2,10 @@ import React, { useMemo, useState } from "react";
 import { useVideo } from "../Provider/VideoProvider";
 import classNames from "classnames";
 import { SubtitleItemType } from "../../lib/fetchAndParseCaption";
-import "./caption.scss";
 
 function Caption() {
   const { playerState } = useVideo();
+  const [currenCCTime, setCurrenCCTime] = useState<number>(0);
   const [currenText, setCurrenText] = useState<SubtitleItemType | null>(null);
   const [nextTextStartAt, setNextTextStartAt] = useState<number | null>(null);
 
@@ -28,6 +28,15 @@ function Caption() {
       }
     }
 
+    if (currenCCTime > playerState.currentTime) {
+      //  user skip back
+      updateCurrentText();
+      setCurrenCCTime(playerState.currentTime);
+      return;
+    }
+
+    setCurrenCCTime(playerState.currentTime);
+
     if (!playerState.currentCaption || !playerState.currentCaptionData) return;
 
     //  in the current text
@@ -43,21 +52,24 @@ function Caption() {
       (!currenText ||
         (currenText && currenText.endTime < playerState.currentTime))
     ) {
-      //  next caption text start time is not came
-      if (nextTextStartAt > playerState.currentTime) return;
-
       //  caption text have to update
       if (nextTextStartAt <= playerState.currentTime) {
         updateCurrentText();
         return;
       }
+
+      if (currenText && currenText.endTime < playerState.currentTime) {
+        setCurrenText(null);
+      }
+
+      //  next caption text start time is not came
+      if (nextTextStartAt > playerState.currentTime) return;
     }
 
     if (
       // nothing is set
-      (!currenText && !nextTextStartAt) ||
-      //  user skip back
-      (currenText && currenText.startTime > playerState.currentTime)
+      !currenText &&
+      !nextTextStartAt
     ) {
       updateCurrentText();
       return;

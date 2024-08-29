@@ -1,27 +1,29 @@
-@import "../variables.scss";
-
 .slider-container {
-  height: $progress-height;
-  margin-bottom: $progress-bottom-margin;
-  margin-inline: $progress-x-margin;
+  height: var(--rv-progress-height);
+  margin-bottom: var(--rv-progress-bottom-margin);
+  margin-inline: var(--rv-progress-x-margin);
   position: relative;
   display: flex;
   align-items: center;
   cursor: pointer;
-  border-radius: $slider-border-radius;
+  border-radius: var(--rv-slider-border-radius);
 
   &:hover {
-    height: $progress-height-hover;
+    height: var(--rv-progress-height-hover);
+
+    .chapter-bar {
+      height: var(--rv-progress-chapter-bar-height);
+    }
   }
 
   .loaded-progress {
     @include progress-bar(-5);
-    background: $progress-loaded-color;
+    background: var(--rv-progress-loaded-color);
   }
 
   .chapter-bar {
     position: absolute;
-    height: $progress-chapter-bar-height;
+    height: var(--rv-progress-height);
     z-index: 5;
     pointer-events: none;
 
@@ -34,31 +36,31 @@
 .video-container.full-screen {
   @include screen-query(425px) {
     .video-bottom-control-container .slider-container {
-      margin-inline: $progress-x-margin-fullscreen-425;
+      margin-inline: var(--rv-progress-x-margin-fullscreen-425);
     }
   }
 
   @include screen-query(600px) {
     .video-bottom-control-container .slider-container {
-      margin-inline: $progress-x-margin-fullscreen-600;
+      margin-inline: var(--rv-progress-x-margin-fullscreen-600);
     }
   }
 
   @include screen-query(1000px) {
     .video-bottom-control-container .slider-container {
-      margin-inline: $progress-x-margin-fullscreen-1000;
+      margin-inline: var(--rv-progress-x-margin-fullscreen-1000);
     }
   }
 
   @include screen-query(1200px) {
     .video-bottom-control-container .slider-container {
-      margin-inline: $progress-x-margin-fullscreen-1200;
+      margin-inline: var(--rv-progress-x-margin-fullscreen-1200);
     }
   }
 
   @include screen-query(1400px) {
     .video-bottom-control-container .slider-container {
-      margin-inline: $progress-x-margin-fullscreen-1400;
+      margin-inline: var(--rv-progress-x-margin-fullscreen-1400);
     }
   }
 }
@@ -66,26 +68,29 @@
 .horizontal-slider {
   height: 100%;
   width: 100%;
-  background-color: $progress-track-color;
-  // border-radius: $slider-border-radius;
+  background-color: var(--rv-progress-track-color);
+  // border-radius: var(--rv-slider-border-radius);
   cursor: pointer;
 }
 
 .slider-track.slider-track-0 {
   @include progress-bar(10);
-  background: $progress-track-fill-color;
+  background: var(--rv-progress-track-fill-color);
 }
 
 .slider-thumb {
   --scale: 0;
-  top: calc(($progress-height-hover - $progress-thumb-height) / 2);
-  height: $progress-thumb-height;
+  top: calc(
+    (var(--rv-progress-height-hover) - var(--rv-progress-thumb-height)) / 2
+  );
+  height: var(--rv-progress-thumb-height);
   aspect-ratio: 1/1;
   transform: scale(var(--scale));
   // transition: transform 150ms ease-in-out;
   // transform-origin: right;
-  background: $progress-track-fill-color;
-  border: $progress-thumb-border-size solid $progress-thumb-border-color;
+  background: var(--rv-progress-track-fill-color);
+  border: var(--rv-progress-thumb-border-size) solid
+    var(--rv-progress-thumb-border-color);
   border-radius: 50%;
 }
 

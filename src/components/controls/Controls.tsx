@@ -17,11 +17,11 @@ import secToMinSec from "../../lib/secToMinSec";
 import { useVideo } from "../Provider/VideoProvider";
 import screenFull from "screenfull";
 import ProgressBar from "./ProgressBar";
-import "./controls.scss";
 import ReactSlider from "react-slider";
 import { isMobile } from "react-device-detect";
 import classNames from "classnames";
 import { controlVisibleDuration } from "../../lib/constant";
+import TooltipWrapper from "./TooltipWrapper";
 
 function Controls() {
   const {
@@ -253,21 +253,28 @@ function Controls() {
       <div className="controls">
         {!isMobile && (
           <>
-            <button id="play-pause-btn" onClick={handlePlayPaused}>
-              {playerState.playing ? <PauseIcon /> : <PlayIcon />}
-            </button>
-            <div ref={volumeContainerRef} className="volume-container">
-              <button id="volume-btn" onClick={toggleMute}>
-                {playerState.muted || playerState.volume === 0 ? (
-                  <VolumeMuteIcon fill />
-                ) : playerState.volume < 0.33 ? (
-                  <VolumeLowIcon fill />
-                ) : playerState.volume < 0.67 ? (
-                  <VolumeMediumIcon fill />
-                ) : (
-                  <VolumeHighIcon fill />
-                )}
+            <TooltipWrapper
+              position="top-right"
+              toolTip={playerState.playing ? "Pause" : "Play"}
+            >
+              <button id="play-pause-btn" onClick={handlePlayPaused}>
+                {playerState.playing ? <PauseIcon /> : <PlayIcon />}
               </button>
+            </TooltipWrapper>
+            <div ref={volumeContainerRef} className="volume-container">
+              <TooltipWrapper toolTip={playerState.muted ? "Unmute" : "Mute"}>
+                <button id="volume-btn" onClick={toggleMute}>
+                  {playerState.muted || playerState.volume === 0 ? (
+                    <VolumeMuteIcon fill />
+                  ) : playerState.volume < 0.33 ? (
+                    <VolumeLowIcon fill />
+                  ) : playerState.volume < 0.67 ? (
+                    <VolumeMediumIcon fill />
+                  ) : (
+                    <VolumeHighIcon fill />
+                  )}
+                </button>
+              </TooltipWrapper>
               <ReactSlider
                 className="horizontal-slider volume-slider"
                 trackClassName="volume-track"
@@ -294,7 +301,7 @@ function Controls() {
           </span>
           /<span>{secToMinSec(playerState.duration || 0)}</span>
         </div>
-        {chapters && (
+        {chapters && chapters.length > 0 && (
           <p
             className={classNames("chapter-button", {
               "show-chapter-button": !playerState.currentChapter,
@@ -316,28 +323,42 @@ function Controls() {
           </p>
         )}
         <span style={{ flexGrow: 1 }} />
-        <button id="backward-btn" onClick={handleSkipBack}>
-          <BackwardIcon size={20} />
-        </button>
-        <button id="forward-btn" onClick={handleSkipForward}>
-          <ForwardIcon size={20} />
-        </button>
-        <button
-          id="setting-button"
-          className={classNames("setting-button", {
-            "setting-active": playerState.isSettingOpen,
-          })}
-        >
-          <SettingIcon fill />
-        </button>
-        {document.pictureInPictureEnabled && ( // if browser support then show pip button
-          <button id="pip-button" onClick={togglePip}>
-            <PipIcon isPip={playerState.pip} />
+        <TooltipWrapper toolTip="Skip backward">
+          <button onClick={handleSkipBack}>
+            <BackwardIcon size={20} />
           </button>
+        </TooltipWrapper>
+        <TooltipWrapper toolTip="Skip forward">
+          <button onClick={handleSkipForward}>
+            <ForwardIcon size={20} />
+          </button>
+        </TooltipWrapper>
+        <TooltipWrapper toolTip="Setting">
+          <button
+            id="setting-button"
+            className={classNames("setting-button", {
+              "setting-active": playerState.isSettingOpen,
+            })}
+          >
+            <SettingIcon fill />
+          </button>
+        </TooltipWrapper>
+        {/* if browser support then show pip button */}
+        {document.pictureInPictureEnabled && (
+          <TooltipWrapper toolTip={playerState.pip ? "Exit Pip" : "Pip"}>
+            <button onClick={togglePip}>
+              <PipIcon isPip={playerState.pip} />
+            </button>
+          </TooltipWrapper>
         )}
-        <button id="fullscreen-btn" onClick={toggleFullScreen}>
-          {playerState.isFullScreen ? <MinimizeIcon /> : <MaximizeIcon />}
-        </button>
+        <TooltipWrapper
+          toolTip={playerState.isFullScreen ? "Exit fullscreen" : "Full screen"}
+          position="top-left"
+        >
+          <button onClick={toggleFullScreen}>
+            {playerState.isFullScreen ? <MinimizeIcon /> : <MaximizeIcon />}
+          </button>
+        </TooltipWrapper>
       </div>
     </div>
   );
