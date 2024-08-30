@@ -27,6 +27,7 @@ function VideoEventListeners() {
 
   useEffect(() => {
     if (videoRef && videoRef.current) {
+      videoRef.current.addEventListener("loadeddata", handleLoadedData);
       videoRef.current.addEventListener("canplay", handleReady);
       videoRef.current.addEventListener("play", handleOnPlay);
       videoRef.current.addEventListener("progress", handleProgress);
@@ -49,6 +50,7 @@ function VideoEventListeners() {
 
     return () => {
       if (videoRef && videoRef.current) {
+        videoRef.current.removeEventListener("loadeddata", handleLoadedData);
         videoRef.current.removeEventListener("canplay", handleReady);
         videoRef.current.removeEventListener("play", handleOnPlay);
         videoRef.current.removeEventListener("progress", handleProgress);
@@ -101,6 +103,10 @@ function VideoEventListeners() {
       );
     };
   }, [videoRef, videoContainerRef, controlVisibleTill, setPlayerState]);
+
+  const handleLoadedData = () => {
+    setPlayerState((prev) => ({ ...prev, isVideoLoaded: true }));
+  };
 
   const getDuration = () => {
     if (videoRef && videoRef.current) {
@@ -170,6 +176,8 @@ function VideoEventListeners() {
         chapters && // nothing is set
         ((!playerState.currentChapter && !playerState.nextChapterStartAt) ||
           //  chapter have to update
+          (playerState.currentChapter &&
+            playerState.currentChapter.endTime <= currentTime) ||
           (playerState.nextChapterStartAt &&
             playerState.nextChapterStartAt <= currentTime) ||
           //  user skip back

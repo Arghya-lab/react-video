@@ -1,4 +1,4 @@
-import React, { forwardRef, ForwardRefRenderFunction } from "react";
+import React, { forwardRef } from "react";
 import { VideoPropTypes } from "./@types/video";
 import { VideoProvider } from "./components/Provider/VideoProvider";
 import InitializeVideo from "./components/core/InitializeVideo";
@@ -15,27 +15,25 @@ import SkipButton from "./components/overlays/SkipButton";
 import LoadingPoster from "./components/overlays/LoadingPoster";
 import "../scss/main.scss";
 
-const ReactVideoFunction: ForwardRefRenderFunction<
-  HTMLVideoElement,
-  VideoPropTypes
-> = (props, ref) => (
-  <VideoProvider {...props} ref={ref}>
-    <LoadingPoster />
-    <InitializeVideo />
-    <VideoEventListeners />
-    <Controls />
-    {/* <ToolTips /> */}
-    <InfoText />
-    <MobileControl />
-    <Buffering />
-    <Settings />
-    <Caption />
-    <Chapters />
-    <SkipButton />
-  </VideoProvider>
+const ReactVideo = forwardRef<HTMLVideoElement, VideoPropTypes>(
+  (props, ref) => (
+    <VideoProvider {...props} ref={ref}>
+      <LoadingPoster />
+      <InitializeVideo />
+      <VideoEventListeners />
+      <Controls />
+      {/* <ToolTips /> */}
+      <InfoText />
+      <MobileControl />
+      <Buffering />
+      <Settings />
+      <Caption />
+      <Chapters />
+      <SkipButton />
+    </VideoProvider>
+  )
 );
 
-export const ReactVideo = forwardRef(ReactVideoFunction);
 ReactVideo.displayName = "ReactVideo";
 
 export default ReactVideo;

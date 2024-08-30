@@ -10,6 +10,7 @@ function InfoText() {
     <div
       className={classNames("info-text-container", {
         "full-screen": playerState.isFullScreen,
+        hidden: !playerState.isControlVisible,
       })}
     >
       {((fullscreenOnlyInfoText && playerState.isFullScreen && infoText) ||

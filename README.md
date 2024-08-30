@@ -92,7 +92,6 @@ loadingPoster?: string;
 infoText?: { title: string; summery?: string };
 fullscreenOnlyInfoText?: boolean;
 className?: string;
-height?: number | string;
 width?: number | string;
 style?: CSSProperties;
 onReady?: () => void;
@@ -147,9 +146,7 @@ onQualityChange?: (sourceItem: {
 
 - **`className`** (`string`): Class for video container.
 
-- **`height`** (`number | string`): Height of video container.
-
-- **`width`** (`number | string`): Height of video container.
+- **`width`** (`number | string`): Width of video container.
 
 - **`style`** : Style of video container.
 

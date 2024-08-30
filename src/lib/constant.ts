@@ -15,6 +15,7 @@ export const playbackSpeeds: PlaybackType[] = [
 ];
 
 export const defaultPlayerState: PlayerStateType = {
+  isVideoLoaded: false,
   playing: false,
   startOnPlay: true,
   buffering: false,

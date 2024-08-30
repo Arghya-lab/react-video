@@ -5,6 +5,7 @@
   .tooltip {
     display: none;
     position: absolute;
+    z-index: 5;
     top: var(--rv-tooltip-top-position);
     width: max-content;
     text-align: center;
@@ -38,7 +39,7 @@
   }
 
   &:hover {
-    .tooltip {
+    .show-tooltip {
       display: block;
     }
   }

@@ -38,7 +38,6 @@ export interface VideoPropTypes {
   infoText?: { title: string; summery?: string };
   fullscreenOnlyInfoText?: boolean;
   className?: string;
-  height?: number | string;
   width?: number | string;
   style?: CSSProperties;
   onReady?: () => void;
@@ -68,6 +67,7 @@ export interface VideoProviderProps extends VideoPropTypes {
 }
 
 export interface PlayerStateType {
+  isVideoLoaded: boolean;
   playing: boolean;
   startOnPlay: boolean;
   buffering: boolean;

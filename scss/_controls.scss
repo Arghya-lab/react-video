@@ -7,11 +7,11 @@
   color: white;
 
   &.hidden {
-    @include visible-hidden-control(0);
+    @include show-hide-control(0);
   }
 
   &.visible {
-    @include visible-hidden-control(1);
+    @include show-hide-control(1);
   }
 
   &::before {

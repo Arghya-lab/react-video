@@ -3,6 +3,11 @@
   top: var(--rv-info-text-container-margin);
   left: var(--rv-info-text-container-margin);
   text-shadow: 5px 5px 8px rgba(0, 0, 0, 0.45);
+  transition: opacity 300ms ease-in-out;
+
+  &.hidden {
+    opacity: 0;
+  }
 
   h1 {
     margin: 0;
