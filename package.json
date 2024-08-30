@@ -1,6 +1,6 @@
 {
   "name": "@arghya-lab/react-video",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A react video player component inspired by youtube player ui",
   "scripts": {
     "build": "rollup -c",
