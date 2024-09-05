@@ -46,30 +46,6 @@ const App = () => (
 export default App;
 ```
 
-### Next.js:
-
-```tsx
-import "@arghya-lab/react-video/dist/styles.css";
-
-// Dynamically import the ReactVideo component with SSR disabled.
-const ReactVideo = dynamic(
-  () => import("@arghya-lab/react-video"),
-  { ssr: false }
-);
-
-const VideoPage = () => (
-  <div>
-    <ReactVideo
-      src="path/to/your/video.mp4"
-      {* other props *}
-    />
-     {* other components *}
-  </div>
-);
-
-export default VideoPage;
-```
-
 ## VideoPlayer Component Props
 
 ```ts

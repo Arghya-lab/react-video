@@ -27,7 +27,7 @@ function TooltipWrapper({
       <div
         className={classNames("tooltip", `tooltip-${position}`, {
           fullscreen: playerState.isFullScreen,
-          "show-tooltip": playerState.isSettingOpen,
+          "show-tooltip": !playerState.isSettingOpen,
         })}
       >
         {toolTip}

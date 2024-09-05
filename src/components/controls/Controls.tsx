@@ -240,127 +240,136 @@ function Controls() {
   if (!controls) return null;
 
   return (
-    <div
-      className={classNames(
-        {
-          visible: playerState.isControlVisible,
-          hidden: !playerState.isControlVisible,
-        },
-        "video-bottom-control-container"
-      )}
-    >
-      <ProgressBar />
-      <div className="controls">
-        {!isMobile && (
-          <>
-            <TooltipWrapper
-              position="top-right"
-              toolTip={playerState.playing ? "Pause" : "Play"}
-            >
-              <button id="play-pause-btn" onClick={handlePlayPaused}>
-                {playerState.playing ? <PauseIcon /> : <PlayIcon />}
-              </button>
-            </TooltipWrapper>
-            <div ref={volumeContainerRef} className="volume-container">
-              <TooltipWrapper toolTip={playerState.muted ? "Unmute" : "Mute"}>
-                <button id="volume-btn" onClick={toggleMute}>
-                  {playerState.muted || playerState.volume === 0 ? (
-                    <VolumeMuteIcon fill />
-                  ) : playerState.volume < 0.33 ? (
-                    <VolumeLowIcon fill />
-                  ) : playerState.volume < 0.67 ? (
-                    <VolumeMediumIcon fill />
-                  ) : (
-                    <VolumeHighIcon fill />
-                  )}
+    <>
+      <span
+        className={classNames("background-overlay", {
+          visible: !playerState.playing,
+        })}
+      />
+      <div
+        className={classNames(
+          {
+            visible: playerState.isControlVisible,
+            hidden: !playerState.isControlVisible,
+          },
+          "video-bottom-control-container"
+        )}
+      >
+        <ProgressBar />
+        <div className="controls">
+          {!isMobile && (
+            <>
+              <TooltipWrapper
+                position="top-right"
+                toolTip={playerState.playing ? "Pause" : "Play"}
+              >
+                <button id="play-pause-btn" onClick={handlePlayPaused}>
+                  {playerState.playing ? <PauseIcon /> : <PlayIcon />}
                 </button>
               </TooltipWrapper>
-              <ReactSlider
-                className="horizontal-slider volume-slider"
-                trackClassName="volume-track"
-                thumbClassName="volume-thumb"
-                renderThumb={(props) => <div {...props} />}
-                min={0}
-                max={10}
-                value={playerState.muted ? 0 : playerState.volume * 10}
-                onChange={handleVolumeChange}
-              />
-            </div>
-          </>
-        )}
-        <div
-          className="duration-container"
-          onClick={() => setIsReverseTime((prev) => !prev)}
-        >
-          <span>
-            {isReverseTime
-              ? secToMinSec(
-                  playerState.currentTime - (playerState.duration || 0)
-                )
-              : secToMinSec(playerState.currentTime)}
-          </span>
-          /<span>{secToMinSec(playerState.duration || 0)}</span>
-        </div>
-        {chapters && chapters.length > 0 && (
-          <p
-            className={classNames("chapter-button", {
-              "show-chapter-button": !playerState.currentChapter,
-            })}
-            onClick={() =>
-              setPlayerState((prev) => ({
-                ...prev,
-                isChapterOverLayOpen: !prev.isChapterOverLayOpen,
-              }))
-            }
+              <div ref={volumeContainerRef} className="volume-container">
+                <TooltipWrapper toolTip={playerState.muted ? "Unmute" : "Mute"}>
+                  <button id="volume-btn" onClick={toggleMute}>
+                    {playerState.muted || playerState.volume === 0 ? (
+                      <VolumeMuteIcon fill />
+                    ) : playerState.volume < 0.33 ? (
+                      <VolumeLowIcon fill />
+                    ) : playerState.volume < 0.67 ? (
+                      <VolumeMediumIcon fill />
+                    ) : (
+                      <VolumeHighIcon fill />
+                    )}
+                  </button>
+                </TooltipWrapper>
+                <ReactSlider
+                  className="horizontal-slider volume-slider"
+                  trackClassName="volume-track"
+                  thumbClassName="volume-thumb"
+                  renderThumb={(props) => <div {...props} />}
+                  min={0}
+                  max={10}
+                  value={playerState.muted ? 0 : playerState.volume * 10}
+                  onChange={handleVolumeChange}
+                />
+              </div>
+            </>
+          )}
+          <div
+            className="duration-container"
+            onClick={() => setIsReverseTime((prev) => !prev)}
           >
-            • {playerState.currentChapter?.name || "show chapters"}
-            <svg height="20" viewBox="0 0 24 24" width="20">
-              <path
-                d="M9.71 18.71l-1.42-1.42 5.3-5.29-5.3-5.29 1.42-1.42 6.7 6.71z"
-                fill="#fff"
-              ></path>
-            </svg>
-          </p>
-        )}
-        <span style={{ flexGrow: 1 }} />
-        <TooltipWrapper toolTip="Skip backward">
-          <button onClick={handleSkipBack}>
-            <BackwardIcon size={20} />
-          </button>
-        </TooltipWrapper>
-        <TooltipWrapper toolTip="Skip forward">
-          <button onClick={handleSkipForward}>
-            <ForwardIcon size={20} />
-          </button>
-        </TooltipWrapper>
-        <TooltipWrapper toolTip="Setting">
-          <button
-            id="setting-button"
-            className={classNames("setting-button", {
-              "setting-active": playerState.isSettingOpen,
-            })}
-          >
-            <SettingIcon fill />
-          </button>
-        </TooltipWrapper>
-        {/* if browser support then show pip button */}
-        {document.pictureInPictureEnabled && (
-          <TooltipWrapper toolTip={playerState.pip ? "Exit Pip" : "Pip"}>
-            <button onClick={togglePip}>
-              <PipIcon isPip={playerState.pip} />
+            <span>
+              {isReverseTime
+                ? secToMinSec(
+                    playerState.currentTime - (playerState.duration || 0)
+                  )
+                : secToMinSec(playerState.currentTime)}
+            </span>
+            /<span>{secToMinSec(playerState.duration || 0)}</span>
+          </div>
+          {chapters && chapters.length > 0 && (
+            <p
+              className={classNames("chapter-button", {
+                "show-chapter-button": !playerState.currentChapter,
+              })}
+              onClick={() =>
+                setPlayerState((prev) => ({
+                  ...prev,
+                  isChapterOverLayOpen: !prev.isChapterOverLayOpen,
+                }))
+              }
+            >
+              • {playerState.currentChapter?.name || "show chapters"}
+              <svg height="20" viewBox="0 0 24 24" width="20">
+                <path
+                  d="M9.71 18.71l-1.42-1.42 5.3-5.29-5.3-5.29 1.42-1.42 6.7 6.71z"
+                  fill="#fff"
+                ></path>
+              </svg>
+            </p>
+          )}
+          <span style={{ flexGrow: 1 }} />
+          <TooltipWrapper toolTip="Skip backward">
+            <button onClick={handleSkipBack}>
+              <BackwardIcon size={20} />
             </button>
           </TooltipWrapper>
-        )}
-        <TooltipWrapper
-          toolTip={playerState.isFullScreen ? "Exit fullscreen" : "Full screen"}
-          position="top-left"
-        >
-          <button onClick={toggleFullScreen}>
-            {playerState.isFullScreen ? <MinimizeIcon /> : <MaximizeIcon />}
-          </button>
-        </TooltipWrapper>
+          <TooltipWrapper toolTip="Skip forward">
+            <button onClick={handleSkipForward}>
+              <ForwardIcon size={20} />
+            </button>
+          </TooltipWrapper>
+          <TooltipWrapper toolTip="Setting">
+            <button
+              id="setting-button"
+              className={classNames("setting-button", {
+                "setting-active": playerState.isSettingOpen,
+              })}
+            >
+              <SettingIcon fill />
+            </button>
+          </TooltipWrapper>
+          {/* if browser support then show pip button */}
+          {document.pictureInPictureEnabled && (
+            <TooltipWrapper toolTip={playerState.pip ? "Exit Pip" : "Pip"}>
+              <button onClick={togglePip}>
+                <PipIcon isPip={playerState.pip} />
+              </button>
+            </TooltipWrapper>
+          )}
+          <TooltipWrapper
+            toolTip={
+              playerState.isFullScreen ? "Exit fullscreen" : "Full screen"
+            }
+            position="top-left"
+          >
+            <button onClick={toggleFullScreen}>
+              {playerState.isFullScreen ? <MinimizeIcon /> : <MaximizeIcon />}
+            </button>
+          </TooltipWrapper>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

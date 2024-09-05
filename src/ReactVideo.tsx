@@ -4,7 +4,6 @@ import { VideoProvider } from "./components/Provider/VideoProvider";
 import InitializeVideo from "./components/core/InitializeVideo";
 import VideoEventListeners from "./components/core/VideoEventListeners";
 import Controls from "./components/controls/Controls";
-// import ToolTips from "./components/overlays/ToolTips";
 import InfoText from "./components/overlays/InfoText";
 import Buffering from "./components/overlays/Buffering";
 import MobileControl from "./components/controls/MobileControl";
@@ -22,7 +21,6 @@ const ReactVideo = forwardRef<HTMLVideoElement, VideoPropTypes>(
       <InitializeVideo />
       <VideoEventListeners />
       <Controls />
-      {/* <ToolTips /> */}
       <InfoText />
       <MobileControl />
       <Buffering />

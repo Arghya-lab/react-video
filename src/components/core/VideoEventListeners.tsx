@@ -27,8 +27,8 @@ function VideoEventListeners() {
 
   useEffect(() => {
     if (videoRef && videoRef.current) {
-      videoRef.current.addEventListener("loadeddata", handleLoadedData);
       videoRef.current.addEventListener("canplay", handleReady);
+      videoRef.current.addEventListener("loadedmetadata", handleDuration);
       videoRef.current.addEventListener("play", handleOnPlay);
       videoRef.current.addEventListener("progress", handleProgress);
       videoRef.current.addEventListener("timeupdate", handleTimeUpdate);
@@ -50,8 +50,8 @@ function VideoEventListeners() {
 
     return () => {
       if (videoRef && videoRef.current) {
-        videoRef.current.removeEventListener("loadeddata", handleLoadedData);
         videoRef.current.removeEventListener("canplay", handleReady);
+        videoRef.current.removeEventListener("loadedmetadata", handleDuration);
         videoRef.current.removeEventListener("play", handleOnPlay);
         videoRef.current.removeEventListener("progress", handleProgress);
         videoRef.current.removeEventListener("timeupdate", handleTimeUpdate);
@@ -104,26 +104,29 @@ function VideoEventListeners() {
     };
   }, [videoRef, videoContainerRef, controlVisibleTill, setPlayerState]);
 
-  const handleLoadedData = () => {
-    setPlayerState((prev) => ({ ...prev, isVideoLoaded: true }));
-  };
+  const handleDuration = () => {
+    if (videoRef?.current) {
+      const duration = videoRef.current.duration;
 
-  const getDuration = () => {
-    if (videoRef && videoRef.current) {
-      return videoRef.current.duration;
+      setPlayerState((prev) => ({
+        ...prev,
+        duration,
+        isVideoLoaded: true,
+      }));
+
+      onDuration(duration);
     }
-    return 0;
   };
 
   const handleReady = () => {
-    onReady();
-    const duration = getDuration();
+    if (!playerState.isVideoLoaded) {
+      onReady();
+    }
+
     setPlayerState((prev) => ({
       ...prev,
       buffering: false,
-      duration,
     }));
-    onDuration(duration);
   };
 
   const handleOnPlay = () => {

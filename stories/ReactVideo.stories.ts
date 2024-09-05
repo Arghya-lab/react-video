@@ -76,6 +76,10 @@ export const CaptionVideo: Story = {
   },
 };
 
+// const handleReady = () => {
+//   console.log("Ready");
+// };
+
 export const polyQtyHlsWithCh: Story = {
   args: {
     source: [
@@ -124,6 +128,7 @@ export const polyQtyHlsWithCh: Story = {
       },
     ],
     showSkipableChapter: true,
+    // onReady={handleReady},
   },
 };
 

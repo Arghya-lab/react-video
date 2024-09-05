@@ -1,3 +1,15 @@
+.background-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+
+  &.visible {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
 .video-bottom-control-container {
   position: absolute;
   bottom: 0;
