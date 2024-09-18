@@ -1,4 +1,3 @@
-import React from "react";
 import { useVideo } from "../../Provider/VideoProvider";
 import { SourceItemType } from "../../../@types";
 

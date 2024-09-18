@@ -1,4 +1,3 @@
-import React from "react";
 import { BackwardIcon, ForwardIcon, PauseIcon, PlayIcon } from "../icons";
 import { isMobile } from "react-device-detect";
 import { useVideo } from "../Provider/VideoProvider";

@@ -1,59 +1,69 @@
 {
   "name": "@arghya-lab/react-video",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A react video player component inspired by youtube player ui",
-  "scripts": {
-    "build": "rollup -c",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write ./src/**/*.{js,jsx,ts,tsx,css,scss,md,json} --config ./.prettierrc.json",
-    "publish": "npm run build && npm publish --access public"
+  "private": true,
+  "type": "module",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.es.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./dist/style.css": "./dist/style.css"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "vite example",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
   "devDependencies": {
-    "@chromatic-com/storybook": "^1.6.1",
+    "@chromatic-com/storybook": "^1.9.0",
     "@eslint/js": "^9.9.0",
-    "@rollup/plugin-commonjs": "^26.0.1",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-typescript": "^11.1.6",
-    "@storybook/addon-essentials": "^8.2.9",
-    "@storybook/addon-interactions": "^8.2.9",
-    "@storybook/addon-links": "^8.2.9",
-    "@storybook/addon-onboarding": "^8.2.9",
-    "@storybook/blocks": "^8.2.9",
-    "@storybook/react": "^8.2.9",
-    "@storybook/react-vite": "^8.2.9",
-    "@storybook/test": "^8.2.9",
+    "@storybook/addon-essentials": "^8.3.1",
+    "@storybook/addon-interactions": "^8.3.1",
+    "@storybook/addon-links": "^8.3.1",
+    "@storybook/addon-onboarding": "^8.3.1",
+    "@storybook/blocks": "^8.3.1",
+    "@storybook/react": "^8.3.1",
+    "@storybook/react-vite": "^8.3.1",
+    "@storybook/test": "^8.3.1",
+    "@types/node": "^22.5.5",
     "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "@types/react-slider": "^1.3.6",
     "@types/tinycolor2": "^1.4.6",
     "@types/webvtt-parser": "^2.2.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "classnames": "^2.5.1",
     "dashjs": "^4.7.4",
     "eslint": "^9.9.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "eslint-plugin-storybook": "^0.8.0",
     "flv.js": "^1.6.2",
     "globals": "^15.9.0",
-    "hls.js": "^1.5.14",
-    "postcss": "^8.4.41",
-    "prettier": "^3.0.2",
+    "hls.js": "^1.5.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "rollup": "^4.20.0",
-    "rollup-plugin-dts": "^6.1.1",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-sass": "^1.13.1",
+    "sass": "^1.79.1",
+    "scss": "^0.2.4",
     "srt-parser-2": "^1.2.3",
-    "storybook": "^8.2.9",
-    "tslib": "^2.6.3",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "^8.1.0",
+    "storybook": "^8.3.1",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.0.1",
+    "vite": "^5.4.1",
+    "vite-plugin-dts": "^4.2.1",
+    "vitest": "^2.1.1",
     "webvtt-parser": "^2.2.0"
   },
   "dependencies": {
@@ -88,5 +98,10 @@
     "hls",
     "flv",
     "html5"
-  ]
+  ],
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import ReactSlider from "react-slider";
 import classNames from "classnames";
 import { useVideo } from "../Provider/VideoProvider";
@@ -54,8 +54,13 @@ function ProgressBar() {
           key={`${loadedArea[0]}-${loadedArea[1]}`}
           className="loaded-progress"
           style={{
-            left: `${(loadedArea[0] / (playerState.duration || 0) || 0) * 100}%`,
-            width: `${((loadedArea[1] - loadedArea[0]) / (playerState.duration || 0) || 0) * 100}%`,
+            left: `${
+              (loadedArea[0] / (playerState.duration || 0) || 0) * 100
+            }%`,
+            width: `${
+              ((loadedArea[1] - loadedArea[0]) / (playerState.duration || 0) ||
+                0) * 100
+            }%`,
           }}
         />
       ))}
@@ -69,8 +74,13 @@ function ProgressBar() {
                 "above-progress": playerState.currentTime > chapter.endTime,
               })}
               style={{
-                left: `${(chapter.startTime / (playerState.duration || 0) || 0) * 100}%`,
-                width: `${((chapter.endTime - chapter.startTime) / (playerState.duration || 0) || 0) * 100}%`,
+                left: `${
+                  (chapter.startTime / (playerState.duration || 0) || 0) * 100
+                }%`,
+                width: `${
+                  ((chapter.endTime - chapter.startTime) /
+                    (playerState.duration || 0) || 0) * 100
+                }%`,
                 background: chapter.color,
               }}
             />

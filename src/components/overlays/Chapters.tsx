@@ -1,4 +1,4 @@
-import React, { MouseEvent } from "react";
+import { MouseEvent } from "react";
 import { useVideo } from "../Provider/VideoProvider";
 import secToMinSec from "../../lib/secToMinSec";
 

@@ -1,14 +1,23 @@
-/src
-/node_modules
-/stories
 /.vscode
-/.storybook
 /.changeset
+/.storybook
+/example
+/node_modules
+/src
+/stories
+/tests
 
 .env
 .prettierrc.json
 *storybook.log
 
-eslint.config.mjs
-rollup.config.mjs
+eslint.config.js
+rollup.config.*
+
+eslint.config.*
+package-lock.json
+
+tsconfig.app.*
 tsconfig.json
+tsconfig.node.*
+vite.config.*

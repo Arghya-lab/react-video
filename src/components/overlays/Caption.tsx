@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useVideo } from "../Provider/VideoProvider";
 import classNames from "classnames";
 import { SubtitleItemType } from "../../lib/fetchAndParseCaption";

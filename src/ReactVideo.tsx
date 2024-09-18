@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import { VideoPropTypes } from "./@types/video";
 import { VideoProvider } from "./components/Provider/VideoProvider";
 import InitializeVideo from "./components/core/InitializeVideo";
@@ -12,7 +12,7 @@ import Caption from "./components/overlays/Caption";
 import Chapters from "./components/overlays/Chapters";
 import SkipButton from "./components/overlays/SkipButton";
 import LoadingPoster from "./components/overlays/LoadingPoster";
-import "../scss/main.scss";
+import "./scss/main.scss";
 
 const ReactVideo = forwardRef<HTMLVideoElement, VideoPropTypes>(
   (props, ref) => (

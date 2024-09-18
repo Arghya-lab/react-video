@@ -1,4 +1,3 @@
-import React from "react";
 import { IconPropType } from "./propTypes";
 import classnames from "classnames";
 

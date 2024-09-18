@@ -32,7 +32,7 @@ Here's a basic example of how to use the video player component:
 ```tsx
 import React from "react";
 import ReactVideo from "@arghya-lab/react-video";
-import "@arghya-lab/react-video/dist/styles.css";
+import "@arghya-lab/react-video/dist/style.css";
 
 const App = () => (
   <div>

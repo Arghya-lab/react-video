@@ -1,4 +1,3 @@
-import React from "react";
 import { CaptionIcon, PlaybackSpeedIcon, QualityIcon } from "../../icons";
 import { useVideo } from "../../Provider/VideoProvider";
 

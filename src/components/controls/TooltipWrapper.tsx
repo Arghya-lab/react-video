@@ -1,4 +1,4 @@
-import React, { ComponentProps, ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
 import classNames from "classnames";
 import { useVideo } from "../Provider/VideoProvider";
 import { isMobile } from "react-device-detect";

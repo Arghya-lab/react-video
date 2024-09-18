@@ -1,4 +1,3 @@
-import React from "react";
 import tinycolor from "tinycolor2";
 import classNames from "classnames";
 import { useVideo } from "../Provider/VideoProvider";

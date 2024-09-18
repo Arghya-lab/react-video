@@ -1,4 +1,3 @@
-import React from "react";
 import { useVideo } from "../../Provider/VideoProvider";
 import { PlaybackType } from "../../../@types";
 import { playbackSpeeds } from "../../../lib/constant";
