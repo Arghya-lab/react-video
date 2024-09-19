@@ -74,6 +74,7 @@ function Caption() {
       updateCurrentText();
       return;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playerState.currentTime]);
 
   if (!playerState.currentCaption || !playerState.currentCaptionData)

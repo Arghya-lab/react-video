@@ -26,56 +26,216 @@ function VideoEventListeners() {
   } = useVideo();
 
   useEffect(() => {
-    if (videoRef && videoRef.current) {
-      videoRef.current.addEventListener("canplay", handleReady);
-      videoRef.current.addEventListener("loadedmetadata", handleDuration);
-      videoRef.current.addEventListener("play", handleOnPlay);
-      videoRef.current.addEventListener("progress", handleProgress);
-      videoRef.current.addEventListener("timeupdate", handleTimeUpdate);
-      videoRef.current.addEventListener("waiting", handleBuffering);
-      videoRef.current.addEventListener("playing", handleBufferingEnd);
-      videoRef.current.addEventListener("pause", handleOnPause);
-      videoRef.current.addEventListener("seeked", onSeek);
-      videoRef.current.addEventListener("ended", onEnded);
-      videoRef.current.addEventListener("error", onError);
-      videoRef.current.addEventListener(
-        "enterpictureinpicture",
-        handleEnablePIP
-      );
-      videoRef.current.addEventListener(
-        "leavepictureinpicture",
-        handleDisablePIP
-      );
+    const video = videoRef?.current;
+
+    const handleDuration = () => {
+      if (video) {
+        const duration = video.duration;
+
+        setPlayerState((prev) => ({
+          ...prev,
+          duration,
+        }));
+
+        onDuration(duration);
+      }
+    };
+
+    const handleReady = () => {
+      if (!playerState.isVideoLoaded) {
+        onReady();
+      }
+
+      setPlayerState((prev) => ({
+        ...prev,
+        buffering: false,
+        isVideoLoaded: true,
+      }));
+    };
+
+    const handleOnPlay = () => {
+      if (playerState.startOnPlay) {
+        onStart();
+        setPlayerState((prev) => ({ ...prev, startOnPlay: false }));
+      }
+      onPlay();
+      setPlayerState((prev) => ({ ...prev, playing: true, buffering: false }));
+    };
+
+    const handleOnPause = () => {
+      onPause();
+      setPlayerState((prev) => ({
+        ...prev,
+        playing: false,
+        isControlVisible: true,
+      }));
+    };
+
+    const handleProgress = () => {
+      if (video) {
+        const currentTime = video.currentTime;
+        const buffered = video.buffered;
+
+        const bufferedAreas: [number, number][] = [];
+
+        for (let i = 0; i < buffered.length; i++) {
+          const start = buffered.start(i);
+          const end = buffered.end(i);
+
+          bufferedAreas.push([start, end]);
+        }
+
+        onProgress({ currentTime, buffered });
+        setPlayerState((prev) => ({
+          ...prev,
+          currentTime,
+          loaded: bufferedAreas,
+        }));
+      }
+    };
+
+    const handleTimeUpdate = () => {
+      if (video) {
+        const currentTime = video.currentTime;
+
+        //  Update current chapters
+        if (
+          chapters && // nothing is set
+          ((!playerState.currentChapter && !playerState.nextChapterStartAt) ||
+            //  chapter have to update
+            (playerState.currentChapter &&
+              playerState.currentChapter.endTime <= currentTime) ||
+            (playerState.nextChapterStartAt &&
+              playerState.nextChapterStartAt <= currentTime) ||
+            //  user skip back
+            (playerState.currentChapter &&
+              playerState.currentChapter.startTime > currentTime))
+        ) {
+          const updatedCh = chapters.find(
+            (chapter) =>
+              chapter.startTime <= currentTime && chapter.endTime >= currentTime
+          );
+          const nextCh = chapters.find(
+            (chapter) => chapter.startTime > currentTime
+          );
+          setPlayerState((prev) => ({
+            ...prev,
+            currentChapter: updatedCh || null,
+            nextChapterStartAt: prev.nextChapterStartAt
+              ? nextCh?.startTime || playerState.duration
+              : nextCh?.startTime || null,
+          }));
+        }
+
+        if (
+          playerState.isControlVisible &&
+          controlVisibleTill &&
+          controlVisibleTill.current + 1 < currentTime
+        ) {
+          document.documentElement.style.cursor = "none";
+
+          setPlayerState((prev) => ({
+            ...prev,
+            currentTime,
+            isControlVisible: false,
+            isSettingOpen: false,
+            settingItemOpen: null,
+          }));
+        } else {
+          setPlayerState((prev) => ({
+            ...prev,
+            currentTime,
+          }));
+        }
+      }
+    };
+
+    const handleBuffering = () => {
+      onBuffer();
+      setPlayerState((prev) => ({ ...prev, buffering: true }));
+    };
+
+    const handleBufferingEnd = () => {
+      onBufferEnd();
+      setPlayerState((prev) => ({ ...prev, buffering: false }));
+    };
+
+    const handleEnablePIP = () => {
+      onEnablePIP();
+      setPlayerState((prev) => ({
+        ...prev,
+        pip: true,
+        isFullScreen: false,
+      }));
+    };
+
+    const handleDisablePIP = () => {
+      onDisablePIP();
+      setPlayerState((prev) => ({
+        ...prev,
+        pip: false,
+      }));
+    };
+
+    if (video) {
+      video.addEventListener("canplay", handleReady);
+      video.addEventListener("loadedmetadata", handleDuration);
+      video.addEventListener("play", handleOnPlay);
+      video.addEventListener("progress", handleProgress);
+      video.addEventListener("timeupdate", handleTimeUpdate);
+      video.addEventListener("waiting", handleBuffering);
+      video.addEventListener("playing", handleBufferingEnd);
+      video.addEventListener("pause", handleOnPause);
+      video.addEventListener("seeked", onSeek);
+      video.addEventListener("ended", onEnded);
+      video.addEventListener("error", onError);
+      video.addEventListener("enterpictureinpicture", handleEnablePIP);
+      video.addEventListener("leavepictureinpicture", handleDisablePIP);
     }
 
     return () => {
-      if (videoRef && videoRef.current) {
-        videoRef.current.removeEventListener("canplay", handleReady);
-        videoRef.current.removeEventListener("loadedmetadata", handleDuration);
-        videoRef.current.removeEventListener("play", handleOnPlay);
-        videoRef.current.removeEventListener("progress", handleProgress);
-        videoRef.current.removeEventListener("timeupdate", handleTimeUpdate);
-        videoRef.current.removeEventListener("waiting", handleBuffering);
-        videoRef.current.removeEventListener("playing", handleBufferingEnd);
-        videoRef.current.removeEventListener("pause", handleOnPause);
-        videoRef.current.removeEventListener("seeked", onSeek);
-        videoRef.current.removeEventListener("ended", onEnded);
-        videoRef.current.removeEventListener("error", onError);
-        videoRef.current.removeEventListener(
-          "enterpictureinpicture",
-          handleEnablePIP
-        );
-        videoRef.current.removeEventListener(
-          "leavepictureinpicture",
-          handleDisablePIP
-        );
+      if (video) {
+        video.removeEventListener("canplay", handleReady);
+        video.removeEventListener("loadedmetadata", handleDuration);
+        video.removeEventListener("play", handleOnPlay);
+        video.removeEventListener("progress", handleProgress);
+        video.removeEventListener("timeupdate", handleTimeUpdate);
+        video.removeEventListener("waiting", handleBuffering);
+        video.removeEventListener("playing", handleBufferingEnd);
+        video.removeEventListener("pause", handleOnPause);
+        video.removeEventListener("seeked", onSeek);
+        video.removeEventListener("ended", onEnded);
+        video.removeEventListener("error", onError);
+        video.removeEventListener("enterpictureinpicture", handleEnablePIP);
+        video.removeEventListener("leavepictureinpicture", handleDisablePIP);
       }
     };
-  }, [videoRef]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    videoRef,
+    chapters,
+    controlVisibleTill,
+    onBuffer,
+    onBufferEnd,
+    onDisablePIP,
+    onDuration,
+    onEnablePIP,
+    onEnded,
+    onError,
+    onPause,
+    onPlay,
+    onProgress,
+    onReady,
+    onSeek,
+    onStart,
+    setPlayerState,
+  ]);
 
   useEffect(() => {
+    const videoContainer = videoContainerRef?.current;
+
     const handleShowControls = () => {
-      if (videoRef && videoRef.current && controlVisibleTill) {
+      if (videoRef?.current && controlVisibleTill) {
         document.documentElement.style.cursor = "default";
         controlVisibleTill.current =
           videoRef.current.currentTime + controlVisibleDuration;
@@ -86,172 +246,14 @@ function VideoEventListeners() {
       }
     };
 
-    videoContainerRef?.current?.addEventListener(
-      "mousemove",
-      handleShowControls
-    );
-    videoContainerRef?.current?.addEventListener("keydown", handleShowControls);
+    videoContainer?.addEventListener("mousemove", handleShowControls);
+    videoContainer?.addEventListener("keydown", handleShowControls);
 
     return () => {
-      videoContainerRef?.current?.removeEventListener(
-        "mousemove",
-        handleShowControls
-      );
-      videoContainerRef?.current?.removeEventListener(
-        "keydown",
-        handleShowControls
-      );
+      videoContainer?.removeEventListener("mousemove", handleShowControls);
+      videoContainer?.removeEventListener("keydown", handleShowControls);
     };
   }, [videoRef, videoContainerRef, controlVisibleTill, setPlayerState]);
-
-  const handleDuration = () => {
-    if (videoRef?.current) {
-      const duration = videoRef.current.duration;
-
-      setPlayerState((prev) => ({
-        ...prev,
-        duration,
-        isVideoLoaded: true,
-      }));
-
-      onDuration(duration);
-    }
-  };
-
-  const handleReady = () => {
-    if (!playerState.isVideoLoaded) {
-      onReady();
-    }
-
-    setPlayerState((prev) => ({
-      ...prev,
-      buffering: false,
-    }));
-  };
-
-  const handleOnPlay = () => {
-    if (playerState.startOnPlay) {
-      onStart();
-      setPlayerState((prev) => ({ ...prev, startOnPlay: false }));
-    }
-    onPlay();
-    setPlayerState((prev) => ({ ...prev, playing: true, buffering: false }));
-  };
-
-  const handleOnPause = () => {
-    onPause();
-    setPlayerState((prev) => ({
-      ...prev,
-      playing: false,
-      isControlVisible: true,
-    }));
-  };
-
-  const handleProgress = () => {
-    if (videoRef && videoRef.current) {
-      const currentTime = videoRef.current.currentTime;
-      const buffered = videoRef.current.buffered;
-
-      const bufferedAreas: [number, number][] = [];
-
-      for (let i = 0; i < buffered.length; i++) {
-        const start = buffered.start(i);
-        const end = buffered.end(i);
-
-        bufferedAreas.push([start, end]);
-      }
-
-      onProgress({ currentTime, buffered });
-      setPlayerState((prev) => ({
-        ...prev,
-        currentTime,
-        loaded: bufferedAreas,
-      }));
-    }
-  };
-
-  const handleTimeUpdate = () => {
-    if (videoRef && videoRef.current) {
-      const currentTime = videoRef.current.currentTime;
-
-      //  Update current chapters
-      if (
-        chapters && // nothing is set
-        ((!playerState.currentChapter && !playerState.nextChapterStartAt) ||
-          //  chapter have to update
-          (playerState.currentChapter &&
-            playerState.currentChapter.endTime <= currentTime) ||
-          (playerState.nextChapterStartAt &&
-            playerState.nextChapterStartAt <= currentTime) ||
-          //  user skip back
-          (playerState.currentChapter &&
-            playerState.currentChapter.startTime > currentTime))
-      ) {
-        const updatedCh = chapters.find(
-          (chapter) =>
-            chapter.startTime <= currentTime && chapter.endTime >= currentTime
-        );
-        const nextCh = chapters.find(
-          (chapter) => chapter.startTime > currentTime
-        );
-        setPlayerState((prev) => ({
-          ...prev,
-          currentChapter: updatedCh || null,
-          nextChapterStartAt: prev.nextChapterStartAt
-            ? nextCh?.startTime || playerState.duration
-            : nextCh?.startTime || null,
-        }));
-      }
-
-      if (
-        playerState.isControlVisible &&
-        controlVisibleTill &&
-        controlVisibleTill.current + 1 < currentTime
-      ) {
-        document.documentElement.style.cursor = "none";
-
-        setPlayerState((prev) => ({
-          ...prev,
-          currentTime,
-          isControlVisible: false,
-          isSettingOpen: false,
-          settingItemOpen: null,
-        }));
-      } else {
-        setPlayerState((prev) => ({
-          ...prev,
-          currentTime,
-        }));
-      }
-    }
-  };
-
-  const handleBuffering = () => {
-    onBuffer();
-    setPlayerState((prev) => ({ ...prev, buffering: true }));
-  };
-
-  const handleBufferingEnd = () => {
-    onBufferEnd();
-    setPlayerState((prev) => ({ ...prev, buffering: false }));
-  };
-
-  const handleEnablePIP = () => {
-    onEnablePIP();
-    setPlayerState((prev) => ({
-      ...prev,
-      pip: true,
-      isFullScreen: false,
-    }));
-  };
-
-  const handleDisablePIP = () => {
-    onDisablePIP();
-    setPlayerState((prev) => ({
-      ...prev,
-      pip: false,
-    }));
-  };
 
   return null;
 }

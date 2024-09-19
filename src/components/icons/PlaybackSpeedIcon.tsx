@@ -6,10 +6,11 @@ export function PlaybackSpeedIcon({
   color,
   size,
   strokeWidth,
+  key,
   ...rest
 }: IconPropType) {
   return (
-    <span className={classnames("player-icon", className)} {...rest}>
+    <span className={classnames("player-icon", className)} key={key} {...rest}>
       <svg
         // xmlns:xlink="http://www.w3.org/1999/xlink"
         xmlns="http://www.w3.org/2000/svg"

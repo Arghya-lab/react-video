@@ -12,7 +12,9 @@ export default defineConfig({
   plugins: [
     react(),
     dts({
-      insertTypesEntry: true, // Creates type declaration files
+      include: ["src/**/*.ts", "src/**/*.tsx"],
+      rollupTypes: true,
+      tsconfigPath: "./tsconfig.app.json",
     }),
   ],
   build: {

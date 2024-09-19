@@ -39,129 +39,10 @@ function Controls() {
   const [volumeUpdate, setVolumeUpdate] = useState(0);
   const [isReverseTime, setIsReverseTime] = useState(false);
 
-  useEffect(() => {
-    document.addEventListener("keydown", handlePlayerKeyPress);
-    window.addEventListener("wheel", handleScroll, { passive: false }); // Add passive: false to prevent default scroll
-    return () => {
-      document.removeEventListener("keydown", handlePlayerKeyPress);
-      window.removeEventListener("wheel", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (videoRef && videoRef.current && !playerState.muted) {
-      const volume = Math.max(
-        0,
-        Math.min(1, playerState.volume + volumeUpdate)
-      );
-
-      videoRef.current.volume = volume;
-      if (controlVisibleTill) {
-        controlVisibleTill.current =
-          videoRef.current.currentTime + controlVisibleDuration;
-      }
-      setPlayerState((prev) => ({ ...prev, volume, isControlVisible: true }));
-      setVolumeUpdate(0);
-    }
-  }, [volumeUpdate]);
-
-  const handlePlayerKeyPress = (e: KeyboardEvent) => {
-    if (isMobile) return;
-    const tagName = document.activeElement?.tagName.toLowerCase();
-    if (tagName === "input") return;
-    if (!videoRef?.current) return;
-
-    e.preventDefault();
-    switch (e.key.toLowerCase()) {
-      case " ":
-        if (tagName === "button") return;
-        if (handlePlayPaused) handlePlayPaused();
-        break;
-      case "k":
-        if (handlePlayPaused) handlePlayPaused();
-        break;
-      case "arrowright":
-      case "l":
-        handleSkipForward();
-        break;
-      case "arrowleft":
-      case "j":
-        handleSkipBack();
-        break;
-      case "f":
-        toggleFullScreen();
-        break;
-      case "p":
-        togglePip();
-        break;
-      case "m":
-        toggleMute();
-        break;
-      case "Escape":
-        if (screenFull.isFullscreen) {
-          screenFull.exit();
-          if (screen.orientation) screen.orientation.unlock();
-          setPlayerState((prev) => ({ ...prev, isFullScreen: false }));
-        }
-        break;
-      case "arrowup":
-        handleVolumeChange((videoRef.current.volume + 0.2) * 10);
-        break;
-      case "arrowdown":
-        handleVolumeChange((videoRef.current.volume - 0.2) * 10);
-        break;
-      case "0":
-        videoRef.current.currentTime = (videoRef.current.duration * 0) / 10;
-        break;
-      case "1":
-        videoRef.current.currentTime = (videoRef.current.duration * 1) / 10;
-        break;
-      case "2":
-        videoRef.current.currentTime = (videoRef.current.duration * 2) / 10;
-        break;
-      case "3":
-        videoRef.current.currentTime = (videoRef.current.duration * 3) / 10;
-        break;
-      case "4":
-        videoRef.current.currentTime = (videoRef.current.duration * 4) / 10;
-        break;
-      case "5":
-        videoRef.current.currentTime = (videoRef.current.duration * 5) / 10;
-        break;
-      case "6":
-        videoRef.current.currentTime = (videoRef.current.duration * 6) / 10;
-        break;
-      case "7":
-        videoRef.current.currentTime = (videoRef.current.duration * 7) / 10;
-        break;
-      case "8":
-        videoRef.current.currentTime = (videoRef.current.duration * 8) / 10;
-        break;
-      case "9":
-        videoRef.current.currentTime = (videoRef.current.duration * 9) / 10;
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleScroll = (e: WheelEvent) => {
-    const isOverSlider =
-      volumeContainerRef.current &&
-      volumeContainerRef.current.contains(e.target as Node);
-    if (isOverSlider) {
-      e.preventDefault(); // Prevent default scroll behavior
-
-      if (videoRef && videoRef.current && !playerState.muted) {
-        setVolumeUpdate((prev) => (prev + e.deltaY < 0 ? 0.1 : -0.1));
-      }
-    }
-  };
-
   const togglePip = () => {
     if (document.pictureInPictureElement) {
       document.exitPictureInPicture();
-    } else if (videoRef && videoRef.current) {
+    } else if (videoRef?.current) {
       videoRef.current.requestPictureInPicture();
     }
   };
@@ -198,7 +79,7 @@ function Controls() {
   };
 
   const handleVolumeChange = (value: number) => {
-    if (videoRef && videoRef.current && !playerState.muted) {
+    if (videoRef?.current && !playerState.muted) {
       const volume = Math.max(0, Math.min(1, value / 10));
       videoRef.current.volume = volume;
       setPlayerState((prev) => ({ ...prev, volume }));
@@ -206,7 +87,7 @@ function Controls() {
   };
 
   const toggleMute = () => {
-    if (videoRef && videoRef.current) {
+    if (videoRef?.current) {
       const muted = !playerState.muted;
       videoRef.current.muted = muted;
       setPlayerState((prev) => ({ ...prev, muted }));
@@ -214,7 +95,7 @@ function Controls() {
   };
 
   const handleSkipForward = () => {
-    if (videoRef && videoRef.current) {
+    if (videoRef?.current) {
       if (controlVisibleTill) {
         controlVisibleTill.current =
           videoRef.current.currentTime + videoSkipSec + controlVisibleDuration;
@@ -226,7 +107,7 @@ function Controls() {
   };
 
   const handleSkipBack = () => {
-    if (videoRef && videoRef.current) {
+    if (videoRef?.current) {
       if (controlVisibleTill) {
         controlVisibleTill.current =
           videoRef.current.currentTime - videoSkipSec + controlVisibleDuration;
@@ -236,6 +117,137 @@ function Controls() {
         videoRef.current.currentTime - videoSkipSec;
     }
   };
+
+  useEffect(() => {
+    const handlePlayerKeyPress = (e: KeyboardEvent) => {
+      if (isMobile) return;
+      const tagName = document.activeElement?.tagName.toLowerCase();
+      if (tagName === "input") return;
+      if (!videoRef?.current) return;
+
+      e.preventDefault();
+      switch (e.key.toLowerCase()) {
+        case " ":
+          if (tagName === "button") return;
+          if (handlePlayPaused) handlePlayPaused();
+          break;
+        case "k":
+          if (handlePlayPaused) handlePlayPaused();
+          break;
+        case "arrowright":
+        case "l":
+          handleSkipForward();
+          break;
+        case "arrowleft":
+        case "j":
+          handleSkipBack();
+          break;
+        case "f":
+          toggleFullScreen();
+          break;
+        case "p":
+          togglePip();
+          break;
+        case "m":
+          toggleMute();
+          break;
+        case "Escape":
+          if (screenFull.isFullscreen) {
+            screenFull.exit();
+            if (screen.orientation) screen.orientation.unlock();
+            setPlayerState((prev) => ({ ...prev, isFullScreen: false }));
+          }
+          break;
+        case "arrowup":
+          handleVolumeChange((videoRef.current.volume + 0.2) * 10);
+          break;
+        case "arrowdown":
+          handleVolumeChange((videoRef.current.volume - 0.2) * 10);
+          break;
+        case "0":
+          videoRef.current.currentTime = (videoRef.current.duration * 0) / 10;
+          break;
+        case "1":
+          videoRef.current.currentTime = (videoRef.current.duration * 1) / 10;
+          break;
+        case "2":
+          videoRef.current.currentTime = (videoRef.current.duration * 2) / 10;
+          break;
+        case "3":
+          videoRef.current.currentTime = (videoRef.current.duration * 3) / 10;
+          break;
+        case "4":
+          videoRef.current.currentTime = (videoRef.current.duration * 4) / 10;
+          break;
+        case "5":
+          videoRef.current.currentTime = (videoRef.current.duration * 5) / 10;
+          break;
+        case "6":
+          videoRef.current.currentTime = (videoRef.current.duration * 6) / 10;
+          break;
+        case "7":
+          videoRef.current.currentTime = (videoRef.current.duration * 7) / 10;
+          break;
+        case "8":
+          videoRef.current.currentTime = (videoRef.current.duration * 8) / 10;
+          break;
+        case "9":
+          videoRef.current.currentTime = (videoRef.current.duration * 9) / 10;
+          break;
+        default:
+          break;
+      }
+    };
+
+    const handleScroll = (e: WheelEvent) => {
+      const isOverSlider =
+        volumeContainerRef.current &&
+        volumeContainerRef.current.contains(e.target as Node);
+      if (isOverSlider) {
+        e.preventDefault(); // Prevent default scroll behavior
+
+        if (videoRef?.current && !playerState.muted) {
+          setVolumeUpdate((prev) => (prev + e.deltaY < 0 ? 0.1 : -0.1));
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handlePlayerKeyPress);
+    window.addEventListener("wheel", handleScroll, { passive: false }); // Add passive: false to prevent default scroll
+    return () => {
+      document.removeEventListener("keydown", handlePlayerKeyPress);
+      window.removeEventListener("wheel", handleScroll);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    handleSkipBack,
+    handlePlayPaused,
+    handleSkipForward,
+    handleVolumeChange,
+    toggleFullScreen,
+    toggleMute,
+    togglePip,
+    setPlayerState,
+    videoRef,
+  ]);
+
+  useEffect(() => {
+    if (videoRef?.current && !playerState.muted) {
+      const volume = Math.max(
+        0,
+        Math.min(1, playerState.volume + volumeUpdate)
+      );
+
+      videoRef.current.volume = volume;
+      if (controlVisibleTill) {
+        controlVisibleTill.current =
+          videoRef.current.currentTime + controlVisibleDuration;
+      }
+      setPlayerState((prev) => ({ ...prev, volume, isControlVisible: true }));
+      setVolumeUpdate(0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [volumeUpdate, controlVisibleTill, setPlayerState, videoRef]);
 
   if (!controls) return null;
 
@@ -285,7 +297,9 @@ function Controls() {
                   className="horizontal-slider volume-slider"
                   trackClassName="volume-track"
                   thumbClassName="volume-thumb"
-                  renderThumb={(props) => <div {...props} />}
+                  renderThumb={({ key, ...rest }) => (
+                    <div key={key} {...rest} />
+                  )}
                   min={0}
                   max={10}
                   value={playerState.muted ? 0 : playerState.volume * 10}

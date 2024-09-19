@@ -5,10 +5,11 @@ export function CaptionIcon({
   className,
   color,
   size,
+  key,
   ...rest
 }: BasicIconPropType) {
   return (
-    <span className={classnames("player-icon", className)} {...rest}>
+    <span className={classnames("player-icon", className)} key={key} {...rest}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={size ? size.toString() : 24}

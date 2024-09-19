@@ -14,7 +14,7 @@ function MobileControl() {
   } = useVideo();
 
   const handleSkipForward = () => {
-    if (videoRef && videoRef.current) {
+    if (videoRef?.current) {
       if (controlVisibleTill) {
         controlVisibleTill.current =
           videoRef.current.currentTime + videoSkipSec + controlVisibleDuration;
@@ -26,7 +26,7 @@ function MobileControl() {
   };
 
   const handleSkipBack = () => {
-    if (videoRef && videoRef.current) {
+    if (videoRef?.current) {
       if (controlVisibleTill) {
         controlVisibleTill.current =
           videoRef.current.currentTime - videoSkipSec + controlVisibleDuration;

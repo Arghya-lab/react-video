@@ -8,10 +8,11 @@ export function LoadingIcon({
   fillColor,
   size,
   strokeWidth,
+  key,
   ...rest
 }: IconPropType) {
   return (
-    <span className={classnames("player-icon", className)} {...rest}>
+    <span className={classnames("player-icon", className)} key={key} {...rest}>
       {/*  From Uiverse.io by barisdogansutcu  */}
       <svg
         className="loader-container"

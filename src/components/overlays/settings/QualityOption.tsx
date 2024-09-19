@@ -11,7 +11,7 @@ function QualityOption() {
   };
 
   const handleQualityChange = (sourceItem: SourceItemType) => {
-    if (videoRef && videoRef.current) {
+    if (videoRef?.current) {
       if (videoRef.current.src !== sourceItem.src) {
         onQualityChange(sourceItem);
         setPlayerState((prev) => ({

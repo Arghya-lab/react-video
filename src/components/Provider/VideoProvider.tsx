@@ -3,7 +3,8 @@ import {
   forwardRef,
   MouseEvent,
   MouseEventHandler,
-  RefObject,
+  // RefObject,
+  useImperativeHandle,
   useContext,
   useRef,
   useState,
@@ -46,6 +47,7 @@ const VideoContext = createContext<VideoContextType>({
   handlePlayPaused: () => {},
 });
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useVideo = () => useContext(VideoContext);
 
 // Define the component using ForwardRefRenderFunction
@@ -86,8 +88,9 @@ export const VideoProvider = forwardRef<HTMLVideoElement, VideoProviderProps>(
     }: VideoProviderProps,
     ref
   ) => {
-    const videoRef =
-      (ref as RefObject<HTMLVideoElement>) || useRef<HTMLVideoElement>(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
+    // const videoRef = ref || defaultVideoRef;
+    useImperativeHandle(ref, () => videoRef.current!, []);
     const videoContainerRef = useRef<HTMLDivElement>(null);
     const controlVisibleTill = useRef(controlVisibleDuration);
     const [playerState, setPlayerState] =

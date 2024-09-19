@@ -19,10 +19,10 @@ function ProgressBar() {
     setSliderValue(
       (playerState.currentTime / (playerState.duration || 0) || 0) * 1000
     );
-  }, [playerState.currentTime]);
+  }, [playerState.currentTime, playerState.duration]);
 
   const handleChangeCurrentTime = (value: number) => {
-    if (videoRef && videoRef.current) {
+    if (videoRef?.current) {
       const WishCT = (value / 1000) * (videoRef.current.duration || 0);
 
       if (controlVisibleTill) {
@@ -40,9 +40,8 @@ function ProgressBar() {
         className="horizontal-slider"
         trackClassName="slider-track"
         thumbClassName="slider-thumb"
-        renderThumb={(props) => (
-          // eslint-disable-next-line react/prop-types
-          <div {...props} style={{ ...props?.style, zIndex: 20 }} />
+        renderThumb={({ key, style, ...rest }) => (
+          <div style={{ ...style, zIndex: 20 }} key={key} {...rest} />
         )}
         min={0}
         max={1000}

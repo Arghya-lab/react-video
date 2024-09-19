@@ -7,7 +7,8 @@ import { useVideo } from "../Provider/VideoProvider";
 import fetchAndParseCaption from "../../lib/fetchAndParseCaption";
 
 function InitializeVideo() {
-  let progressTimeout: NodeJS.Timeout;
+  // let progressTimeout: NodeJS.Timeout;
+
   const {
     videoRef,
     source,
@@ -23,7 +24,7 @@ function InitializeVideo() {
     let dashPlayer: dashjs.MediaPlayerClass | null = null;
     let flvPlayer: flvjs.Player | null = null;
 
-    if (videoRef && videoRef.current) {
+    if (videoRef?.current) {
       const video = videoRef.current;
       const previouslyPlayingAt = playerState.currentTime;
       const isPreviouslyPlaying = playerState.playing;
@@ -94,12 +95,13 @@ function InitializeVideo() {
     }
 
     return () => {
-      clearTimeout(progressTimeout);
+      // clearTimeout(progressTimeout);
       if (hls) hls.destroy();
       if (dashPlayer) dashPlayer.reset();
       if (flvPlayer) flvPlayer.destroy();
     };
-  }, [source, videoRef, playerState.currentSource?.quality]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [source, videoRef, autoPlay, captions, defaultQuality, setPlayerState]);
 
   return null;
 }

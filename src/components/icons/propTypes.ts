@@ -1,4 +1,4 @@
-import { HTMLProps } from "react";
+import React, { HTMLProps } from "react";
 
 export interface IconPropType extends HTMLProps<HTMLSpanElement> {
   size?: number;
@@ -7,6 +7,7 @@ export interface IconPropType extends HTMLProps<HTMLSpanElement> {
   fillColor?: string;
   strokeWidth?: number;
   className?: string;
+  key?: React.Key | null;
 }
 
 export interface PipIconPropType extends HTMLProps<HTMLSpanElement> {
@@ -17,10 +18,12 @@ export interface PipIconPropType extends HTMLProps<HTMLSpanElement> {
   strokeWidth?: number;
   className?: string;
   isPip?: boolean;
+  key?: React.Key | null;
 }
 
 export interface BasicIconPropType extends HTMLProps<HTMLSpanElement> {
   size?: number;
   color?: string;
   className?: string;
+  key?: React.Key | null;
 }

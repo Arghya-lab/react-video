@@ -6,7 +6,7 @@ function PlaybackSpeedOption() {
   const { setPlayerState, videoRef, onPlaybackRateChange } = useVideo();
 
   const handleChangePlaybackRate = (playback: PlaybackType) => {
-    if (videoRef && videoRef.current) {
+    if (videoRef?.current) {
       videoRef.current.playbackRate = playback.playbackRate;
 
       onPlaybackRateChange(playback.playbackRate);
