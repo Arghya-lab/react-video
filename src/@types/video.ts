@@ -47,7 +47,6 @@ export interface VideoPropTypes {
   onBuffer?: () => void;
   onBufferEnd?: () => void;
   onSeek?: () => void;
-  onDuration?: (duration: number) => void;
   onProgress?: ({
     currentTime,
     buffered,
@@ -89,6 +88,7 @@ export interface PlayerStateType {
   currentChapter: ChapterType | null;
   nextChapterStartAt: number | null;
   isChapterOverLayOpen: boolean;
+  prevPlayerHeight?: number;
   // videoAspectRatio: number;
   // FullScreenType: ScreenFullTypeEnum;
 }

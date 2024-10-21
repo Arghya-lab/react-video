@@ -2,7 +2,13 @@ import { useVideo } from "../../Provider/VideoProvider";
 import { SourceItemType } from "../../../@types";
 
 function QualityOption() {
-  const { videoRef, source, setPlayerState, onQualityChange } = useVideo();
+  const {
+    videoRef,
+    videoContainerRef,
+    source,
+    setPlayerState,
+    onQualityChange,
+  } = useVideo();
 
   if (!(source instanceof Array)) return null;
 
@@ -20,6 +26,8 @@ function QualityOption() {
           isSourceAutoSelected: false,
           loaded: [],
           settingItemOpen: null,
+          isVideoLoaded: false,
+          prevPlayerHeight: videoContainerRef?.current?.offsetHeight,
         }));
       } else {
         handleBack();

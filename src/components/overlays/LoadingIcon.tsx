@@ -1,5 +1,15 @@
-import { IconPropType } from "./propTypes";
+import { HTMLProps } from "react";
 import classnames from "classnames";
+
+export interface IconPropType extends HTMLProps<HTMLSpanElement> {
+  size?: number;
+  color?: string;
+  fill?: boolean;
+  fillColor?: string;
+  strokeWidth?: number;
+  className?: string;
+  key?: React.Key | null;
+}
 
 export function LoadingIcon({
   className,
@@ -13,7 +23,6 @@ export function LoadingIcon({
 }: IconPropType) {
   return (
     <span className={classnames("player-icon", className)} key={key} {...rest}>
-      {/*  From Uiverse.io by barisdogansutcu  */}
       <svg
         className="loader-container"
         viewBox="25 25 50 50"
@@ -21,7 +30,6 @@ export function LoadingIcon({
         fill={fill ? fillColor || color || "currentColor" : "none"}
         stroke={color || "currentColor"}
         strokeWidth={strokeWidth ? strokeWidth.toString() : "1.5"}
-        // strokeLinecap="round"
       >
         <circle className="loading-circle" r="20" cy="50" cx="50"></circle>
       </svg>

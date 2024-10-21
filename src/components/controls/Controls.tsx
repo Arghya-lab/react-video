@@ -1,27 +1,27 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  BackwardIcon,
-  ForwardIcon,
-  MaximizeIcon,
-  MinimizeIcon,
-  PauseIcon,
-  PipIcon,
-  PlayIcon,
-  SettingIcon,
-  VolumeHighIcon,
-  VolumeLowIcon,
-  VolumeMediumIcon,
-  VolumeMuteIcon,
-} from "../icons";
 import secToMinSec from "../../lib/secToMinSec";
 import { useVideo } from "../Provider/VideoProvider";
 import screenFull from "screenfull";
 import ProgressBar from "./ProgressBar";
-import ReactSlider from "react-slider";
 import { isMobile } from "react-device-detect";
 import classNames from "classnames";
 import { controlVisibleDuration } from "../../lib/constant";
 import TooltipWrapper from "./TooltipWrapper";
+import Slider from "./Slider";
+import {
+  IconMaximize,
+  IconMinimize,
+  IconPictureInPictureOff,
+  IconPictureInPictureOn,
+  IconPlayerPauseFilled,
+  IconPlayerPlayFilled,
+  IconPlayerTrackNextFilled,
+  IconPlayerTrackPrevFilled,
+  IconSettingsFilled,
+  IconVolume,
+  IconVolume2,
+  IconVolume3,
+} from "@tabler/icons-react";
 
 function Controls() {
   const {
@@ -275,35 +275,43 @@ function Controls() {
                 position="top-right"
                 toolTip={playerState.playing ? "Pause" : "Play"}
               >
-                <button id="play-pause-btn" onClick={handlePlayPaused}>
-                  {playerState.playing ? <PauseIcon /> : <PlayIcon />}
+                <button
+                  id="play-pause-btn"
+                  className="rv-btn"
+                  onClick={handlePlayPaused}
+                >
+                  {playerState.playing ? (
+                    <IconPlayerPauseFilled />
+                  ) : (
+                    <IconPlayerPlayFilled />
+                  )}
                 </button>
               </TooltipWrapper>
               <div ref={volumeContainerRef} className="volume-container">
                 <TooltipWrapper toolTip={playerState.muted ? "Unmute" : "Mute"}>
-                  <button id="volume-btn" onClick={toggleMute}>
+                  <button
+                    id="volume-btn"
+                    className="rv-btn"
+                    onClick={toggleMute}
+                  >
                     {playerState.muted || playerState.volume === 0 ? (
-                      <VolumeMuteIcon fill />
-                    ) : playerState.volume < 0.33 ? (
-                      <VolumeLowIcon fill />
-                    ) : playerState.volume < 0.67 ? (
-                      <VolumeMediumIcon fill />
+                      <IconVolume3 />
+                    ) : playerState.volume < 0.5 ? (
+                      <IconVolume2 />
                     ) : (
-                      <VolumeHighIcon fill />
+                      <IconVolume />
                     )}
                   </button>
                 </TooltipWrapper>
-                <ReactSlider
-                  className="horizontal-slider volume-slider"
-                  trackClassName="volume-track"
-                  thumbClassName="volume-thumb"
-                  renderThumb={({ key, ...rest }) => (
-                    <div key={key} {...rest} />
-                  )}
-                  min={0}
+                <Slider
+                  className="volume-slider-root"
+                  trackClassName="volume-slider-track"
+                  rangeClassName="volume-slider-range"
+                  thumbClassName="volume-slider-thumb"
                   max={10}
-                  value={playerState.muted ? 0 : playerState.volume * 10}
-                  onChange={handleVolumeChange}
+                  step={1}
+                  value={[playerState.muted ? 0 : playerState.volume * 10]}
+                  onValueChange={([val]) => handleVolumeChange(val)}
                 />
               </div>
             </>
@@ -344,30 +352,34 @@ function Controls() {
           )}
           <span style={{ flexGrow: 1 }} />
           <TooltipWrapper toolTip="Skip backward">
-            <button onClick={handleSkipBack}>
-              <BackwardIcon size={20} />
+            <button className="rv-btn" onClick={handleSkipBack}>
+              <IconPlayerTrackPrevFilled size={20} />
             </button>
           </TooltipWrapper>
           <TooltipWrapper toolTip="Skip forward">
-            <button onClick={handleSkipForward}>
-              <ForwardIcon size={20} />
+            <button className="rv-btn" onClick={handleSkipForward}>
+              <IconPlayerTrackNextFilled size={20} />
             </button>
           </TooltipWrapper>
           <TooltipWrapper toolTip="Setting">
             <button
               id="setting-button"
-              className={classNames("setting-button", {
+              className={classNames("setting-button rv-btn", {
                 "setting-active": playerState.isSettingOpen,
               })}
             >
-              <SettingIcon fill />
+              <IconSettingsFilled />
             </button>
           </TooltipWrapper>
           {/* if browser support then show pip button */}
           {document.pictureInPictureEnabled && (
             <TooltipWrapper toolTip={playerState.pip ? "Exit Pip" : "Pip"}>
-              <button onClick={togglePip}>
-                <PipIcon isPip={playerState.pip} />
+              <button className="rv-btn" onClick={togglePip}>
+                {playerState.pip ? (
+                  <IconPictureInPictureOff />
+                ) : (
+                  <IconPictureInPictureOn />
+                )}
               </button>
             </TooltipWrapper>
           )}
@@ -377,8 +389,8 @@ function Controls() {
             }
             position="top-left"
           >
-            <button onClick={toggleFullScreen}>
-              {playerState.isFullScreen ? <MinimizeIcon /> : <MaximizeIcon />}
+            <button className="rv-btn" onClick={toggleFullScreen}>
+              {playerState.isFullScreen ? <IconMinimize /> : <IconMaximize />}
             </button>
           </TooltipWrapper>
         </div>

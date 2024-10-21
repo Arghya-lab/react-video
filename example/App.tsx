@@ -62,7 +62,6 @@ function App() {
         onBufferEnd={() => console.log("onBufferEnd")}
         onEnablePIP={() => console.log("onEnablePIP")}
         onDisablePIP={() => console.log("onDisablePIP")}
-        onDuration={() => console.log("onDuration")}
         onEnded={() => console.log("onEnded")}
         onError={() => console.log("onError")}
         onPlaybackRateChange={() => console.log("onPlaybackRateChange")}

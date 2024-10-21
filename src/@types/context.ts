@@ -21,7 +21,6 @@ export interface VideoContextType extends VideoPropTypes {
   onError: () => void;
   onEnablePIP: () => void;
   onDisablePIP: () => void;
-  onDuration: (duration: number) => void;
   onProgress: ({
     currentTime,
     buffered,

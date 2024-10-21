@@ -1,6 +1,6 @@
 import { useVideo } from "../Provider/VideoProvider";
-import { LoadingIcon } from "../icons";
 import classNames from "classnames";
+import { LoadingIcon } from "./LoadingIcon";
 
 function Buffering() {
   const { playerState } = useVideo();

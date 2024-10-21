@@ -1,6 +1,6 @@
 {
   "name": "@arghya-lab/react-video",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "A react video player component inspired by youtube player ui",
   "type": "module",
   "main": "dist/index.umd.js",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^1.9.0",
     "@eslint/js": "^9.9.0",
+    "@radix-ui/react-slider": "^1.2.1",
     "@storybook/addon-essentials": "^8.3.1",
     "@storybook/addon-interactions": "^8.3.1",
     "@storybook/addon-links": "^8.3.1",
@@ -37,6 +38,7 @@
     "@storybook/react": "^8.3.1",
     "@storybook/react-vite": "^8.3.1",
     "@storybook/test": "^8.3.1",
+    "@tabler/icons-react": "^3.19.0",
     "@types/node": "^22.5.5",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -54,22 +56,18 @@
     "globals": "^15.9.0",
     "hls.js": "^1.5.15",
     "react": "^18.3.1",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18.3.1",
+    "screenfull": "^6.0.2",
     "srt-parser-2": "^1.2.3",
     "storybook": "^8.3.1",
+    "tinycolor2": "^1.6.0",
     "typescript": "^5.4.2",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1",
     "vite-plugin-dts": "^4.2.1",
     "vitest": "^2.1.1",
     "webvtt-parser": "^2.2.0"
-  },
-  "dependencies": {
-    "classnames": "^2.5.1",
-    "react-device-detect": "^2.2.3",
-    "react-slider": "^2.0.6",
-    "screenfull": "^6.0.2",
-    "tinycolor2": "^1.6.0"
   },
   "peerDependencies": {
     "react": "^17 || ^18",

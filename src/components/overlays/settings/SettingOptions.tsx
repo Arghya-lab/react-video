@@ -1,4 +1,8 @@
-import { CaptionIcon, PlaybackSpeedIcon, QualityIcon } from "../../icons";
+import {
+  IconAdjustmentsHorizontal,
+  IconBadgeCcFilled,
+  IconBrandSpeedtest,
+} from "@tabler/icons-react";
 import { useVideo } from "../../Provider/VideoProvider";
 
 function SettingOptions() {
@@ -15,7 +19,7 @@ function SettingOptions() {
           }
         >
           <div className="setting-item-icon">
-            <CaptionIcon />
+            <IconBadgeCcFilled size={20} />
           </div>
           <div className="setting-item-label">
             <span>CC/Subtitles </span>
@@ -39,7 +43,7 @@ function SettingOptions() {
         }
       >
         <div className="setting-item-icon">
-          <PlaybackSpeedIcon />
+          <IconBrandSpeedtest size={20} />
         </div>
         <div className="setting-item-label">
           <span>Playback speed</span>
@@ -55,7 +59,7 @@ function SettingOptions() {
           }
         >
           <div className="setting-item-icon">
-            <QualityIcon />
+            <IconAdjustmentsHorizontal size={20} />
           </div>
           <div className="setting-item-label">
             <span>Quality</span>

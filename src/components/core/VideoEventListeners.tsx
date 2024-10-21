@@ -19,7 +19,6 @@ function VideoEventListeners() {
     onSeek,
     onEnded,
     onError,
-    onDuration,
     onProgress,
     onEnablePIP,
     onDisablePIP,
@@ -28,29 +27,20 @@ function VideoEventListeners() {
   useEffect(() => {
     const video = videoRef?.current;
 
-    const handleDuration = () => {
+    const handleReady = () => {
       if (video) {
         const duration = video.duration;
+        if (!playerState.isVideoLoaded) {
+          onReady();
+        }
 
         setPlayerState((prev) => ({
           ...prev,
           duration,
+          buffering: false,
+          isVideoLoaded: true,
         }));
-
-        onDuration(duration);
       }
-    };
-
-    const handleReady = () => {
-      if (!playerState.isVideoLoaded) {
-        onReady();
-      }
-
-      setPlayerState((prev) => ({
-        ...prev,
-        buffering: false,
-        isVideoLoaded: true,
-      }));
     };
 
     const handleOnPlay = () => {
@@ -179,7 +169,7 @@ function VideoEventListeners() {
 
     if (video) {
       video.addEventListener("canplay", handleReady);
-      video.addEventListener("loadedmetadata", handleDuration);
+      // video.addEventListener("loadedmetadata", handleDuration);
       video.addEventListener("play", handleOnPlay);
       video.addEventListener("progress", handleProgress);
       video.addEventListener("timeupdate", handleTimeUpdate);
@@ -196,7 +186,7 @@ function VideoEventListeners() {
     return () => {
       if (video) {
         video.removeEventListener("canplay", handleReady);
-        video.removeEventListener("loadedmetadata", handleDuration);
+        // video.removeEventListener("loadedmetadata", handleDuration);
         video.removeEventListener("play", handleOnPlay);
         video.removeEventListener("progress", handleProgress);
         video.removeEventListener("timeupdate", handleTimeUpdate);
@@ -218,7 +208,6 @@ function VideoEventListeners() {
     onBuffer,
     onBufferEnd,
     onDisablePIP,
-    onDuration,
     onEnablePIP,
     onEnded,
     onError,

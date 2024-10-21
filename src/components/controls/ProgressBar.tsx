@@ -1,8 +1,8 @@
 import { useMemo, useRef, useState } from "react";
-import ReactSlider from "react-slider";
 import classNames from "classnames";
 import { useVideo } from "../Provider/VideoProvider";
 import { controlVisibleDuration } from "../../lib/constant";
+import Slider from "./Slider";
 
 function ProgressBar() {
   const {
@@ -35,18 +35,16 @@ function ProgressBar() {
   };
 
   return (
-    <div ref={sliderRef} className="slider-container">
-      <ReactSlider
-        className="horizontal-slider"
-        trackClassName="slider-track"
-        thumbClassName="slider-thumb"
-        renderThumb={({ key, style, ...rest }) => (
-          <div style={{ ...style, zIndex: 20 }} key={key} {...rest} />
-        )}
-        min={0}
+    <div ref={sliderRef} className="progress-container">
+      <Slider
+        className="progress-slider-root"
+        trackClassName="progress-slider-track"
+        rangeClassName="progress-slider-range"
+        thumbClassName="progress-slider-thumb"
+        value={[sliderValue]}
         max={1000}
-        value={sliderValue}
-        onChange={handleChangeCurrentTime}
+        step={1}
+        onValueChange={([val]) => handleChangeCurrentTime(val)}
       />
       {playerState.loaded.map((loadedArea) => (
         <div

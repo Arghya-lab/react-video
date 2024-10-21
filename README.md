@@ -77,7 +77,6 @@ onPause?: () => void;
 onBuffer?: () => void;
 onBufferEnd?: () => void;
 onSeek?: () => void;
-onDuration?: (duration: number) => void;
 onProgress?: ({
     currentTime,
     buffered,
@@ -140,8 +139,6 @@ onQualityChange?: (sourceItem: {
 
 - **`onSeek`** (`fn() | undefined`): Callback function that is invoked when the user seeks to a different time in the video.
 
-- **`onDuration`** (`fn() | undefined`): Callback function that is invoked when the video duration is available or changes.
-
 - **`onProgress`** (`fn() | undefined`): Callback function that is invoked periodically with the current playback progress.
 
 - **`onEnablePIP`** (`fn() | undefined`): Callback function that is invoked when Picture-in-Picture mode is enabled.
@@ -193,6 +190,7 @@ Default variables values:
   --rv-progress-track-color: rgba(255, 255, 255, 0.6);
   --rv-progress-track-fill-color: red;
   --rv-progress-loaded-color: rgba(255, 255, 255, 0.5);
+  --rv-progress-thumb-color: red;
   --rv-progress-thumb-border-color: red;
 
   --rv-mobile-control-button-color: rgba(255, 255, 255, 0.9);
@@ -338,6 +336,7 @@ Default variables values:
 `--rv-progress-track-color`: Color of the progress bar track.\
 `--rv-progress-track-fill-color`: Color of the filled portion of the progress bar.\
 `--rv-progress-loaded-color`: Color indicating the loaded portion of the video.\
+`--rv-progress-thumb-color`: Color of the progress thumb.\
 `--rv-progress-thumb-border-color`: Border color of the progress thumb.
 
 #### Mobile Controls

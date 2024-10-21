@@ -1,8 +1,13 @@
-import { BackwardIcon, ForwardIcon, PauseIcon, PlayIcon } from "../icons";
 import { isMobile } from "react-device-detect";
 import { useVideo } from "../Provider/VideoProvider";
 import classNames from "classnames";
 import { controlVisibleDuration } from "../../lib/constant";
+import {
+  IconPlayerPauseFilled,
+  IconPlayerPlayFilled,
+  IconPlayerTrackNextFilled,
+  IconPlayerTrackPrevFilled,
+} from "@tabler/icons-react";
 
 function MobileControl() {
   const {
@@ -39,34 +44,38 @@ function MobileControl() {
 
   return (
     <div
+      id="mobile-control-container"
       className={classNames(
         { visible: playerState.isControlVisible },
-        { hidden: !playerState.isControlVisible },
-        "mobile-control-container"
+        { hidden: !playerState.isControlVisible }
       )}
     >
       {isMobile && (
-        <button onClick={handleSkipBack}>
-          <BackwardIcon size={36} />
+        <button className="rv-btn" onClick={handleSkipBack}>
+          <IconPlayerTrackPrevFilled size={36} />
         </button>
       )}
-      {(isMobile || !playerState.playing) && (
-        <button
-          onClick={handlePlayPaused}
-          className={classNames("play-btn-center", {
-            buffering: playerState.buffering && playerState.playing,
-          })}
-        >
-          {playerState.playing ? (
-            <PauseIcon size={36} />
-          ) : (
-            <PlayIcon size={36} />
-          )}
-        </button>
-      )}
+      {isMobile ||
+        (!playerState.playing && (
+          <button
+            id="play-btn-center"
+            onClick={handlePlayPaused}
+            className={classNames("rv-btn", {
+              buffering: playerState.buffering && playerState.playing,
+            })}
+          >
+            {playerState.playing ? (
+              <IconPlayerPauseFilled
+                size={playerState.isFullScreen ? 56 : 36}
+              />
+            ) : (
+              <IconPlayerPlayFilled size={playerState.isFullScreen ? 56 : 36} />
+            )}
+          </button>
+        ))}
       {isMobile && (
-        <button onClick={handleSkipForward}>
-          <ForwardIcon size={36} />
+        <button className="rv-btn" onClick={handleSkipForward}>
+          <IconPlayerTrackNextFilled size={36} />
         </button>
       )}
     </div>

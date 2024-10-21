@@ -3,7 +3,6 @@ import {
   forwardRef,
   MouseEvent,
   MouseEventHandler,
-  // RefObject,
   useImperativeHandle,
   useContext,
   useRef,
@@ -40,7 +39,6 @@ const VideoContext = createContext<VideoContextType>({
   onError: () => {},
   onEnablePIP: () => {},
   onDisablePIP: () => {},
-  onDuration: () => {},
   onProgress: () => {},
   onPlaybackRateChange: () => {},
   onQualityChange: () => {},
@@ -81,7 +79,6 @@ export const VideoProvider = forwardRef<HTMLVideoElement, VideoProviderProps>(
       onError = () => {},
       onEnablePIP = () => {},
       onDisablePIP = () => {},
-      onDuration = () => {},
       onProgress = () => {},
       onPlaybackRateChange = () => {},
       onQualityChange = () => {},
@@ -112,8 +109,8 @@ export const VideoProvider = forwardRef<HTMLVideoElement, VideoProviderProps>(
       // if setting overlay is open then hide and if click on button then show
       const settingBtn = document.getElementById("setting-button");
       const settingContainer = document.getElementById("setting-container");
-      const topVideoLayer = document.querySelector(".mobile-control-container");
-      const centerPlatBtn = document.querySelector(".play-btn-center");
+      const topVideoLayer = document.querySelector("#mobile-control-container");
+      const centerPlatBtn = document.querySelector("#play-btn-center");
 
       if (!(settingContainer && settingContainer.contains(e.target as Node))) {
         if (
@@ -137,8 +134,8 @@ export const VideoProvider = forwardRef<HTMLVideoElement, VideoProviderProps>(
     };
 
     const handleDoubleClick = (e: MouseEvent) => {
-      const topVideoLayer = document.querySelector(".mobile-control-container");
-      const centerPlatBtn = document.querySelector(".play-btn-center");
+      const topVideoLayer = document.querySelector("#mobile-control-container");
+      const centerPlatBtn = document.querySelector("#play-btn-center");
 
       if (centerPlatBtn?.contains(e.target as Node)) {
         return;
@@ -199,7 +196,6 @@ export const VideoProvider = forwardRef<HTMLVideoElement, VideoProviderProps>(
           onError,
           onEnablePIP,
           onDisablePIP,
-          onDuration,
           onProgress,
           onPlaybackRateChange,
           onQualityChange,
@@ -210,7 +206,14 @@ export const VideoProvider = forwardRef<HTMLVideoElement, VideoProviderProps>(
           ref={videoContainerRef}
           onClick={handleClick}
           onDoubleClick={handleDoubleClick}
-          style={{ width, ...style }}
+          style={{
+            width,
+            ...style,
+            height: playerState.isVideoLoaded
+              ? undefined
+              : playerState.prevPlayerHeight,
+          }}
+          id="react-video-container"
           className={classNames("video-container", className, {
             "full-screen": playerState.isFullScreen,
             "video-loaded": playerState.isVideoLoaded,

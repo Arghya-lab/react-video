@@ -128,6 +128,7 @@ export const polyQtyHlsWithCh: Story = {
       },
     ],
     showSkipableChapter: true,
+    autoPlay: true,
     // onReady={handleReady},
   },
 };

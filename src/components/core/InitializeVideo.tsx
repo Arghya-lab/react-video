@@ -100,8 +100,17 @@ function InitializeVideo() {
       if (dashPlayer) dashPlayer.reset();
       if (flvPlayer) flvPlayer.destroy();
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [source, videoRef, autoPlay, captions, defaultQuality, setPlayerState]);
+  }, [
+    source,
+    videoRef,
+    autoPlay,
+    captions,
+    defaultQuality,
+    playerState.currentSource,
+    setPlayerState,
+  ]);
 
   return null;
 }
